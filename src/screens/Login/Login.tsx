@@ -1,8 +1,13 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
+import {
+  CustomText,
+  CustomTextInput,
+  FullButton,
+  SimpleButton,
+} from "../../components";
 import { AuthContext } from "../../contexts/AuthContext";
-import { colors } from "../../theme";
 import { styles } from "./Login.styles";
 
 export default function Login() {
@@ -24,37 +29,34 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.title}>¡Bienvenido!</Text>
-        <TextInput
-          style={styles.input}
+        <CustomText.Title>¡Bienvenido!</CustomText.Title>
+
+        <CustomTextInput
           placeholder="Correo electrónico"
-          placeholderTextColor={colors.placeholder}
           value={email}
           onChangeText={setEmail}
         />
-        <TextInput
-          style={styles.input}
+
+        <CustomTextInput
           placeholder="Contraseña"
-          placeholderTextColor={colors.placeholder}
           secureTextEntry
           value={password}
           onChangeText={setPassword}
         />
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Iniciar sesión</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.googleButton]}
-          onPress={handleGoogle}
-        >
+
+        <FullButton onPress={handleLogin}>
+          <CustomText.ButtonText>Iniciar sesión</CustomText.ButtonText>
+        </FullButton>
+
+        <FullButton style={styles.googleButton} onPress={handleGoogle}>
           <AntDesign name="google" size={20} color="#fff" />
-          <Text style={[styles.buttonText, { marginLeft: 8 }]}>
-            Continuar con Google
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleForgot}>
-          <Text style={styles.forgotText}>¿Olvidaste tu contraseña?</Text>
-        </TouchableOpacity>
+          <CustomText.ButtonText>Continuar con Google</CustomText.ButtonText>
+        </FullButton>
+
+        <SimpleButton
+          title="¿Olvidaste tu contraseña?"
+          onPress={handleForgot}
+        />
       </View>
     </View>
   );
