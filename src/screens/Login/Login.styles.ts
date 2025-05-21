@@ -15,10 +15,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: 16,
     padding: spacing.lg,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
     elevation: 5,
   },
   googleButton: {
@@ -29,5 +26,16 @@ export const styles = StyleSheet.create({
     fontSize: typography.small,
     textAlign: "center",
     marginTop: spacing.sm,
+  },
+  passwordView: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: spacing.md,
+    width: "90%",
+  },
+  passwordEye: {
+    marginLeft: spacing.sm,
+    marginBottom: spacing.md,
   },
 });
