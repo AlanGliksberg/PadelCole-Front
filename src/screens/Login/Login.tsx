@@ -22,6 +22,7 @@ export default function Login() {
   const handleLogin = async () => {
     const res = await login<LoginResponse>(email, password);
     if (res.error || !res.data) {
+      // TODO - manejar credenciales incorrectas o error
       return;
     }
     saveToken(res.data?.token);
@@ -42,6 +43,8 @@ export default function Login() {
           placeholder="Correo electrónico"
           value={email}
           onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
 
         <View style={styles.passwordView}>
@@ -50,6 +53,7 @@ export default function Login() {
             secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
+            autoCapitalize="none"
           />
           <TouchableOpacity
             onPress={() => setShowPassword((prev) => !prev)}

@@ -19,7 +19,10 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => response.data,
-  (error) => error.response.data
+  (error) => {
+    if (!error?.response?.data) throw error;
+    return error.response.data;
+  }
 );
 
 export const post = async <T>(
