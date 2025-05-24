@@ -1,3 +1,4 @@
+import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { login } from "@/src/services/auth";
 import { colors } from "@/src/theme";
 import { LoginResponse } from "@/src/types/auth/LoginResponse";
@@ -18,17 +19,24 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { saveToken } = useContext(AuthContext);
+  const { hideLoading, showLoading, loading } = useContext(LoadingContext);
 
   const handleLogin = async () => {
+    showLoading();
     const res = await login<LoginResponse>(email, password);
     if (res.error || !res.data) {
       // TODO - manejar credenciales incorrectas o error
+      hideLoading();
       return;
     }
     saveToken(res.data?.token);
+    hideLoading();
   };
   const handleGoogle = () => {
     /* … */
+  };
+  const handleRegister = () => {
+    // router.push('register');
   };
   const handleForgot = () => {
     /* … */
@@ -67,15 +75,20 @@ export default function Login() {
           </TouchableOpacity>
         </View>
 
-        <FullButton onPress={handleLogin}>
+        <FullButton onPress={handleLogin} disabled={loading}>
           <CustomText.ButtonText>Iniciar sesión</CustomText.ButtonText>
         </FullButton>
 
-        <FullButton style={styles.googleButton} onPress={handleGoogle}>
+        <FullButton
+          style={styles.googleButton}
+          onPress={handleGoogle}
+          disabled={loading}
+        >
           <AntDesign name="google" size={20} color="#fff" />
           <CustomText.ButtonText>Continuar con Google</CustomText.ButtonText>
         </FullButton>
 
+        <SimpleButton title="Registrarse" onPress={handleRegister} />
         <SimpleButton
           title="¿Olvidaste tu contraseña?"
           onPress={handleForgot}
