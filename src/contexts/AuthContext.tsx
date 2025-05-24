@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SplashScreen from "expo-splash-screen";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 
 type AuthContextData = {
@@ -18,8 +19,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Al montar, tratar de recuperar el token
   useEffect(() => {
-    AsyncStorage.getItem("userToken").then((stored) => {
+    AsyncStorage.getItem("userToken").then(async (stored) => {
       if (stored) setToken(stored);
+      setTimeout(async () => await SplashScreen.hideAsync(), 1500);
     });
   }, []);
 
