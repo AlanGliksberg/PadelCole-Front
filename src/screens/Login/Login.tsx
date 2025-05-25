@@ -1,7 +1,7 @@
 import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { login } from "@/src/services/auth";
 import { colors } from "@/src/theme";
-import { LoginResponse } from "@/src/types/auth/LoginResponse";
+import { LoginResponse } from "@/src/types";
 import { AntDesign } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
 import { TouchableOpacity, View } from "react-native";

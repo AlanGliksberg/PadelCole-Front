@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosInstance } from "axios";
 import { API_URL } from "../config/env";
-import { USER_TOKEN_SESSION_KEY } from "../constants/constants";
+import { USER_TOKEN_SESSION_KEY } from "../constants/auth";
 import { ApiResponse } from "../types";
 
 const axiosInstance: AxiosInstance = axios.create({

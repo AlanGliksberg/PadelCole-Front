@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { USER_TOKEN_SESSION_KEY } from "../constants/constants";
+import { USER_TOKEN_SESSION_KEY } from "../constants/auth";
 
 type AuthContextData = {
   token: string | null;
