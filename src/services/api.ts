@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosInstance } from "axios";
 import { API_URL } from "../config/env";
+import { USER_TOKEN_SESSION_KEY } from "../constants/constants";
 import { ApiResponse } from "../types";
 
 const axiosInstance: AxiosInstance = axios.create({
@@ -10,7 +11,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const token = await AsyncStorage.getItem("userToken");
+    const token = await AsyncStorage.getItem(USER_TOKEN_SESSION_KEY);
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
@@ -38,8 +39,7 @@ export const get = async <T>(
   params?: Record<string, any>,
   customHeaders?: Record<string, any>
 ) => {
-  const url = uri + new URLSearchParams(params).toString();
-  console.log("url", url);
+  const url = params ? `${uri}?${new URLSearchParams(params).toString()}` : uri;
   return await fetch<T>(url, "GET", null, customHeaders);
 };
 
