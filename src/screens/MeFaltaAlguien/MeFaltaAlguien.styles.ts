@@ -1,13 +1,17 @@
 import { StyleSheet } from "react-native";
-import { colors, spacing } from "../../theme";
+import { spacing } from "../../theme";
 
 export const styles = StyleSheet.create({
   container: {
+    display: "flex",
     flex: 1,
-    backgroundColor: colors.background,
+  },
+  matchesContainer: {
+    height: "85%",
   },
   createMatchText: {
-    marginVertical: spacing.sm,
+    marginTop: spacing.xl,
+    marginBottom: spacing.md,
   },
   createMatchButton: {
     alignSelf: "center",

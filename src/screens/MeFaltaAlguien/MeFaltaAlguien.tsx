@@ -3,7 +3,7 @@ import { getCreatedMatches } from "@/src/services/match";
 import { GetCreatedMatchesResponse, Match } from "@/src/types";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import {
   CustomScreen,
   CustomText,
@@ -59,39 +59,45 @@ export default function MeFaltaAlguien() {
   //pensar el loader por secciones y si uso skeleton
   return (
     <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME} loading={loading}>
-      <CustomText style={styles.createMatchText} bold>
-        Creá tu próximo partido:
-      </CustomText>
-      <FullButton
-        onPress={() => router.push("/home")}
-        size="l"
-        style={styles.createMatchButton}
-      >
-        <CustomText.ButtonText>Crear partido</CustomText.ButtonText>
-      </FullButton>
-      <CustomText style={styles.matchesText} bold>
-        Tus partidos pendientes:
-      </CustomText>
+      <View style={styles.container}>
+        <View style={styles.matchesContainer}>
+          <CustomText style={styles.matchesText} bold>
+            Tus partidos pendientes:
+          </CustomText>
 
-      {error && errorSection}
+          {error && errorSection}
 
-      {!error && !loading && (
-        <FlatList
-          data={matches}
-          keyExtractor={(m) => m.id}
-          renderItem={({ item }) => <MatchBox match={item} />}
-          contentContainerStyle={styles.list}
-          ListFooterComponent={
-            matches.length < total ? (
-              <SimpleButton
-                title="Ver más"
-                onPress={() => loadMatches(page + 1)}
-                style={styles.loadMore}
-              />
-            ) : null
-          }
-        />
-      )}
+          {!error && !loading && (
+            <FlatList
+              data={matches}
+              keyExtractor={(m) => m.id}
+              renderItem={({ item }) => <MatchBox match={item} />}
+              contentContainerStyle={styles.list}
+              ListFooterComponent={
+                matches.length < total ? (
+                  <SimpleButton
+                    title="Ver más"
+                    onPress={() => loadMatches(page + 1)}
+                    style={styles.loadMore}
+                  />
+                ) : null
+              }
+            />
+          )}
+        </View>
+        <View>
+          <CustomText style={styles.createMatchText} bold>
+            Creá tu próximo partido:
+          </CustomText>
+          <FullButton
+            onPress={() => router.push("/home")}
+            size="l"
+            style={styles.createMatchButton}
+          >
+            <CustomText.ButtonText>Crear partido</CustomText.ButtonText>
+          </FullButton>
+        </View>
+      </View>
     </CustomScreen>
   );
 }
