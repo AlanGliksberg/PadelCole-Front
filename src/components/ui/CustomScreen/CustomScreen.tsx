@@ -1,8 +1,9 @@
-// src/components/CustomScreen.tsx
+import { colors } from "@/src/theme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { BlurView } from "expo-blur";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./CustomScreen.styles";
 
@@ -10,13 +11,15 @@ interface CustomScreenProps {
   children: React.ReactNode;
   title: string;
   showBack?: boolean;
+  loading?: boolean;
 }
 
-export default function CustomScreen({
+const CustomScreen: React.FC<CustomScreenProps> = ({
   children,
   title,
   showBack = false,
-}: CustomScreenProps) {
+  loading = false,
+}) => {
   const navigation = useNavigation();
 
   return (
@@ -34,7 +37,17 @@ export default function CustomScreen({
         )}
         <Text style={styles.title}>{title}</Text>
       </View>
-      <View style={styles.content}>{children}</View>
+      <View style={styles.content}>
+        {loading ? (
+          <BlurView intensity={50} style={styles.loading}>
+            <ActivityIndicator size="large" color={colors.primary} />
+          </BlurView>
+        ) : (
+          children
+        )}
+      </View>
     </SafeAreaView>
   );
-}
+};
+
+export default CustomScreen;

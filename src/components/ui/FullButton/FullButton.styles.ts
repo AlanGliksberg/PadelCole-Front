@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors, spacing } from "../../theme";
+import { colors, spacing } from "../../../theme";
 
 export const styles = StyleSheet.create({
   button: {
@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.primary,
-    height: 48,
+    height: 42,
     borderRadius: 8,
     marginBottom: spacing.sm,
   },

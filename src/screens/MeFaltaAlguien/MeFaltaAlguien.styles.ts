@@ -1,128 +1,27 @@
 import { StyleSheet } from "react-native";
-import { colors, spacing, typography } from "../../theme";
+import { colors, spacing } from "../../theme";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    padding: spacing.lg,
   },
-  createButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 24,
-    paddingVertical: spacing.md,
-    alignItems: "center",
-    marginBottom: spacing.md,
-    elevation: 2,
+  createMatchText: {
+    marginVertical: spacing.sm,
   },
-  createButtonText: {
-    color: "#fff",
-    fontSize: typography.body,
-    fontWeight: "600",
-    textTransform: "uppercase",
+  createMatchButton: {
+    alignSelf: "center",
+    marginBottom: spacing.xl,
   },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 16,
-    elevation: 4,
-  },
-  row: {
-    flexDirection: "row",
-    marginBottom: spacing.sm,
-  },
-  status: {
-    alignSelf: "flex-end",
-    backgroundColor: colors.accent,
-    color: "#fff",
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    borderRadius: 12,
-    fontWeight: "600",
-    textTransform: "uppercase",
-  },
-  location: {
-    fontSize: typography.h2,
-    fontWeight: "700",
-    color: colors.text,
-    marginBottom: spacing.xs,
-  },
-  description: {
-    fontSize: typography.body,
-    color: colors.text,
-    marginBottom: spacing.sm,
-  },
-  meta: {
-    fontSize: typography.small,
-    color: colors.text,
-    marginBottom: spacing.sm,
-  },
-  tag: {
-    backgroundColor: colors.accent,
-    color: "#fff",
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    borderRadius: 8,
-    marginRight: spacing.sm,
-    fontSize: typography.small,
-  },
-  subheader: {
-    fontSize: typography.body,
-    fontWeight: "600",
-    marginBottom: spacing.xs,
-  },
-  playersRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  player: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.primary,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    borderRadius: 8,
-    marginRight: spacing.sm,
-    marginBottom: spacing.xs,
-    fontSize: typography.small,
-  },
-  empty: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: spacing.xl,
-  },
-  emptyImage: {
-    width: 120,
-    height: 120,
+  matchesText: {
     marginBottom: spacing.md,
   },
-  emptyText: {
-    fontSize: typography.body,
-    color: "#777",
-    marginBottom: spacing.md,
+  list: {
+    paddingBottom: spacing.lg,
   },
-  emptyButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 24,
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.lg,
-  },
+
   loadMore: {
-    backgroundColor: colors.primary,
-    borderRadius: 24,
-    paddingVertical: spacing.sm,
-    alignItems: "center",
+    alignSelf: "center",
     marginVertical: spacing.md,
-  },
-  loadMoreText: {
-    color: "#fff",
-    fontSize: typography.body,
-    fontWeight: "600",
   },
 });

@@ -1,4 +1,6 @@
+import { Gender } from "../gender/Gender";
 import { Team } from "../player/Team";
+import { Status } from "./Status";
 
 export type Match = {
   id: string;
@@ -6,8 +8,13 @@ export type Match = {
   location: string;
   description: string | null;
   category: string;
+  pointsDeviation: number | null;
+  status: Status;
+  createdAt: Date;
+  creatorPlayerId: string;
+  gender: Gender;
   duration: number;
-  gender: string;
-  status: { description: string };
   teams: Team[];
+  date: string;
+  time: string;
 };

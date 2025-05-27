@@ -6,4 +6,10 @@ export const colors = {
   text: "#333333",
   placeholder: "#999999",
   google: "#DB4437",
+  error: "#E53935",
+  description: "#555",
+  tag: "#333",
+  pendingStatus: "#FFCC80",
+  closedStatus: "#C8E6C9",
+  completedStatus: "#BBDEFB",
 };

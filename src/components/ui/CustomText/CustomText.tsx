@@ -1,9 +1,14 @@
+import { typography } from "@/src/theme";
 import React from "react";
 import { Text, TextProps, TextStyle } from "react-native";
 import { styles } from "./CustomText.styles";
 
+type TextType = "h1" | "h2" | "h3" | "body" | "small";
+
 export interface CustomTextProps extends TextProps {
   style?: TextStyle;
+  bold?: boolean;
+  type?: TextType;
 }
 
 export interface CustomTextComponent extends React.FC<CustomTextProps> {
@@ -11,9 +16,23 @@ export interface CustomTextComponent extends React.FC<CustomTextProps> {
   ButtonText: React.FC<TextProps>;
 }
 
-const CustomText: CustomTextComponent = ({ children, style, ...props }) => {
+const CustomText: CustomTextComponent = ({
+  children,
+  style,
+  bold,
+  type = "h3",
+  ...props
+}) => {
   return (
-    <Text {...props} style={[styles.text, style]}>
+    <Text
+      {...props}
+      style={[
+        styles.text,
+        bold && styles.bold,
+        { fontSize: typography[type] },
+        style,
+      ]}
+    >
       {children}
     </Text>
   );

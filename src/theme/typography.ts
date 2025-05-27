@@ -4,4 +4,5 @@ export const typography = {
   h3: 16,
   body: 16,
   small: 12,
+  xsmall: 10,
 };

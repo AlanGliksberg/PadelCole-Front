@@ -1,24 +1,33 @@
 import { FALTA_ALGUIEN_PAGE_NAME } from "@/src/constants/pages";
 import { getCreatedMatches } from "@/src/services/match";
 import { GetCreatedMatchesResponse, Match } from "@/src/types";
-import React, { useContext, useEffect, useState } from "react";
-import { Alert, Text, View } from "react-native";
-import { CustomScreen, CustomText, FullButton } from "../../components";
-import { LoadingContext } from "../../contexts/LoadingContext";
+import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import {
+  CustomScreen,
+  CustomText,
+  ErrorSection,
+  FullButton,
+  MatchBox,
+  SimpleButton,
+} from "../../components";
 import { styles } from "./MeFaltaAlguien.styles";
 
 export default function MeFaltaAlguien() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const { showLoading, hideLoading } = useContext(LoadingContext);
+  const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const loadMatches = async (nextPage = 1) => {
     try {
-      showLoading();
+      setError(false);
+      setLoading(true);
       const res = await getCreatedMatches<GetCreatedMatchesResponse>(
         nextPage,
-        20
+        3
       );
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
       const { matches: newMatches, totalMatches } = res.data;
@@ -28,57 +37,61 @@ export default function MeFaltaAlguien() {
       setTotal(totalMatches);
       setPage(nextPage);
     } catch (e: any) {
-      Alert.alert("Error", e.message);
+      setError(true);
     } finally {
-      hideLoading();
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadMatches(1);
+    loadMatches();
   }, []);
 
-  const renderMatch = ({ item }: { item: Match }) => (
-    <View style={styles.card}>
-      <CustomText.ButtonText style={styles.status}>
-        {item.status.description}
-      </CustomText.ButtonText>
-      <CustomText style={styles.location}>{item.location}</CustomText>
-      {item.description && (
-        <CustomText style={styles.description}>{item.description}</CustomText>
-      )}
-      <CustomText style={styles.meta}>
-        {item.dateTime.replace("T", " ")}
-      </CustomText>
-      <View style={styles.row}>
-        <CustomText style={styles.tag}>{item.category}</CustomText>
-        <CustomText style={styles.tag}>{item.duration} min</CustomText>
-        <CustomText style={styles.tag}>{item.gender}</CustomText>
-      </View>
-      <CustomText style={styles.subheader}>Jugadores:</CustomText>
-      <View style={styles.playersRow}>
-        {item.teams
-          .flatMap((team) => team.players)
-          .map((p) => (
-            <CustomText.ButtonText key={p.id} style={styles.player}>
-              {p.firstName}
-            </CustomText.ButtonText>
-          ))}
-      </View>
-    </View>
+  const errorSection = (
+    <>
+      <ErrorSection
+        message="Error buscando tus partidos"
+        onRetry={loadMatches}
+      />
+    </>
   );
 
-  const ListHeader = () => (
-    <FullButton style={styles.createButton} onPress={() => {}}>
-      <CustomText.ButtonText style={styles.createButtonText}>
-        Crear partido
-      </CustomText.ButtonText>
-    </FullButton>
-  );
-
+  //pensar el loader por secciones y si uso skeleton
   return (
-    <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME}>
-      <Text>Bienvenido a MeFaltaAlguien</Text>
+    <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME} loading={loading}>
+      <CustomText style={styles.createMatchText} bold>
+        Creá tu próximo partido:
+      </CustomText>
+      <FullButton
+        onPress={() => router.push("/home")}
+        size="l"
+        style={styles.createMatchButton}
+      >
+        <CustomText.ButtonText>Crear partido</CustomText.ButtonText>
+      </FullButton>
+      <CustomText style={styles.matchesText} bold>
+        Tus partidos pendientes:
+      </CustomText>
+
+      {error && errorSection}
+
+      {!error && !loading && (
+        <FlatList
+          data={matches}
+          keyExtractor={(m) => m.id}
+          renderItem={({ item }) => <MatchBox match={item} />}
+          contentContainerStyle={styles.list}
+          ListFooterComponent={
+            matches.length < total ? (
+              <SimpleButton
+                title="Ver más"
+                onPress={() => loadMatches(page + 1)}
+                style={styles.loadMore}
+              />
+            ) : null
+          }
+        />
+      )}
     </CustomScreen>
   );
 }

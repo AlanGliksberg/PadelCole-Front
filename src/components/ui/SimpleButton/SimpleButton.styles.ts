@@ -1,5 +1,5 @@
+import { colors, spacing, typography } from "@/src/theme";
 import { StyleSheet } from "react-native";
-import { colors, spacing, typography } from "../../theme";
 
 export const styles = StyleSheet.create({
   button: {

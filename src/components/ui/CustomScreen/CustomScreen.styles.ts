@@ -31,4 +31,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: spacing.lg,
   },
+  loading: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

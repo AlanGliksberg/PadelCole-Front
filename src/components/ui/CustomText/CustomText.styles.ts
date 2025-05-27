@@ -1,10 +1,13 @@
 import { StyleSheet } from "react-native";
-import { colors, spacing, typography } from "../../theme";
+import { colors, spacing, typography } from "../../../theme";
 
 export const styles = StyleSheet.create({
   text: {
     color: colors.text,
     fontSize: typography.body,
+  },
+  bold: {
+    fontWeight: "600",
   },
   title: {
     fontSize: typography.h2,
@@ -14,7 +17,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: colors.surface,
     fontSize: typography.small,
     fontWeight: "600",
     textTransform: "uppercase",
