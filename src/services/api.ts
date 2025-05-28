@@ -2,7 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosInstance } from "axios";
 import { API_URL } from "../config/env";
 import { USER_TOKEN_SESSION_KEY } from "../constants/auth";
-import { ApiResponse } from "../types";
+import { ApiParams, ApiResponse } from "../types";
+import { cache, CACHE_TTL } from "./cache";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_URL,
@@ -26,28 +27,31 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export const post = async <T>(
-  uri: string,
-  body: any,
-  customHeaders?: Record<string, any>
-) => {
-  return await fetch<T>(uri, "POST", body, customHeaders);
+export const post = async <T>(uri: string, apiParams: ApiParams) => {
+  apiParams.method = "POST";
+  return await fetch<T>(uri, apiParams);
 };
 
-export const get = async <T>(
-  uri: string,
-  params?: Record<string, any>,
-  customHeaders?: Record<string, any>
-) => {
-  const url = params ? `${uri}?${new URLSearchParams(params).toString()}` : uri;
-  return await fetch<T>(url, "GET", null, customHeaders);
+export const get = async <T>(uri: string, apiParams: ApiParams = {}) => {
+  const url = apiParams?.queryParams
+    ? `${uri}?${new URLSearchParams(apiParams.queryParams).toString()}`
+    : uri;
+  const cached = cache.get(url);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+
+  apiParams.method = "GET";
+  const result = await fetch<T>(url, apiParams);
+
+  cache.set(url, { timestamp: Date.now(), data: result });
+
+  return result;
 };
 
 const fetch = async <T>(
   uri: string,
-  method: string,
-  body?: any,
-  customHeaders: Record<string, any> = {}
+  { method, body, customHeaders = {} }: ApiParams
 ): Promise<ApiResponse<T>> => {
   const headers = getHeaders(customHeaders);
   try {

@@ -1,4 +1,4 @@
-export { ApiResponse } from "./api/ApiResponse";
+export { ApiParams, ApiResponse } from "./api/Api";
 export { GetCreatedMatchesResponse } from "./api/MatchResponse";
 export { LoginResponse } from "./auth/LoginResponse";
 export { Gender } from "./gender/Gender";
