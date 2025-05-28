@@ -1,4 +1,5 @@
 export { default as MatchBox } from "./MatchBox/MatchBox";
+export { default as MatchBoxSkeleton } from "./MatchBox/MatchBoxSkeleton";
 export { default as CustomScreen } from "./ui/CustomScreen/CustomScreen";
 export { default as CustomText } from "./ui/CustomText/CustomText";
 export { default as CustomTextInput } from "./ui/CustomTextInput/CustomTextInput";

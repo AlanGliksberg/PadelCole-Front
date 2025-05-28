@@ -10,36 +10,37 @@ import {
   ErrorSection,
   FullButton,
   MatchBox,
+  MatchBoxSkeleton,
   SimpleButton,
 } from "../../components";
 import { styles } from "./MeFaltaAlguien.styles";
+
+const pageSize = 3;
 
 export default function MeFaltaAlguien() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
 
   const loadMatches = async (nextPage = 1) => {
     try {
       setError(false);
-      setLoading(true);
+      setMatches((prev) => [...prev, ...Array(pageSize).fill({} as Match)]);
       const res = await getCreatedMatches<GetCreatedMatchesResponse>(
         nextPage,
-        3
+        pageSize
       );
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
       const { matches: newMatches, totalMatches } = res.data;
-      setMatches((prev) =>
-        nextPage === 1 ? newMatches : [...prev, ...newMatches]
-      );
+      setMatches((prev) => {
+        const realPrev = prev.filter((m) => !!m.id);
+        return [...realPrev, ...newMatches];
+      });
       setTotal(totalMatches);
       setPage(nextPage);
     } catch (e: any) {
       setError(true);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -58,7 +59,7 @@ export default function MeFaltaAlguien() {
 
   //pensar el loader por secciones y si uso skeleton
   return (
-    <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME} loading={loading}>
+    <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME}>
       <View style={styles.container}>
         <View style={styles.matchesContainer}>
           <CustomText style={styles.matchesText} bold>
@@ -67,11 +68,13 @@ export default function MeFaltaAlguien() {
 
           {error && errorSection}
 
-          {!error && !loading && (
+          {!error && (
             <FlatList
               data={matches}
-              keyExtractor={(m) => m.id}
-              renderItem={({ item }) => <MatchBox match={item} />}
+              keyExtractor={(m, i) => m.id ?? `skeleton-${i}`}
+              renderItem={({ item }) =>
+                item.id ? <MatchBox match={item} /> : <MatchBoxSkeleton />
+              }
               contentContainerStyle={styles.list}
               ListFooterComponent={
                 matches.length < total ? (
