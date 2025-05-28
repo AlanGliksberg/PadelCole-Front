@@ -1,3 +1,4 @@
+import { Application } from "../application/Application";
 import { Gender } from "../gender/Gender";
 import { Team } from "../player/Team";
 import { Status } from "./Status";
@@ -17,4 +18,5 @@ export type Match = {
   teams: Team[];
   date: string;
   time: string;
+  applications: Application[];
 };

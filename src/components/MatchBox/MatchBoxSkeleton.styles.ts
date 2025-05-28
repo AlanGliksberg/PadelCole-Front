@@ -16,14 +16,14 @@ export const styles = StyleSheet.create({
   textBlockLarge: {
     height: 20,
     width: "60%",
-    backgroundColor: "#e0e0e0",
+    backgroundColor: colors.skeleton,
     borderRadius: 4,
     marginBottom: spacing.xs,
   },
   textBlockSmall: {
     height: 14,
     width: "25%",
-    backgroundColor: "#e0e0e0",
+    backgroundColor: colors.skeleton,
     borderRadius: 4,
     marginBottom: spacing.xs,
   },
@@ -36,14 +36,21 @@ export const styles = StyleSheet.create({
   iconSkeleton: {
     width: 18,
     height: 18,
-    backgroundColor: "#e0e0e0",
+    backgroundColor: colors.skeleton,
     borderRadius: 9,
     marginRight: spacing.xs,
   },
   tagSkeleton: {
     height: 20,
     width: 50,
-    backgroundColor: "#e0e0e0",
+    backgroundColor: colors.skeleton,
     borderRadius: 10,
+  },
+  player: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.skeleton,
+    marginRight: spacing.sm,
   },
 });

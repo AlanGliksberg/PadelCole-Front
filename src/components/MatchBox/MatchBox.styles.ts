@@ -62,4 +62,29 @@ export const styles = StyleSheet.create({
     marginRight: spacing.sm,
     fontSize: typography.small,
   },
+  vs: {
+    marginHorizontal: spacing.sm,
+    color: colors.text,
+    fontSize: typography.body,
+    fontWeight: "600",
+  },
+  applicationsButtonText: {
+    color: colors.primary,
+  },
+  badge: {
+    position: "absolute",
+    top: -10,
+    right: -10,
+    backgroundColor: colors.accent,
+    width: spacing.lg,
+    height: spacing.lg,
+    borderRadius: spacing.lg / 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: {
+    color: colors.white,
+    fontSize: typography.small,
+    fontWeight: "600",
+  },
 });

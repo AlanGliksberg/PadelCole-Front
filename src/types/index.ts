@@ -6,3 +6,4 @@ export { Match } from "./match/Match";
 export { Status } from "./match/Status";
 export { Player } from "./player/Player";
 export { Team } from "./player/Team";
+export { User } from "./user/User";

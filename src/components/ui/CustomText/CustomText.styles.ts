@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
   buttonText: {
-    color: colors.surface,
+    color: colors.white,
     fontSize: typography.small,
     fontWeight: "600",
     textTransform: "uppercase",

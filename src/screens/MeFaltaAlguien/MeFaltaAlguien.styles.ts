@@ -7,10 +7,10 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   matchesContainer: {
-    height: "85%",
+    height: "87%",
   },
   createMatchText: {
-    marginTop: spacing.xl,
+    marginTop: spacing.md,
     marginBottom: spacing.md,
   },
   createMatchButton: {

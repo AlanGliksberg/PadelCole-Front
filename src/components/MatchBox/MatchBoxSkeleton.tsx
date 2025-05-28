@@ -42,6 +42,13 @@ const MatchBoxSkeleton: React.FC = () => {
         <View style={styles.tagSkeleton} />
         <View style={styles.tagSkeleton} />
       </View>
+
+      <View style={styles.row}>
+        <View style={styles.player} />
+        <View style={styles.player} />
+        <View style={styles.player} />
+        <View style={styles.player} />
+      </View>
     </Animated.View>
   );
 };

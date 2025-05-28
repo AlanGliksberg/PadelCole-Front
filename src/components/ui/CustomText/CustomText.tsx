@@ -3,17 +3,17 @@ import React from "react";
 import { Text, TextProps, TextStyle } from "react-native";
 import { styles } from "./CustomText.styles";
 
-type TextType = "h1" | "h2" | "h3" | "body" | "small";
+type TextType = "h1" | "h2" | "h3" | "body" | "small" | "xsmall";
 
 export interface CustomTextProps extends TextProps {
-  style?: TextStyle;
+  style?: TextStyle | TextStyle[];
   bold?: boolean;
   type?: TextType;
 }
 
 export interface CustomTextComponent extends React.FC<CustomTextProps> {
   Title: React.FC<TextProps>;
-  ButtonText: React.FC<TextProps>;
+  ButtonText: React.FC<CustomTextProps>;
 }
 
 const CustomText: CustomTextComponent = ({
@@ -48,9 +48,23 @@ const Title: React.FC<TextProps> = ({ children, style, ...props }) => {
 };
 
 // Subcomponente ButtonText
-const ButtonText: React.FC<TextProps> = ({ children, style, ...props }) => {
+const ButtonText: React.FC<CustomTextProps> = ({
+  children,
+  style,
+  bold,
+  type = "small",
+  ...props
+}) => {
   return (
-    <Text {...props} style={[styles.buttonText, style]}>
+    <Text
+      {...props}
+      style={[
+        styles.buttonText,
+        bold && styles.bold,
+        { fontSize: typography[type] },
+        style,
+      ]}
+    >
       {children}
     </Text>
   );

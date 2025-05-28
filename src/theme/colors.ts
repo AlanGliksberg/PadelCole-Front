@@ -1,8 +1,9 @@
 export const colors = {
   primary: "#5C6BC0",
-  accent: "#f50057",
+  accent: "#d61138",
   background: "#F4F6FB",
   surface: "#FFFFFF",
+  white: "#FFFFFF",
   text: "#333333",
   placeholder: "#999999",
   google: "#DB4437",
@@ -12,4 +13,5 @@ export const colors = {
   pendingStatus: "#FFCC80",
   closedStatus: "#C8E6C9",
   completedStatus: "#BBDEFB",
+  skeleton: "#e0e0e0",
 };

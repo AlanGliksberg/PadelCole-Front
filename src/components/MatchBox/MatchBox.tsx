@@ -5,13 +5,19 @@ import { View } from "react-native";
 import CustomText from "../ui/CustomText/CustomText";
 
 import { colors } from "@/src/theme";
+import TeamAvatars from "../TeamAvatars/TeamAvatars";
+import BorderedButton from "../ui/BorderedButton/BorderedButton";
 import { styles } from "./MatchBox.styles";
 
 interface MatchBoxProps {
   match: Match;
+  showApplications?: boolean;
 }
 
-const MatchBox: React.FC<MatchBoxProps> = ({ match }) => {
+const MatchBox: React.FC<MatchBoxProps> = ({
+  match,
+  showApplications = false,
+}) => {
   return (
     <View style={styles.card}>
       <View
@@ -45,19 +51,46 @@ const MatchBox: React.FC<MatchBoxProps> = ({ match }) => {
             <CustomText style={styles.meta}>{match.time}</CustomText>
           </View>
           <View style={styles.row}>
-            <CustomText style={styles.tag}>{match.category}</CustomText>
-            <CustomText style={styles.tag}>{match.duration} min</CustomText>
             <CustomText style={styles.tag}>
               {match.gender.pluralName}
             </CustomText>
+            <CustomText style={styles.tag}>{match.category}</CustomText>
+            <CustomText style={styles.tag}>{match.duration} min</CustomText>
+          </View>
+          <View style={styles.row}>
+            <TeamAvatars
+              players={match.teams.find((t) => t.teamNumber === 1)!.players}
+            />
+            <CustomText style={styles.vs}>vs</CustomText>
+            <TeamAvatars
+              players={match.teams.find((t) => t.teamNumber === 2)!.players}
+            />
           </View>
         </View>
-        <View style={{ alignItems: "flex-end", width: "30%" }}>
+        <View
+          style={{
+            alignItems: "flex-end",
+            width: "30%",
+            justifyContent: "space-between",
+          }}
+        >
           <CustomText.ButtonText
             style={[styles.status, styles[match.status.name]]}
           >
             {match.status.description}
           </CustomText.ButtonText>
+          {showApplications && (
+            <BorderedButton size="xl">
+              <CustomText type="xsmall" style={styles.applicationsButtonText}>
+                Postulaciones
+              </CustomText>
+              <View style={styles.badge}>
+                <CustomText style={styles.badgeText}>
+                  {match.applications.length}
+                </CustomText>
+              </View>
+            </BorderedButton>
+          )}
         </View>
       </View>
     </View>

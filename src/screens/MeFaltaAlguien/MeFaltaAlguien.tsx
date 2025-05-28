@@ -23,10 +23,13 @@ export default function MeFaltaAlguien() {
   const [total, setTotal] = useState(0);
   const [error, setError] = useState<boolean>(false);
 
+  const fakeMatches = Array(pageSize + 1).fill({} as Match);
   const loadMatches = async (nextPage = 1) => {
     try {
       setError(false);
-      setMatches((prev) => [...prev, ...Array(pageSize).fill({} as Match)]);
+      setMatches((prev) =>
+        nextPage === 1 ? fakeMatches : [...prev, ...fakeMatches]
+      );
       const res = await getCreatedMatches<GetCreatedMatchesResponse>(
         nextPage,
         pageSize
@@ -35,7 +38,7 @@ export default function MeFaltaAlguien() {
       const { matches: newMatches, totalMatches } = res.data;
       setMatches((prev) => {
         const realPrev = prev.filter((m) => !!m.id);
-        return [...realPrev, ...newMatches];
+        return nextPage === 1 ? newMatches : [...realPrev, ...newMatches];
       });
       setTotal(totalMatches);
       setPage(nextPage);
@@ -48,16 +51,8 @@ export default function MeFaltaAlguien() {
     loadMatches();
   }, []);
 
-  const errorSection = (
-    <>
-      <ErrorSection
-        message="Error buscando tus partidos"
-        onRetry={loadMatches}
-      />
-    </>
-  );
-
-  //pensar el loader por secciones y si uso skeleton
+  //TODO - si no hay partidos tengo que mostrar otra pantalla
+  // cachear la llamada a la api
   return (
     <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME}>
       <View style={styles.container}>
@@ -66,14 +61,23 @@ export default function MeFaltaAlguien() {
             Tus partidos pendientes:
           </CustomText>
 
-          {error && errorSection}
+          {error && (
+            <ErrorSection
+              message="Error buscando tus partidos"
+              onRetry={loadMatches}
+            />
+          )}
 
           {!error && (
             <FlatList
               data={matches}
               keyExtractor={(m, i) => m.id ?? `skeleton-${i}`}
               renderItem={({ item }) =>
-                item.id ? <MatchBox match={item} /> : <MatchBoxSkeleton />
+                item.id ? (
+                  <MatchBox match={item} showApplications />
+                ) : (
+                  <MatchBoxSkeleton />
+                )
               }
               contentContainerStyle={styles.list}
               ListFooterComponent={
