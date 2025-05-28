@@ -5,8 +5,8 @@ import { View } from "react-native";
 import CustomText from "../ui/CustomText/CustomText";
 
 import { colors } from "@/src/theme";
+import { BorderedButton } from "..";
 import TeamAvatars from "../TeamAvatars/TeamAvatars";
-import BorderedButton from "../ui/BorderedButton/BorderedButton";
 import { styles } from "./MatchBox.styles";
 
 interface MatchBoxProps {
