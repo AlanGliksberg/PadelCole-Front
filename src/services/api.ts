@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import { API_URL } from "../config/env";
 import { USER_TOKEN_SESSION_KEY } from "../constants/auth";
 import { ApiParams, ApiResponse } from "../types";
-import { cache, CACHE_TTL } from "./cache";
+import { CACHE_TTL, cacheGetCall, getCachedCall } from "./cache";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_URL,
@@ -38,7 +38,7 @@ export const get = async <T>(uri: string, apiParams: ApiParams = {}) => {
     : uri;
 
   if (apiParams.withCache) {
-    const cached = cache.get(url);
+    const cached = getCachedCall(uri, url);
     if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
       return cached.data;
     }
@@ -47,7 +47,7 @@ export const get = async <T>(uri: string, apiParams: ApiParams = {}) => {
   apiParams.method = "GET";
   const result = await fetch<T>(url, apiParams);
 
-  cache.set(url, { timestamp: Date.now(), data: result });
+  cacheGetCall(uri, url, result);
 
   return result;
 };

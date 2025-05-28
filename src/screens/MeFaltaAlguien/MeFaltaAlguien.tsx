@@ -52,7 +52,6 @@ export default function MeFaltaAlguien() {
   }, []);
 
   //TODO - si no hay partidos tengo que mostrar otra pantalla
-  // cachear la llamada a la api
   return (
     <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME}>
       <View style={styles.container}>
