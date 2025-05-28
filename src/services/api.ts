@@ -36,9 +36,12 @@ export const get = async <T>(uri: string, apiParams: ApiParams = {}) => {
   const url = apiParams?.queryParams
     ? `${uri}?${new URLSearchParams(apiParams.queryParams).toString()}`
     : uri;
-  const cached = cache.get(url);
-  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
-    return cached.data;
+
+  if (apiParams.withCache) {
+    const cached = cache.get(url);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+      return cached.data;
+    }
   }
 
   apiParams.method = "GET";
