@@ -1,4 +1,5 @@
 import { Gender } from "../gender/Gender";
+import { User } from "../user/User";
 
 export type Player = {
   id: string;
@@ -9,4 +10,5 @@ export type Player = {
   phone: string | null;
   userId: string | null;
   gender: Gender | null;
+  user?: User;
 };
