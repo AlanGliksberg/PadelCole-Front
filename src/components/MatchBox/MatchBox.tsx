@@ -1,12 +1,11 @@
+import { colors } from "@/src/theme";
 import { Match } from "@/src/types";
 import { parseDateToString } from "@/src/utils/common";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { View } from "react-native";
-import CustomText from "../ui/CustomText/CustomText";
-
-import { colors } from "@/src/theme";
-import { BorderedButton } from "..";
 import TeamAvatars from "../TeamAvatars/TeamAvatars";
+import BorderedButton from "../ui/BorderedButton/BorderedButton";
+import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./MatchBox.styles";
 
 interface MatchBoxProps {

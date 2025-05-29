@@ -13,6 +13,7 @@ import {
   MatchBoxSkeleton,
   SimpleButton,
 } from "../../components";
+import EmptyState from "./EmptyState";
 import { styles } from "./MeFaltaAlguien.styles";
 
 const pageSize = 3;
@@ -51,14 +52,15 @@ export default function MeFaltaAlguien() {
     loadMatches();
   }, []);
 
-  //TODO - si no hay partidos tengo que mostrar otra pantalla
   return (
     <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME}>
       <View style={styles.container}>
         <View style={styles.matchesContainer}>
-          <CustomText style={styles.matchesText} bold>
-            Tus partidos pendientes:
-          </CustomText>
+          {matches.length > 0 && (
+            <CustomText style={styles.matchesText} bold>
+              Tus partidos pendientes:
+            </CustomText>
+          )}
 
           {error && (
             <ErrorSection
@@ -88,21 +90,25 @@ export default function MeFaltaAlguien() {
                   />
                 ) : null
               }
+              ListEmptyComponent={<EmptyState />}
             />
           )}
         </View>
-        <View>
-          <CustomText style={styles.createMatchText} bold>
-            Creá tu próximo partido:
-          </CustomText>
-          <FullButton
-            onPress={() => router.push("/home")}
-            size="l"
-            style={styles.createMatchButton}
-          >
-            <CustomText.ButtonText>Crear partido</CustomText.ButtonText>
-          </FullButton>
-        </View>
+
+        {matches.length > 0 && (
+          <View>
+            <CustomText style={styles.createMatchText} bold>
+              Creá tu próximo partido:
+            </CustomText>
+            <FullButton
+              onPress={() => router.push("/home")}
+              size="l"
+              style={styles.createMatchButton}
+            >
+              <CustomText.ButtonText>Crear partido</CustomText.ButtonText>
+            </FullButton>
+          </View>
+        )}
       </View>
     </CustomScreen>
   );

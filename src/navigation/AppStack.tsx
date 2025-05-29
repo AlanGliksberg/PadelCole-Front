@@ -9,8 +9,9 @@ import {
 } from "../constants/pages";
 import { Home, MeFaltaAlguien, Perfil, QuieroJugar } from "../screens";
 import { colors } from "../theme";
+import { AppStackParamList } from "../types";
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<AppStackParamList>();
 
 export function AppStack() {
   return (
@@ -20,7 +21,7 @@ export function AppStack() {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: "gray",
         tabBarLabelStyle: { fontSize: 11 },
-        tabBarStyle: { backgroundColor: "#fff", borderTopColor: "#eee" },
+        tabBarStyle: { backgroundColor: colors.white },
       }}
     >
       <Tab.Screen
