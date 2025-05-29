@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/src/contexts/AuthContext";
 import { LoadingProvider } from "@/src/contexts/LoadingContext";
+import { PlayerModalsProvider } from "@/src/contexts/PlayerModalsContext";
 import RootNavigator from "@/src/navigation/RootNavigator";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -13,9 +14,11 @@ export default function Layout() {
     <SafeAreaProvider>
       <StatusBar style="inverted" />
       <AuthProvider>
-        <LoadingProvider>
-          <RootNavigator />
-        </LoadingProvider>
+        <PlayerModalsProvider>
+          <LoadingProvider>
+            <RootNavigator />
+          </LoadingProvider>
+        </PlayerModalsProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );
