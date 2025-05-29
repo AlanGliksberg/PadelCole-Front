@@ -49,6 +49,11 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           <CustomText style={styles.tag}>{match.duration} min</CustomText>
         </View>
         <View style={styles.row}>
+          <CustomText type="small" bold>
+            Jugadores:
+          </CustomText>
+        </View>
+        <View style={styles.row}>
           <TeamAvatars
             players={match.teams.find((t) => t.teamNumber === 1)!.players}
           />
