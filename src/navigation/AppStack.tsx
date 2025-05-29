@@ -23,6 +23,7 @@ export function AppStack() {
         tabBarInactiveTintColor: "gray",
         tabBarLabelStyle: { fontSize: typography.xsmall },
         tabBarStyle: { backgroundColor: colors.white },
+        popToTopOnBlur: true,
       }}
     >
       <Tab.Screen
