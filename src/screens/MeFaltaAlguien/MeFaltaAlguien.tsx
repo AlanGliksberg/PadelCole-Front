@@ -1,11 +1,9 @@
-import { FALTA_ALGUIEN_PAGE_NAME } from "@/src/constants/pages";
 import { getCreatedMatches } from "@/src/services/match";
 import { GetCreatedMatchesResponse, Match } from "@/src/types";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import {
-  CustomScreen,
   CustomText,
   ErrorSection,
   FullButton,
@@ -53,63 +51,61 @@ export default function MeFaltaAlguien() {
   }, []);
 
   return (
-    <CustomScreen title={FALTA_ALGUIEN_PAGE_NAME}>
-      <View style={styles.container}>
-        <View style={styles.matchesContainer}>
-          {matches.length > 0 && (
-            <CustomText style={styles.matchesText} bold>
-              Tus partidos pendientes:
-            </CustomText>
-          )}
-
-          {error && (
-            <ErrorSection
-              message="Error buscando tus partidos"
-              onRetry={loadMatches}
-            />
-          )}
-
-          {!error && (
-            <FlatList
-              data={matches}
-              keyExtractor={(m, i) => m.id ?? `skeleton-${i}`}
-              renderItem={({ item }) =>
-                item.id ? (
-                  <MatchBox match={item} showApplications />
-                ) : (
-                  <MatchBoxSkeleton />
-                )
-              }
-              contentContainerStyle={styles.list}
-              ListFooterComponent={
-                matches.length < total ? (
-                  <SimpleButton
-                    title="Ver más"
-                    onPress={() => loadMatches(page + 1)}
-                    style={styles.loadMore}
-                  />
-                ) : null
-              }
-              ListEmptyComponent={<EmptyState />}
-            />
-          )}
-        </View>
-
+    <View style={styles.container}>
+      <View style={styles.matchesContainer}>
         {matches.length > 0 && (
-          <View>
-            <CustomText style={styles.createMatchText} bold>
-              Creá tu próximo partido:
-            </CustomText>
-            <FullButton
-              onPress={() => router.push("/home")}
-              size="l"
-              style={styles.createMatchButton}
-            >
-              <CustomText.ButtonText>Crear partido</CustomText.ButtonText>
-            </FullButton>
-          </View>
+          <CustomText style={styles.matchesText} bold>
+            Tus partidos pendientes:
+          </CustomText>
+        )}
+
+        {error && (
+          <ErrorSection
+            message="Error buscando tus partidos"
+            onRetry={loadMatches}
+          />
+        )}
+
+        {!error && (
+          <FlatList
+            data={matches}
+            keyExtractor={(m, i) => m.id ?? `skeleton-${i}`}
+            renderItem={({ item }) =>
+              item.id ? (
+                <MatchBox match={item} showApplications />
+              ) : (
+                <MatchBoxSkeleton />
+              )
+            }
+            contentContainerStyle={styles.list}
+            ListFooterComponent={
+              matches.length < total ? (
+                <SimpleButton
+                  title="Ver más"
+                  onPress={() => loadMatches(page + 1)}
+                  style={styles.loadMore}
+                />
+              ) : null
+            }
+            ListEmptyComponent={<EmptyState />}
+          />
         )}
       </View>
-    </CustomScreen>
+
+      {matches.length > 0 && (
+        <View>
+          <CustomText style={styles.createMatchText} bold>
+            Creá tu próximo partido:
+          </CustomText>
+          <FullButton
+            onPress={() => router.push("/home")}
+            size="l"
+            style={styles.createMatchButton}
+          >
+            <CustomText.ButtonText>Crear partido</CustomText.ButtonText>
+          </FullButton>
+        </View>
+      )}
+    </View>
   );
 }

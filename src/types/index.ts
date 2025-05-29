@@ -5,6 +5,7 @@ export { Gender } from "./gender/Gender";
 export { Match } from "./match/Match";
 export { Status } from "./match/Status";
 export { AppStackParamList } from "./navigation/AppStack";
+export { MeFaltaAlguienStackParamList } from "./navigation/MeFaltaAlguienStack";
 export { Player } from "./player/Player";
 export { Team } from "./player/Team";
 export { User } from "./user/User";
