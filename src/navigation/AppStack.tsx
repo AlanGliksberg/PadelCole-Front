@@ -1,7 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { CustomScreen } from "../components";
 import {
   FALTA_ALGUIEN_PAGE_NAME,
   HOME_PAGE_NAME,
@@ -24,13 +23,6 @@ export function AppStack() {
         tabBarInactiveTintColor: "gray",
         tabBarLabelStyle: { fontSize: typography.xsmall },
         tabBarStyle: { backgroundColor: colors.white },
-      }}
-      screenLayout={(props) => {
-        return (
-          <CustomScreen title={props.options.title || ""}>
-            {props.children}
-          </CustomScreen>
-        );
       }}
     >
       <Tab.Screen
@@ -56,7 +48,7 @@ export function AppStack() {
       />
 
       <Tab.Screen
-        name="MeFaltaAlguien"
+        name="MeFaltaAlguienStack"
         component={MeFaltaAlguienStack}
         options={{
           title: FALTA_ALGUIEN_PAGE_NAME,

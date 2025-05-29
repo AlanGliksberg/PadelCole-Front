@@ -1,6 +1,6 @@
 export type AppStackParamList = {
   Home: undefined;
   QuieroJugar: undefined;
-  MeFaltaAlguien: undefined;
+  MeFaltaAlguienStack: undefined;
   MiPerfil: undefined;
 };
