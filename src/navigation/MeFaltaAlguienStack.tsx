@@ -12,7 +12,10 @@ const Stack = createNativeStackNavigator<MeFaltaAlguienStackParamList>();
 
 const MeFaltaAlguienStack: React.FC = () => (
   <Stack.Navigator
-    screenOptions={{ headerShown: false }}
+    screenOptions={{
+      headerShown: false,
+      animation: "slide_from_right",
+    }}
     screenLayout={(props) => {
       return (
         <CustomScreen
