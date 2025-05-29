@@ -1,6 +1,11 @@
 import { getCreatedMatches } from "@/src/services/match";
-import { GetCreatedMatchesResponse, Match } from "@/src/types";
-import { router } from "expo-router";
+import {
+  GetCreatedMatchesResponse,
+  Match,
+  MeFaltaAlguienStackParamList,
+} from "@/src/types";
+import { NavigationProp } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import {
@@ -21,6 +26,8 @@ export default function MeFaltaAlguien() {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState<boolean>(false);
+  const navigation =
+    useNavigation<NavigationProp<MeFaltaAlguienStackParamList>>();
 
   const fakeMatches = Array(pageSize + 1).fill({} as Match);
   const loadMatches = async (nextPage = 1) => {
@@ -98,7 +105,7 @@ export default function MeFaltaAlguien() {
             Creá tu próximo partido:
           </CustomText>
           <FullButton
-            onPress={() => router.push("/home")}
+            onPress={() => navigation.navigate("CrearPartido")}
             size="l"
             style={styles.createMatchButton}
           >
