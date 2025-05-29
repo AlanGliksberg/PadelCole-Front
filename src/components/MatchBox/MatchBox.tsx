@@ -19,78 +19,63 @@ const MatchBox: React.FC<MatchBoxProps> = ({
 }) => {
   return (
     <View style={styles.card}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <View style={{ width: "70%", gap: 2 }}>
-          <CustomText style={styles.location}>{`${match.location}`}</CustomText>
-          {match.description && (
-            <CustomText style={styles.description}>
-              {match.description}
-            </CustomText>
-          )}
-          <View style={{ flexDirection: "row", gap: 3 }}>
-            <MaterialCommunityIcons
-              name="calendar"
-              size={18}
-              color={colors.description}
-            />
-            <CustomText style={styles.meta}>
-              {parseDateToString(match.date)}
-            </CustomText>
-            <CustomText style={styles.meta}>-</CustomText>
-            <MaterialIcons
-              name="access-time"
-              size={18}
-              color={colors.description}
-            />
-            <CustomText style={styles.meta}>{match.time}</CustomText>
-          </View>
-          <View style={styles.row}>
-            <CustomText style={styles.tag}>
-              {match.gender.pluralName}
-            </CustomText>
-            <CustomText style={styles.tag}>{match.category}</CustomText>
-            <CustomText style={styles.tag}>{match.duration} min</CustomText>
-          </View>
-          <View style={styles.row}>
-            <TeamAvatars
-              players={match.teams.find((t) => t.teamNumber === 1)!.players}
-            />
-            <CustomText style={styles.vs}>vs</CustomText>
-            <TeamAvatars
-              players={match.teams.find((t) => t.teamNumber === 2)!.players}
-            />
-          </View>
+      <View style={styles.column1}>
+        <CustomText style={styles.location}>{`${match.location}`}</CustomText>
+        {match.description && (
+          <CustomText style={styles.description}>
+            {match.description}
+          </CustomText>
+        )}
+        <View style={styles.dateContainer}>
+          <MaterialCommunityIcons
+            name="calendar"
+            size={18}
+            color={colors.description}
+          />
+          <CustomText style={styles.meta}>
+            {parseDateToString(match.date)}
+          </CustomText>
+          <CustomText style={styles.meta}>-</CustomText>
+          <MaterialIcons
+            name="access-time"
+            size={18}
+            color={colors.description}
+          />
+          <CustomText style={styles.meta}>{match.time}</CustomText>
         </View>
-        <View
-          style={{
-            alignItems: "flex-end",
-            width: "30%",
-            justifyContent: "space-between",
-          }}
+        <View style={styles.row}>
+          <CustomText style={styles.tag}>{match.gender.pluralName}</CustomText>
+          <CustomText style={styles.tag}>{match.category}</CustomText>
+          <CustomText style={styles.tag}>{match.duration} min</CustomText>
+        </View>
+        <View style={styles.row}>
+          <TeamAvatars
+            players={match.teams.find((t) => t.teamNumber === 1)!.players}
+          />
+          <CustomText style={styles.vs}>vs</CustomText>
+          <TeamAvatars
+            players={match.teams.find((t) => t.teamNumber === 2)!.players}
+          />
+        </View>
+      </View>
+      <View style={styles.column2}>
+        <CustomText.ButtonText
+          style={[styles.status, styles[match.status.name]]}
         >
-          <CustomText.ButtonText
-            style={[styles.status, styles[match.status.name]]}
-          >
-            {match.status.description}
-          </CustomText.ButtonText>
-          {showApplications && (
-            <BorderedButton size="xl">
-              <CustomText type="xsmall" style={styles.applicationsButtonText}>
-                Postulaciones
+          {match.status.description}
+        </CustomText.ButtonText>
+        {showApplications && (
+          <BorderedButton size="xl">
+            <CustomText type="xsmall" style={styles.applicationsButtonText}>
+              Postulaciones
+            </CustomText>
+            <View style={styles.badge}>
+              <CustomText style={styles.badgeText}>
+                {match.applications.length}
               </CustomText>
-              <View style={styles.badge}>
-                <CustomText style={styles.badgeText}>
-                  {match.applications.length}
-                </CustomText>
-              </View>
-            </BorderedButton>
-          )}
-        </View>
+            </View>
+          </BorderedButton>
+        )}
       </View>
     </View>
   );

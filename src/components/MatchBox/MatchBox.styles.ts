@@ -13,6 +13,8 @@ export const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
     display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   status: {
     backgroundColor: colors.accent,
@@ -86,5 +88,18 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontSize: typography.small,
     fontWeight: "600",
+  },
+  column1: {
+    width: "70%",
+    gap: 2,
+  },
+  column2: {
+    alignItems: "flex-end",
+    width: "30%",
+    justifyContent: "space-between",
+  },
+  dateContainer: {
+    flexDirection: "row",
+    gap: 3,
   },
 });
