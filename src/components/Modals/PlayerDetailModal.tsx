@@ -28,9 +28,9 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({
           <View style={styles.header}>
             <View style={styles.nameContainer}>
               <PlayerAvatar player={player!} size="m" />
-              <CustomText
-                style={styles.name}
-              >{`${player?.firstName} ${player?.lastName}`}</CustomText>
+              <CustomText style={styles.name}>
+                {`${player?.firstName} ${player?.lastName}`}
+              </CustomText>
             </View>
             <View>
               <TouchableOpacity onPress={closePlayerDetail}>
