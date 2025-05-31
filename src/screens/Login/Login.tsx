@@ -42,6 +42,8 @@ export default function Login() {
     /* … */
   };
 
+  // TODO - cuando entras a un input no podes salir del teclado.
+  // cuando clickeas en cualquier lado de la pantalla se deberia cerrar el teclado
   return (
     <View style={styles.container}>
       <View style={styles.card}>

@@ -22,6 +22,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    console.log("API error:", error?.response?.data)
     if (!error?.response?.data) throw error;
     return error.response.data;
   }

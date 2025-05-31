@@ -29,7 +29,7 @@ const EmptyState: React.FC = () => {
       </CustomText>
       <FullButton
         style={styles.emptyPrimaryButton}
-        size="m"
+        size="l"
         onPress={() => navigation.navigate("QuieroJugar")}
       >
         <CustomText.ButtonText>Creá tu partido</CustomText.ButtonText>
