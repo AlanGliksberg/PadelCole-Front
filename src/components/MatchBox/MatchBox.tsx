@@ -45,7 +45,9 @@ const MatchBox: React.FC<MatchBoxProps> = ({
         </View>
         <View style={styles.row}>
           <CustomText style={styles.tag}>{match.gender.pluralName}</CustomText>
-          <CustomText style={styles.tag}>{match.category}</CustomText>
+          <CustomText style={styles.tag}>
+            {match.category.description}
+          </CustomText>
           <CustomText style={styles.tag}>{match.duration} min</CustomText>
         </View>
         <View style={styles.row}>

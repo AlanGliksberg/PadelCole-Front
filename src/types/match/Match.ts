@@ -1,5 +1,6 @@
 import { Application } from "../application/Application";
 import { Gender } from "../gender/Gender";
+import { Category } from "../player/Category";
 import { Team } from "../player/Team";
 import { Status } from "./Status";
 
@@ -8,7 +9,7 @@ export type Match = {
   dateTime: string;
   location: string;
   description: string | null;
-  category: string;
+  category: Category;
   pointsDeviation: number | null;
   status: Status;
   createdAt: Date;
