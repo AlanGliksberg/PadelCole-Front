@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors, spacing } from "../../theme";
+import { colors, spacing, typography } from "../../theme";
 
 export const styles = StyleSheet.create({
   backdrop: {
@@ -14,24 +14,41 @@ export const styles = StyleSheet.create({
     maxHeight: "80%",
     backgroundColor: colors.background,
     borderRadius: spacing.md,
-    padding: spacing.md,
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
+    overflow: "hidden",
   },
   header: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignSelf: "flex-start",
+    alignSelf: "center",
+    backgroundColor: colors.modalHeaderBackground,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.md,
   },
   nameContainer: {
     flexDirection: "row",
-    gap: 10,
     alignItems: "center",
     maxWidth: "90%",
     flexShrink: 1,
   },
   name: {
+    color: colors.white,
+    fontSize: typography.h3,
+    fontWeight: "700",
+    marginLeft: spacing.sm,
     flexShrink: 1,
+  },
+  row: {
+    width: "100%",
+    flexDirection: "row",
+    flexShrink: 1,
+    marginTop: spacing.md,
+    paddingHorizontal: spacing.md,
+  },
+  rowItem: {
+    flexDirection: "row",
+    flex: 2,
   },
 });

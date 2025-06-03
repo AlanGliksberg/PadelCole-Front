@@ -8,5 +8,6 @@ export { AppStackParamList } from "./navigation/AppStack";
 export { MeFaltaAlguienStackParamList } from "./navigation/MeFaltaAlguienStack";
 export { Category, CATEGORY } from "./player/Category";
 export { Player } from "./player/Player";
+export { Position } from "./player/Position";
 export { Team } from "./player/Team";
 export { User } from "./user/User";

@@ -3,7 +3,7 @@ import React from "react";
 import { Text, TextProps, TextStyle } from "react-native";
 import { styles } from "./CustomText.styles";
 
-type TextType = "h1" | "h2" | "h3" | "body" | "small" | "xsmall";
+type TextType = "h1" | "h2" | "h3" | "medium" | "body" | "small" | "xsmall";
 
 export interface CustomTextProps extends TextProps {
   style?: TextStyle | TextStyle[];

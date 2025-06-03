@@ -4,6 +4,7 @@ export const colors = {
   background: "#F4F6FB",
   surface: "#FFFFFF",
   white: "#FFFFFF",
+  modalHeaderBackground: "#455A64",
   text: "#333333",
   placeholder: "#999999",
   google: "#DB4437",

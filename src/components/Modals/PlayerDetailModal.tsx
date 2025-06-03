@@ -34,8 +34,44 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({
             </View>
             <View>
               <TouchableOpacity onPress={closePlayerDetail}>
-                <MaterialIcons name="close" size={24} color={colors.text} />
+                <MaterialIcons name="close" size={24} color={colors.white} />
               </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.row}>
+            <View style={styles.rowItem}>
+              <CustomText type="medium" bold>
+                Género:{" "}
+              </CustomText>
+              <CustomText type="medium">
+                {player?.gender?.name || "No informado"}
+              </CustomText>
+            </View>
+            <View style={styles.rowItem}>
+              <CustomText type="medium" bold>
+                Categoría:{" "}
+              </CustomText>
+              <CustomText type="medium">
+                {player?.category?.description || "No informado"}
+              </CustomText>
+            </View>
+          </View>
+          <View style={styles.row}>
+            <View style={styles.rowItem}>
+              <CustomText type="medium" bold>
+                Posición:{" "}
+              </CustomText>
+              <CustomText type="medium">
+                {player?.position?.description || "No informado"}
+              </CustomText>
+            </View>
+            <View style={styles.rowItem}>
+              <CustomText type="medium" bold>
+                Teléfono:{" "}
+              </CustomText>
+              <CustomText type="medium">
+                {player?.phone || "No informado"}
+              </CustomText>
             </View>
           </View>
         </TouchableOpacity>
