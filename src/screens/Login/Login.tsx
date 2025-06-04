@@ -33,13 +33,13 @@ export default function Login() {
     hideLoading();
   };
   const handleGoogle = () => {
-    /* … */
+    // TODO
   };
   const handleRegister = () => {
-    // router.push('register');
+    // TODO
   };
   const handleForgot = () => {
-    /* … */
+    // TODO
   };
 
   // TODO - cuando entras a un input no podes salir del teclado.
@@ -77,24 +77,26 @@ export default function Login() {
           </TouchableOpacity>
         </View>
 
-        <FullButton onPress={handleLogin} disabled={loading}>
-          <CustomText.ButtonText>Iniciar sesión</CustomText.ButtonText>
-        </FullButton>
+        <View style={styles.buttonContainer}>
+          <FullButton onPress={handleLogin} disabled={loading}>
+            <CustomText.ButtonText>Iniciar sesión</CustomText.ButtonText>
+          </FullButton>
 
-        <FullButton
-          style={styles.googleButton}
-          onPress={handleGoogle}
-          disabled={loading}
-        >
-          <AntDesign name="google" size={20} color="#fff" />
-          <CustomText.ButtonText>Continuar con Google</CustomText.ButtonText>
-        </FullButton>
+          <FullButton
+            style={styles.googleButton}
+            onPress={handleGoogle}
+            disabled={loading}
+          >
+            <AntDesign name="google" size={20} color="#fff" />
+            <CustomText.ButtonText>Continuar con Google</CustomText.ButtonText>
+          </FullButton>
 
-        <SimpleButton title="Registrarse" onPress={handleRegister} />
-        <SimpleButton
-          title="¿Olvidaste tu contraseña?"
-          onPress={handleForgot}
-        />
+          <SimpleButton title="Registrarse" onPress={handleRegister} />
+          <SimpleButton
+            title="¿Olvidaste tu contraseña?"
+            onPress={handleForgot}
+          />
+        </View>
       </View>
     </View>
   );

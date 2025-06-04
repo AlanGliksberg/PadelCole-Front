@@ -5,6 +5,11 @@ export { LoginResponse } from "./auth/LoginResponse";
 export { Gender } from "./gender/Gender";
 export { Match } from "./match/Match";
 export { Status } from "./match/Status";
+export {
+  ModalContextData,
+  ModalParams,
+  ModalProps,
+} from "./modals/CustomModal";
 export { AppStackParamList } from "./navigation/AppStack";
 export { MeFaltaAlguienStackParamList } from "./navigation/MeFaltaAlguienStack";
 export { Category, CATEGORY } from "./player/Category";

@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    console.log("API error:", error?.response?.data)
+    console.log("API error:", error?.response?.data);
     if (!error?.response?.data) throw error;
     return error.response.data;
   }
@@ -48,7 +48,7 @@ export const get = async <T>(uri: string, apiParams: ApiParams = {}) => {
   apiParams.method = "GET";
   const result = await fetch<T>(url, apiParams);
 
-  cacheGetCall(uri, url, result);
+  if (!result.error) cacheGetCall(uri, url, result);
 
   return result;
 };

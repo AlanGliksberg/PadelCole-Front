@@ -22,16 +22,25 @@ const widthMap: Record<ButtonSize, DimensionValue> = {
   xl: "100%",
 };
 
+const heightMap: Record<ButtonSize, DimensionValue> = {
+  xs: 25,
+  s: 30,
+  m: 35,
+  l: 40,
+  xl: 45,
+};
+
+// TODO - refactor. poner el texto custom dentro del boton
 const FullButton: React.FC<FullButtonProps> = ({
   style,
   size = "xl",
   children,
   ...props
 }) => {
-  const widthStyle = { width: widthMap[size] };
+  const sizeStyle = { width: widthMap[size], height: heightMap[size] };
 
   return (
-    <TouchableOpacity {...props} style={[styles.button, widthStyle, style]}>
+    <TouchableOpacity {...props} style={[styles.button, sizeStyle, style]}>
       {children}
     </TouchableOpacity>
   );

@@ -38,4 +38,8 @@ export const styles = StyleSheet.create({
     marginLeft: spacing.sm,
     marginBottom: spacing.md,
   },
+  buttonContainer: {
+    display: "flex",
+    gap: spacing.sm,
+  },
 });

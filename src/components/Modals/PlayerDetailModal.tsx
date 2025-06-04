@@ -7,12 +7,12 @@ import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./PlayerDetailModal.styles";
 
-interface PlayerDetailModalProps {
+interface PlayerDetailsModalProps {
   player: Player | null;
   closePlayerDetail: () => void;
 }
 
-const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({
+const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
   player,
   closePlayerDetail,
 }) => {
@@ -80,4 +80,4 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({
   );
 };
 
-export default PlayerDetailModal;
+export default PlayerDetailsModal;

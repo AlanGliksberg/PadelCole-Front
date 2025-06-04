@@ -1,4 +1,5 @@
 import { AuthContext } from "@/src/contexts/AuthContext";
+import { ModalContext } from "@/src/contexts/ModalContext";
 import { colors, typography } from "@/src/theme";
 import { Match } from "@/src/types";
 import { parseDateToString } from "@/src/utils/common";
@@ -20,7 +21,15 @@ const MatchBox: React.FC<MatchBoxProps> = ({
   showCreatorDetails = false,
 }) => {
   const { user } = useContext(AuthContext);
+  const { openModal } = useContext(ModalContext);
   const isCreator = user?.playerId === match.creatorPlayerId;
+
+  const deleteMatch = () => {
+    openModal({
+      title: "Eliminar partido",
+      message: `¿Estás seguro que querés eliminar el partido ${match.location}?`,
+    });
+  };
 
   return (
     <View style={styles.card}>
@@ -41,12 +50,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
                   color={colors.primary}
                 />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  // onDelete && onDelete(match)
-                }}
-                style={styles.iconButton}
-              >
+              <TouchableOpacity onPress={deleteMatch} style={styles.iconButton}>
                 <MaterialIcons
                   name="delete"
                   size={typography.h4}
