@@ -16,6 +16,14 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  header: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  iconButton: {
+    padding: spacing.xs,
+    marginLeft: spacing.sm,
+  },
   status: {
     backgroundColor: colors.accent,
     color: colors.text,
@@ -40,6 +48,7 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     color: colors.text,
     marginBottom: spacing.xs,
+    marginRight: 5,
   },
   description: {
     fontSize: typography.small,

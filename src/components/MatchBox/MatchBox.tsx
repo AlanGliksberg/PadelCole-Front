@@ -1,8 +1,10 @@
-import { colors } from "@/src/theme";
+import { AuthContext } from "@/src/contexts/AuthContext";
+import { colors, typography } from "@/src/theme";
 import { Match } from "@/src/types";
 import { parseDateToString } from "@/src/utils/common";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { View } from "react-native";
+import { useContext } from "react";
+import { TouchableOpacity, View } from "react-native";
 import TeamAvatars from "../TeamAvatars/TeamAvatars";
 import BorderedButton from "../ui/BorderedButton/BorderedButton";
 import CustomText from "../ui/CustomText/CustomText";
@@ -10,17 +12,50 @@ import { styles } from "./MatchBox.styles";
 
 interface MatchBoxProps {
   match: Match;
-  showApplications?: boolean;
+  showCreatorDetails?: boolean;
 }
 
 const MatchBox: React.FC<MatchBoxProps> = ({
   match,
-  showApplications = false,
+  showCreatorDetails = false,
 }) => {
+  const { user } = useContext(AuthContext);
+  const isCreator = user?.playerId === match.creatorPlayerId;
+
   return (
     <View style={styles.card}>
       <View style={styles.column1}>
-        <CustomText style={styles.location}>{`${match.location}`}</CustomText>
+        <View style={styles.header}>
+          <CustomText style={styles.location}>{`${match.location}`}</CustomText>
+          {isCreator && showCreatorDetails && (
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  // onEdit && onEdit(match)
+                }}
+                style={styles.iconButton}
+              >
+                <MaterialIcons
+                  name="edit"
+                  size={typography.h4}
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  // onDelete && onDelete(match)
+                }}
+                style={styles.iconButton}
+              >
+                <MaterialIcons
+                  name="delete"
+                  size={typography.h4}
+                  color={colors.error}
+                />
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
         {match.description && (
           <CustomText style={styles.description}>
             {match.description}
@@ -71,7 +106,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
         >
           {match.status.description}
         </CustomText.ButtonText>
-        {showApplications && (
+        {isCreator && showCreatorDetails && (
           <BorderedButton size="xl">
             <CustomText type="xsmall" style={styles.applicationsButtonText}>
               Postulaciones

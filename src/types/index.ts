@@ -1,5 +1,6 @@
 export { ApiParams, ApiResponse } from "./api/Api";
 export { GetCreatedMatchesResponse } from "./api/MatchResponse";
+export { JWTPayload } from "./auth/JWTPayload";
 export { LoginResponse } from "./auth/LoginResponse";
 export { Gender } from "./gender/Gender";
 export { Match } from "./match/Match";

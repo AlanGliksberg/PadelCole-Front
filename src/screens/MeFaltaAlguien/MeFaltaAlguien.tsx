@@ -79,7 +79,7 @@ export default function MeFaltaAlguien() {
             keyExtractor={(m, i) => m.id?.toString() ?? `skeleton-${i}`}
             renderItem={({ item }) =>
               item.id ? (
-                <MatchBox match={item} showApplications />
+                <MatchBox match={item} showCreatorDetails />
               ) : (
                 <MatchBoxSkeleton />
               )
