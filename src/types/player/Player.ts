@@ -4,15 +4,15 @@ import { Category } from "./Category";
 import { Position } from "./Position";
 
 export type Player = {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
-  categoryId: string;
-  genderId: string;
+  categoryId: number;
+  genderId: number;
   rankingPoints: number | null;
   phone: string | null;
-  userId: string | null;
-  positionId: string;
+  userId: number | null;
+  positionId: number;
 
   position: Position | null;
   category: Category | null;

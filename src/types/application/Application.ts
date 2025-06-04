@@ -1,6 +1,6 @@
 export type Application = {
-  id: string;
-  matchId: string;
+  id: number;
+  matchId: number;
   playerId: string;
   teamNumber: number;
   message: string;

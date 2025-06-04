@@ -1,5 +1,5 @@
 export type Gender = {
-  id: string;
+  id: number;
   code: string;
   name: string;
   pluralName: string;

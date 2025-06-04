@@ -29,9 +29,9 @@ export enum CATEGORY {
 }
 
 export type Category = {
-  id: string;
+  id: number;
   code: CATEGORY;
   description: string;
-  genderId: string;
+  genderId: number;
   initialPoints: number;
 };

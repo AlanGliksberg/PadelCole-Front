@@ -76,7 +76,7 @@ export default function MeFaltaAlguien() {
         {!error && (
           <FlatList
             data={matches}
-            keyExtractor={(m, i) => m.id ?? `skeleton-${i}`}
+            keyExtractor={(m, i) => m.id.toString() ?? `skeleton-${i}`}
             renderItem={({ item }) =>
               item.id ? (
                 <MatchBox match={item} showApplications />
