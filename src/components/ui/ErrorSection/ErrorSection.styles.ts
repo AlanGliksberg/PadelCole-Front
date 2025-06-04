@@ -19,6 +19,6 @@ export const styles = StyleSheet.create({
     marginTop: 50,
   },
   buttonText: {
-    fontSize: typography.h3,
+    fontSize: typography.h4,
   },
 });

@@ -8,9 +8,15 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: spacing.xs,
   },
+  avatarInverse: {
+    backgroundColor: colors.white,
+  },
   avatarText: {
     color: colors.white,
     fontWeight: "600",
+  },
+  avatarTextInverse: {
+    color: colors.primary,
   },
   size_s: {
     width: 32,

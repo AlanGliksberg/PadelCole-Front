@@ -3,7 +3,15 @@ import React from "react";
 import { Text, TextProps, TextStyle } from "react-native";
 import { styles } from "./CustomText.styles";
 
-type TextType = "h1" | "h2" | "h3" | "medium" | "body" | "small" | "xsmall";
+type TextType =
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "medium"
+  | "body"
+  | "small"
+  | "xsmall";
 
 export interface CustomTextProps extends TextProps {
   style?: TextStyle | TextStyle[];
@@ -20,7 +28,7 @@ const CustomText: CustomTextComponent = ({
   children,
   style,
   bold,
-  type = "h3",
+  type = "h4",
   ...props
 }) => {
   return (

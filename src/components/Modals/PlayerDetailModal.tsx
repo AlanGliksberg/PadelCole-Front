@@ -27,14 +27,14 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({
         <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
           <View style={styles.header}>
             <View style={styles.nameContainer}>
-              <PlayerAvatar player={player!} size="m" />
+              <PlayerAvatar player={player!} size="m" inverse />
               <CustomText style={styles.name}>
                 {`${player?.firstName} ${player?.lastName}`}
               </CustomText>
             </View>
             <View>
               <TouchableOpacity onPress={closePlayerDetail}>
-                <MaterialIcons name="close" size={24} color={colors.white} />
+                <MaterialIcons name="close" size={28} color={colors.white} />
               </TouchableOpacity>
             </View>
           </View>

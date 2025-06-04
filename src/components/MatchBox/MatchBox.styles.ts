@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.completedStatus,
   },
   location: {
-    fontSize: typography.h3,
+    fontSize: typography.h4,
     fontWeight: "700",
     color: colors.text,
     marginBottom: spacing.xs,

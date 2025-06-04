@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     textAlign: "left",
     color: "#fff",
-    fontSize: typography.h3,
+    fontSize: typography.h4,
     fontWeight: "600",
   },
   content: {
