@@ -31,6 +31,7 @@ const heightMap: Record<ButtonSize, DimensionValue> = {
 };
 
 // TODO - refactor. poner el texto custom dentro del boton
+// y no poner en mayuscula por default
 const FullButton: React.FC<FullButtonProps> = ({
   style,
   size = "xl",
