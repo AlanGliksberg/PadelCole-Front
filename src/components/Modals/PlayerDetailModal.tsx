@@ -49,20 +49,20 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({
             </View>
             <View style={styles.rowItem}>
               <CustomText type="medium" bold>
-                Categoría:{" "}
+                Posición:{" "}
               </CustomText>
               <CustomText type="medium">
-                {player?.category?.description || "No informado"}
+                {player?.position?.description || "No informado"}
               </CustomText>
             </View>
           </View>
           <View style={styles.row}>
             <View style={styles.rowItem}>
               <CustomText type="medium" bold>
-                Posición:{" "}
+                Categoría:{" "}
               </CustomText>
               <CustomText type="medium">
-                {player?.position?.description || "No informado"}
+                {player?.category?.description || "No informado"}
               </CustomText>
             </View>
             <View style={styles.rowItem}>
