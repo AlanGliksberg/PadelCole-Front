@@ -62,6 +62,5 @@ export const styles = StyleSheet.create({
   },
   emptySecondaryLink: {
     color: colors.primary,
-    fontSize: typography.small,
   },
 });

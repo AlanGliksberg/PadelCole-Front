@@ -27,16 +27,21 @@ const EmptyState: React.FC = () => {
       <CustomText style={styles.emptyDescription}>
         Te conseguimos a los jugadores para que solo te preocupes por disfrutar.
       </CustomText>
+      {/* TODO - funcionalidad de crea partido */}
       <FullButton
         style={styles.emptyPrimaryButton}
         size="l"
         onPress={() => navigation.navigate("QuieroJugar")}
       >
-        <CustomText.ButtonText>Creá tu partido</CustomText.ButtonText>
+        <CustomText.ButtonText uppercase>Creá tu partido</CustomText.ButtonText>
       </FullButton>
       <TouchableOpacity onPress={() => navigation.navigate("QuieroJugar")}>
-        <CustomText.ButtonText style={styles.emptySecondaryLink}>
-          Buscá partido
+        <CustomText.ButtonText
+          type="small"
+          uppercase
+          style={styles.emptySecondaryLink}
+        >
+          Buscá partidos
         </CustomText.ButtonText>
       </TouchableOpacity>
     </View>

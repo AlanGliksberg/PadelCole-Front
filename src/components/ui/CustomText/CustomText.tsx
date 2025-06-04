@@ -17,6 +17,7 @@ export interface CustomTextProps extends TextProps {
   style?: TextStyle | TextStyle[];
   bold?: boolean;
   type?: TextType;
+  uppercase?: boolean;
 }
 
 export interface CustomTextComponent extends React.FC<CustomTextProps> {
@@ -61,6 +62,7 @@ const ButtonText: React.FC<CustomTextProps> = ({
   style,
   bold,
   type = "small",
+  uppercase = false,
   ...props
 }) => {
   return (
@@ -70,6 +72,7 @@ const ButtonText: React.FC<CustomTextProps> = ({
         styles.buttonText,
         bold && styles.bold,
         { fontSize: typography[type] },
+        uppercase && { textTransform: "uppercase" },
         style,
       ]}
     >

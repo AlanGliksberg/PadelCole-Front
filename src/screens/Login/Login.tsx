@@ -79,7 +79,9 @@ export default function Login() {
 
         <View style={styles.buttonContainer}>
           <FullButton onPress={handleLogin} disabled={loading}>
-            <CustomText.ButtonText>Iniciar sesión</CustomText.ButtonText>
+            <CustomText.ButtonText uppercase>
+              Iniciar sesión
+            </CustomText.ButtonText>
           </FullButton>
 
           <FullButton
@@ -88,7 +90,9 @@ export default function Login() {
             disabled={loading}
           >
             <AntDesign name="google" size={20} color="#fff" />
-            <CustomText.ButtonText>Continuar con Google</CustomText.ButtonText>
+            <CustomText.ButtonText uppercase>
+              Continuar con Google
+            </CustomText.ButtonText>
           </FullButton>
 
           <SimpleButton title="Registrarse" onPress={handleRegister} />

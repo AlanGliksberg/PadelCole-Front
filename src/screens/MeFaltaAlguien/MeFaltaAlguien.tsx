@@ -109,7 +109,9 @@ export default function MeFaltaAlguien() {
             size="l"
             style={styles.createMatchButton}
           >
-            <CustomText.ButtonText>Crear partido</CustomText.ButtonText>
+            <CustomText.ButtonText uppercase type="small">
+              Crear partido
+            </CustomText.ButtonText>
           </FullButton>
         </View>
       )}
