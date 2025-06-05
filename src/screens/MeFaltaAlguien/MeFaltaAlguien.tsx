@@ -30,7 +30,7 @@ export default function MeFaltaAlguien() {
     useNavigation<NavigationProp<MeFaltaAlguienStackParamList>>();
 
   const fakeMatches = Array(pageSize + 1).fill({} as Match);
-  const loadMatches = async (nextPage = 1) => {
+  const loadMatches = async (nextPage = 1, withCache = true) => {
     try {
       setError(false);
       setMatches((prev) =>
@@ -38,7 +38,8 @@ export default function MeFaltaAlguien() {
       );
       const res = await getCreatedMatches<GetCreatedMatchesResponse>(
         nextPage,
-        pageSize
+        pageSize,
+        withCache
       );
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
       const { matches: newMatches, totalMatches } = res.data;
@@ -79,7 +80,11 @@ export default function MeFaltaAlguien() {
             keyExtractor={(m, i) => m.id?.toString() ?? `skeleton-${i}`}
             renderItem={({ item }) =>
               item.id ? (
-                <MatchBox match={item} showCreatorDetails />
+                <MatchBox
+                  match={item}
+                  showCreatorDetails
+                  refreshData={() => loadMatches(1, false)}
+                />
               ) : (
                 <MatchBoxSkeleton />
               )

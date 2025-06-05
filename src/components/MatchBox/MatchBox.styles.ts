@@ -20,6 +20,10 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
+  iconContainer: {
+    display: "flex",
+    flexDirection: "row",
+  },
   iconButton: {
     padding: spacing.xs,
     marginLeft: spacing.sm,

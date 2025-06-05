@@ -1,5 +1,6 @@
 import { AuthContext } from "@/src/contexts/AuthContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
+import { deleteMatchApi } from "@/src/services/match";
 import { colors, typography } from "@/src/theme";
 import { Match } from "@/src/types";
 import { parseDateToString } from "@/src/utils/common";
@@ -14,11 +15,13 @@ import { styles } from "./MatchBox.styles";
 interface MatchBoxProps {
   match: Match;
   showCreatorDetails?: boolean;
+  refreshData?: () => void;
 }
 
 const MatchBox: React.FC<MatchBoxProps> = ({
   match,
   showCreatorDetails = false,
+  refreshData,
 }) => {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
@@ -28,6 +31,11 @@ const MatchBox: React.FC<MatchBoxProps> = ({
     openModal({
       title: "Eliminar partido",
       message: `¿Estás seguro que querés eliminar el partido ${match.location}?`,
+      primaryLabel: "Sí, eliminar",
+      primaryAction: async () => {
+        await deleteMatchApi(match.id);
+        refreshData && refreshData();
+      },
     });
   };
 
@@ -35,30 +43,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
     <View style={styles.card}>
       <View style={styles.column1}>
         <View style={styles.header}>
-          <CustomText style={styles.location}>{`${match.location}`}</CustomText>
-          {isCreator && showCreatorDetails && (
-            <>
-              <TouchableOpacity
-                onPress={() => {
-                  // onEdit && onEdit(match)
-                }}
-                style={styles.iconButton}
-              >
-                <MaterialIcons
-                  name="edit"
-                  size={typography.h4}
-                  color={colors.primary}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={deleteMatch} style={styles.iconButton}>
-                <MaterialIcons
-                  name="delete"
-                  size={typography.h4}
-                  color={colors.error}
-                />
-              </TouchableOpacity>
-            </>
-          )}
+          <CustomText style={styles.location}>{match.location}</CustomText>
         </View>
         {match.description && (
           <CustomText style={styles.description}>
@@ -105,11 +90,36 @@ const MatchBox: React.FC<MatchBoxProps> = ({
         </View>
       </View>
       <View style={styles.column2}>
-        <CustomText.ButtonText
-          style={[styles.status, styles[match.status.name]]}
-        >
-          {match.status.description}
-        </CustomText.ButtonText>
+        <View>
+          <CustomText.ButtonText
+            style={[styles.status, styles[match.status.name]]}
+          >
+            {match.status.description}
+          </CustomText.ButtonText>
+          {isCreator && showCreatorDetails && (
+            <View style={styles.iconContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  // onEdit && onEdit(match)
+                }}
+                style={styles.iconButton}
+              >
+                <MaterialIcons
+                  name="edit"
+                  size={typography.h4}
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={deleteMatch} style={styles.iconButton}>
+                <MaterialIcons
+                  name="delete"
+                  size={typography.h4}
+                  color={colors.error}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
         {isCreator && showCreatorDetails && (
           <BorderedButton size="xl">
             <CustomText type="xsmall" style={styles.applicationsButtonText}>

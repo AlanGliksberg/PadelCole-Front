@@ -53,6 +53,11 @@ export const get = async <T>(uri: string, apiParams: ApiParams = {}) => {
   return result;
 };
 
+export const deleteApi = async <T>(uri: string, apiParams: ApiParams = {}) => {
+  apiParams.method = "DELETE";
+  return await fetch<T>(uri, apiParams);
+};
+
 const fetch = async <T>(
   uri: string,
   { method, body, customHeaders = {} }: ApiParams
@@ -67,6 +72,10 @@ const fetch = async <T>(
         });
       case "GET":
         return await axiosInstance.get<never, ApiResponse<T>>(uri, {
+          headers,
+        });
+      case "DELETE":
+        return await axiosInstance.delete<never, ApiResponse<T>>(uri, {
           headers,
         });
     }
