@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
   iconContainer: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "flex-end"
   },
   iconButton: {
     padding: spacing.xs,
