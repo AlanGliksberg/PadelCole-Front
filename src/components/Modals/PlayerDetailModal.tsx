@@ -43,7 +43,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
               <CustomText type="medium" bold>
                 Género:{" "}
               </CustomText>
-              <CustomText type="medium">
+              <CustomText type="small">
                 {player?.gender?.name || "No informado"}
               </CustomText>
             </View>
@@ -51,7 +51,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
               <CustomText type="medium" bold>
                 Posición:{" "}
               </CustomText>
-              <CustomText type="medium">
+              <CustomText type="small">
                 {player?.position?.description || "No informado"}
               </CustomText>
             </View>
@@ -61,7 +61,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
               <CustomText type="medium" bold>
                 Categoría:{" "}
               </CustomText>
-              <CustomText type="medium">
+              <CustomText type="small">
                 {player?.category?.description || "No informado"}
               </CustomText>
             </View>
@@ -69,7 +69,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
               <CustomText type="medium" bold>
                 Teléfono:{" "}
               </CustomText>
-              <CustomText type="medium">
+              <CustomText type="small">
                 {player?.phone || "No informado"}
               </CustomText>
             </View>

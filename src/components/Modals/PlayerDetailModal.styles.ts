@@ -50,5 +50,6 @@ export const styles = StyleSheet.create({
   rowItem: {
     flexDirection: "row",
     flex: 2,
+    alignItems: "flex-end"
   },
 });
