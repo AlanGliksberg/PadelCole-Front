@@ -4,7 +4,12 @@ import { colors } from "@/src/theme";
 import { LoginResponse } from "@/src/types";
 import { AntDesign } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import {
   CustomText,
   CustomTextInput,
@@ -42,66 +47,66 @@ export default function Login() {
     // TODO
   };
 
-  // TODO - cuando entras a un input no podes salir del teclado.
-  // cuando clickeas en cualquier lado de la pantalla se deberia cerrar el teclado
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <CustomText.Title>¡Bienvenido!</CustomText.Title>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <CustomText.Title>¡Bienvenido!</CustomText.Title>
 
-        <CustomTextInput
-          placeholder="Correo electrónico"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-
-        <View style={styles.passwordView}>
           <CustomTextInput
-            placeholder="Contraseña"
-            secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={setPassword}
+            placeholder="Correo electrónico"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
             autoCapitalize="none"
           />
-          <TouchableOpacity
-            onPress={() => setShowPassword((prev) => !prev)}
-            style={styles.passwordEye}
-          >
-            <AntDesign
-              name={showPassword ? "eye" : "eyeo"}
-              size={24}
-              color={colors.placeholder}
+
+          <View style={styles.passwordView}>
+            <CustomTextInput
+              placeholder="Contraseña"
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={setPassword}
+              autoCapitalize="none"
             />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              onPress={() => setShowPassword((prev) => !prev)}
+              style={styles.passwordEye}
+            >
+              <AntDesign
+                name={showPassword ? "eye" : "eyeo"}
+                size={24}
+                color={colors.placeholder}
+              />
+            </TouchableOpacity>
+          </View>
 
-        <View style={styles.buttonContainer}>
-          <FullButton onPress={handleLogin} disabled={loading}>
-            <CustomText.ButtonText uppercase>
-              Iniciar sesión
-            </CustomText.ButtonText>
-          </FullButton>
+          <View style={styles.buttonContainer}>
+            <FullButton onPress={handleLogin} disabled={loading}>
+              <CustomText.ButtonText uppercase>
+                Iniciar sesión
+              </CustomText.ButtonText>
+            </FullButton>
 
-          <FullButton
-            style={styles.googleButton}
-            onPress={handleGoogle}
-            disabled={loading}
-          >
-            <AntDesign name="google" size={20} color="#fff" />
-            <CustomText.ButtonText uppercase>
-              Continuar con Google
-            </CustomText.ButtonText>
-          </FullButton>
+            <FullButton
+              style={styles.googleButton}
+              onPress={handleGoogle}
+              disabled={loading}
+            >
+              <AntDesign name="google" size={20} color="#fff" />
+              <CustomText.ButtonText uppercase>
+                Continuar con Google
+              </CustomText.ButtonText>
+            </FullButton>
 
-          <SimpleButton title="Registrarse" onPress={handleRegister} />
-          <SimpleButton
-            title="¿Olvidaste tu contraseña?"
-            onPress={handleForgot}
-          />
+            <SimpleButton title="Registrarse" onPress={handleRegister} />
+            <SimpleButton
+              title="¿Olvidaste tu contraseña?"
+              onPress={handleForgot}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }

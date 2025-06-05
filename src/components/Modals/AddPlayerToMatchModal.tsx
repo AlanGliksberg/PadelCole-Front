@@ -3,6 +3,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  Keyboard,
 } from "react-native";
 import { styles } from "./AddPlayerToMatchModal.styles";
 import { CustomText, CustomTextInput } from "..";
@@ -27,10 +28,12 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
     >
       <TouchableWithoutFeedback onPress={closeModal}>
         <View style={styles.backdrop}>
-          <TouchableWithoutFeedback onPress={() => {}}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
               <View style={styles.headerRow}>
-                <CustomText style={styles.title} bold type="h3">Agregar jugador</CustomText>
+                <CustomText style={styles.title} bold type="h3">
+                  Agregar jugador
+                </CustomText>
                 <TouchableOpacity
                   onPress={closeModal}
                   style={styles.closeButton}
@@ -39,8 +42,13 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
                 </TouchableOpacity>
               </View>
               <View>
-                <CustomTextInput />
+                <CustomTextInput
+                  placeholder="Buscá un jugador"
+                  //         value={email}
+                  //   onChangeText={setEmail}
+                />
               </View>
+              <View></View>
             </View>
           </TouchableWithoutFeedback>
         </View>

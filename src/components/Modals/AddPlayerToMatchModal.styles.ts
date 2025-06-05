@@ -9,8 +9,6 @@ export const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     backgroundColor: "rgba(0,0,0,0.5)",
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   container: {
     position: "absolute",
@@ -19,13 +17,13 @@ export const styles = StyleSheet.create({
     width: "90%",
     height: 600,
     maxHeight: "70%",
-    backgroundColor: colors.background,
+    backgroundColor: colors.white,
     borderRadius: spacing.md,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.md,
     overflow: "hidden",
     display: "flex",
-    justifyContent: "space-between",
+    gap: 20
   },
   headerRow: {
     width: "100%",
