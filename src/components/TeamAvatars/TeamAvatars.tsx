@@ -1,17 +1,18 @@
-import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 import { Player } from "@/src/types";
-import React, { useContext } from "react";
+import React from "react";
 import { View } from "react-native";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import { styles } from "./TeamAvatars.styles";
 
 interface TeamAvatarsProps {
   players: Player[];
+  isCreator?: boolean;
 }
 
-const TeamAvatars: React.FC<TeamAvatarsProps> = ({ players }) => {
-  const { openPlayerDetail } = useContext(PlayerModalsContext);
-
+const TeamAvatars: React.FC<TeamAvatarsProps> = ({
+  players,
+  isCreator = false,
+}) => {
   return (
     <View style={styles.container}>
       {[0, 1].map((idx) => {
@@ -20,8 +21,8 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({ players }) => {
           <PlayerAvatar
             key={idx}
             player={player}
-            onPress={player ? () => openPlayerDetail(player) : () => {}}
             size="s"
+            isCreator={isCreator}
           />
         );
       })}

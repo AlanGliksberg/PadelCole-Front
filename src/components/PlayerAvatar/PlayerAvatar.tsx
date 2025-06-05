@@ -3,22 +3,29 @@ import { getPlayerInitials } from "@/src/utils/player";
 import { Image, TouchableOpacity, View } from "react-native";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./PlayerAvatar.styles";
+import { useContext } from "react";
+import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 
 type AvatarSize = "s" | "m" | "l";
 
 interface PlayerAvatarProps {
-  player: Player;
-  onPress?: () => void;
+  player: Player | null;
   size?: AvatarSize;
   inverse?: boolean;
+  isCreator?: boolean;
+  touchable?: boolean;
 }
 
 const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
   player,
-  onPress,
   size = "s",
   inverse = false,
+  isCreator = false,
+  touchable = true,
 }) => {
+  const { openPlayerDetail, openAddPlayerToMatch } =
+    useContext(PlayerModalsContext);
+
   const textSize = size === "s" ? "small" : size === "m" ? "h2" : "h1";
   const avatarContent = (
     <View
@@ -43,8 +50,15 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
       )}
     </View>
   );
-  return onPress ? (
-    <TouchableOpacity onPress={onPress}>{avatarContent}</TouchableOpacity>
+
+  const avatarAction = player
+    ? () => openPlayerDetail(player)
+    : isCreator
+    ? () => openAddPlayerToMatch()
+    : () => {};
+
+  return touchable ? (
+    <TouchableOpacity onPress={avatarAction}>{avatarContent}</TouchableOpacity>
   ) : (
     <>{avatarContent}</>
   );

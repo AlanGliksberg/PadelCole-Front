@@ -82,10 +82,12 @@ const MatchBox: React.FC<MatchBoxProps> = ({
         <View style={styles.row}>
           <TeamAvatars
             players={match.teams.find((t) => t.teamNumber === 1)!.players}
+            isCreator
           />
           <CustomText style={styles.vs}>vs</CustomText>
           <TeamAvatars
             players={match.teams.find((t) => t.teamNumber === 2)!.players}
+            isCreator
           />
         </View>
       </View>

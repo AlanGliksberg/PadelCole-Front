@@ -5,7 +5,7 @@ import React from "react";
 import { Modal, TouchableOpacity, View } from "react-native";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomText from "../ui/CustomText/CustomText";
-import { styles } from "./PlayerDetailModal.styles";
+import { styles } from "./PlayerDetailsModal.styles";
 
 interface PlayerDetailsModalProps {
   player: Player | null;
@@ -27,7 +27,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
         <TouchableOpacity style={styles.modalContainer} activeOpacity={1}>
           <View style={styles.header}>
             <View style={styles.nameContainer}>
-              <PlayerAvatar player={player!} size="m" inverse />
+              <PlayerAvatar player={player!} size="m" inverse touchable={false} />
               <CustomText style={styles.name}>
                 {`${player?.firstName} ${player?.lastName}`}
               </CustomText>
