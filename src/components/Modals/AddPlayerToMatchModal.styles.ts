@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     overflow: "hidden",
     display: "flex",
-    gap: 20
+    gap: 20,
   },
   headerRow: {
     width: "100%",
@@ -38,18 +38,7 @@ export const styles = StyleSheet.create({
     right: -5,
     top: -8,
   },
-  message: {
-    color: colors.text,
-    fontSize: typography.body,
-    lineHeight: typography.body * 1.4,
-    textAlign: "center",
-    marginBottom: spacing.md,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    paddingHorizontal: spacing.md,
-    gap: spacing.md,
+  searchContainer: {
+
   },
 });

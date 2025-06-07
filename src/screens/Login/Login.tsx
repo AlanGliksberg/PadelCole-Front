@@ -61,24 +61,25 @@ export default function Login() {
             autoCapitalize="none"
           />
 
-          <View style={styles.passwordView}>
+          <View>
             <CustomTextInput
               placeholder="Contraseña"
               secureTextEntry={!showPassword}
               value={password}
               onChangeText={setPassword}
               autoCapitalize="none"
+              rightSlot={
+                <TouchableOpacity
+                  onPress={() => setShowPassword((prev) => !prev)}
+                >
+                  <AntDesign
+                    name={showPassword ? "eye" : "eyeo"}
+                    size={24}
+                    color={colors.placeholder}
+                  />
+                </TouchableOpacity>
+              }
             />
-            <TouchableOpacity
-              onPress={() => setShowPassword((prev) => !prev)}
-              style={styles.passwordEye}
-            >
-              <AntDesign
-                name={showPassword ? "eye" : "eyeo"}
-                size={24}
-                color={colors.placeholder}
-              />
-            </TouchableOpacity>
           </View>
 
           <View style={styles.buttonContainer}>

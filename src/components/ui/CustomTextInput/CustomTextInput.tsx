@@ -2,17 +2,31 @@ import React from "react";
 import { TextInput, TextInputProps, View } from "react-native";
 import { colors } from "../../../theme";
 import { styles } from "./CustomTextInput.styles";
-import { MaterialIcons } from "@expo/vector-icons";
 
-const CustomTextInput: React.FC<TextInputProps> = (props) => {
+interface CustomTextInputProps extends TextInputProps {
+  leftSlot?: React.ReactNode;
+  rightSlot?: React.ReactNode;
+}
+
+const CustomTextInput: React.FC<CustomTextInputProps> = ({
+  style,
+  leftSlot,
+  rightSlot,
+  ...rest
+}) => {
   return (
     <View style={styles.searchSection}>
-      <MaterialIcons name="close" size={28} color={colors.text} />
-      <TextInput
-        placeholderTextColor={colors.placeholder}
-        {...props}
-        style={[styles.input, props.style]}
-      />
+      <View style={styles.leftSide}>
+        {leftSlot && <View style={styles.leftSlot}>{leftSlot}</View>}
+        <TextInput
+          placeholderTextColor={colors.placeholder}
+          style={[styles.input, style]}
+          {...rest}
+        />
+      </View>
+      <View style={styles.rightSide}>
+        {rightSlot && <View style={styles.rightSlot}>{rightSlot}</View>}
+      </View>
     </View>
   );
 };

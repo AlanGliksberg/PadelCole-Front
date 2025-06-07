@@ -1,23 +1,43 @@
-import { Platform, StyleSheet } from "react-native";
+// CustomTextInput.styles.ts
+import { StyleSheet } from "react-native";
 import { colors, spacing, typography } from "../../../theme";
 
 export const styles = StyleSheet.create({
   searchSection: {
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.input,
-  },
-  input: {
     width: "100%",
     height: 48,
     backgroundColor: colors.input,
     borderRadius: 8,
-    paddingHorizontal: spacing.md,
     marginBottom: spacing.md,
+    paddingHorizontal: spacing.sm,
+  },
+  leftSide: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  leftSlot: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: spacing.sm,
+  },
+  input: {
+    flex: 1,
+    height: "100%",
+    paddingVertical: 0,
     fontSize: typography.body,
     color: colors.text,
-    ...Platform.select({ android: { paddingVertical: 0 } }),
+  },
+  rightSide: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  rightSlot: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: spacing.sm,
   },
 });

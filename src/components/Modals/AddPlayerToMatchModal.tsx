@@ -42,7 +42,7 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
                   <MaterialIcons name="close" size={28} color={colors.text} />
                 </TouchableOpacity>
               </View>
-              <View>
+              <View style={styles.searchContainer}>
                 <CustomTextInput
                   placeholder="Buscá un jugador"
                   //         value={email}

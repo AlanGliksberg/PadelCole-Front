@@ -27,17 +27,6 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: spacing.sm,
   },
-  passwordView: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: spacing.md,
-    width: "90%",
-  },
-  passwordEye: {
-    marginLeft: spacing.sm,
-    marginBottom: spacing.md,
-  },
   buttonContainer: {
     display: "flex",
     gap: spacing.sm,
