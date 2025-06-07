@@ -50,6 +50,7 @@ export default function MeFaltaAlguien() {
       setTotal(totalMatches);
       setPage(nextPage);
     } catch (e: any) {
+      console.log(e);
       setError(true);
     }
   };
