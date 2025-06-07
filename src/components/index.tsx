@@ -7,6 +7,7 @@ export { default as BorderedButton } from "./ui/BorderedButton/BorderedButton";
 export { default as CustomScreen } from "./ui/CustomScreen/CustomScreen";
 export { default as CustomText } from "./ui/CustomText/CustomText";
 export { default as CustomTextInput } from "./ui/CustomTextInput/CustomTextInput";
+export { default as CustomSearchInput } from "./ui/CustomSearchInput/CustomSearchInput";
 export { default as ErrorSection } from "./ui/ErrorSection/ErrorSection";
 export { default as FullButton } from "./ui/FullButton/FullButton";
 export { default as SimpleButton } from "./ui/SimpleButton/SimpleButton";

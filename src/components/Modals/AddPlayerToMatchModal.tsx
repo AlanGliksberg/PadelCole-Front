@@ -9,7 +9,10 @@ import { styles } from "./AddPlayerToMatchModal.styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "@/src/theme";
 import CustomText from "../ui/CustomText/CustomText";
-import CustomTextInput from "../ui/CustomTextInput/CustomTextInput";
+import CustomSearchInput from "../ui/CustomSearchInput/CustomSearchInput";
+import { useEffect, useState } from "react";
+import { Player } from "@/src/types";
+import { getPlayers } from "@/src/services/player";
 
 interface PlayerDetailsModalProps {
   isOpen: boolean;
@@ -20,6 +23,17 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
   isOpen,
   closeModal,
 }) => {
+  const [players, setPlayers] = useState<Player[]>([]);
+
+  const searchPlayers = async (name: string) => {
+    const resultPlayers = await getPlayers(name);
+    setPlayers(resultPlayers.data);
+  };
+
+  useEffect(() => {
+    console.log("players:", JSON.stringify(players));
+  }, [players]);
+
   return (
     <Modal
       visible={isOpen}
@@ -43,10 +57,10 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
                 </TouchableOpacity>
               </View>
               <View style={styles.searchContainer}>
-                <CustomTextInput
+                <CustomSearchInput
                   placeholder="Buscá un jugador"
-                  //         value={email}
-                  //   onChangeText={setEmail}
+                  startSearchingOn={3}
+                  onSearch={searchPlayers}
                 />
               </View>
               <View></View>

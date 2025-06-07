@@ -3,7 +3,7 @@ import { TextInput, TextInputProps, View } from "react-native";
 import { colors } from "../../../theme";
 import { styles } from "./CustomTextInput.styles";
 
-interface CustomTextInputProps extends TextInputProps {
+export interface CustomTextInputProps extends TextInputProps {
   leftSlot?: React.ReactNode;
   rightSlot?: React.ReactNode;
 }

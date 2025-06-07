@@ -1,7 +1,6 @@
 import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { login } from "@/src/services/auth";
 import { colors } from "@/src/theme";
-import { LoginResponse } from "@/src/types";
 import { AntDesign } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
 import {
@@ -28,7 +27,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     showLoading();
-    const res = await login<LoginResponse>(email, password);
+    const res = await login(email, password);
     if (res.error || !res.data) {
       // TODO - manejar credenciales incorrectas o error
       hideLoading();
