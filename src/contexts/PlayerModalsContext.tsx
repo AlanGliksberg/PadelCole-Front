@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { Player } from "../types";
-import { AddPlayerToMatch, PlayerDetailsModal } from "../components";
+import { AddPlayerToMatchModal, PlayerDetailsModal } from "../components";
 
 interface PlayerModalsContextData {
   openPlayerDetail: (player: Player) => void;
@@ -46,7 +46,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         player={selectedPlayer}
         closePlayerDetail={closePlayerDetail}
       />
-      <AddPlayerToMatch
+      <AddPlayerToMatchModal
         isOpen={openAddPlayerModal}
         closeModal={closeAddPlayerToMatch}
       />

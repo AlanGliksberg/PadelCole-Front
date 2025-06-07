@@ -2,7 +2,7 @@ export { default as MatchBox } from "./MatchBox/MatchBox";
 export { default as MatchBoxSkeleton } from "./MatchBox/MatchBoxSkeleton";
 export { default as PlayerDetailsModal } from "./Modals/PlayerDetailsModal";
 export { default as CustomModal } from "./Modals/CustomModal";
-export { default as AddPlayerToMatch } from "./Modals/AddPlayerToMatchModal";
+export { default as AddPlayerToMatchModal } from "./Modals/AddPlayerToMatchModal";
 export { default as BorderedButton } from "./ui/BorderedButton/BorderedButton";
 export { default as CustomScreen } from "./ui/CustomScreen/CustomScreen";
 export { default as CustomText } from "./ui/CustomText/CustomText";

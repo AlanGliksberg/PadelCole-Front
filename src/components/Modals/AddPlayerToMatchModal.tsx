@@ -6,9 +6,10 @@ import {
   Keyboard,
 } from "react-native";
 import { styles } from "./AddPlayerToMatchModal.styles";
-import { CustomText, CustomTextInput } from "..";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "@/src/theme";
+import CustomText from "../ui/CustomText/CustomText";
+import CustomTextInput from "../ui/CustomTextInput/CustomTextInput";
 
 interface PlayerDetailsModalProps {
   isOpen: boolean;
