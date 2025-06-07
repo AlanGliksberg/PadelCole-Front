@@ -41,7 +41,7 @@ export const get = async <T>(uri: string, apiParams: ApiParams = {}) => {
   if (apiParams.withCache) {
     const cached = getCachedCall(uri, url);
     if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
-      return cached.data;
+      return cached.data as ApiResponse<T>;
     }
   }
 

@@ -17,6 +17,8 @@ interface PlayerDetailsModalProps {
   closePlayerDetail: () => void;
 }
 
+// TODO - ver si se puede que, si lo esta viendo el creador de un partido, 
+// dar la opcion de eliminar el jugador del partido
 const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
   player,
   closePlayerDetail,

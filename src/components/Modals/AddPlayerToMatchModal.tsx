@@ -4,6 +4,7 @@ import {
   TouchableWithoutFeedback,
   View,
   Keyboard,
+  FlatList,
 } from "react-native";
 import { styles } from "./AddPlayerToMatchModal.styles";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -26,8 +27,9 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
   const [players, setPlayers] = useState<Player[]>([]);
 
   const searchPlayers = async (name: string) => {
+    // TODO - agregar loading
     const resultPlayers = await getPlayers(name);
-    setPlayers(resultPlayers.data);
+    setPlayers(resultPlayers.data?.players || []);
   };
 
   useEffect(() => {
@@ -63,7 +65,28 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
                   onSearch={searchPlayers}
                 />
               </View>
-              <View></View>
+              <FlatList
+                data={players}
+                keyExtractor={(p) => p.id.toString()}
+                style={styles.list}
+                keyboardShouldPersistTaps="never"
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.itemContainer}
+                    activeOpacity={0.6}
+                    // onPress={() => handleSelectPlayer(item)}
+                  >
+                    <CustomText style={styles.name}>
+                      {item.firstName} {item.lastName}
+                    </CustomText>
+                    <CustomText type="small" style={styles.sub}>
+                      {item.position?.description} •{" "}
+                      {item.category?.description}
+                    </CustomText>
+                  </TouchableOpacity>
+                )}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
+              />
             </View>
           </TouchableWithoutFeedback>
         </View>

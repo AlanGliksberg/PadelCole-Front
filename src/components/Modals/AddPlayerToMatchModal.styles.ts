@@ -38,7 +38,26 @@ export const styles = StyleSheet.create({
     right: -5,
     top: -8,
   },
-  searchContainer: {
-
+  searchContainer: {},
+  list: {
+    marginTop: spacing.sm,
+    flex: 1
+  },
+  itemContainer: {
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    backgroundColor: colors.surface,
+    borderRadius: 8,
+  },
+  name: {
+    fontSize: typography.body,
+    fontWeight: "600",
+  },
+  sub: {
+    marginTop: 4,
+    color: colors.placeholder,
+  },
+  separator: {
+    height: spacing.xs,
   },
 });

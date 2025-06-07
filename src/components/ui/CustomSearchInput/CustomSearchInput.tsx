@@ -21,11 +21,7 @@ const CustomSearchInput: React.FC<CustomSearchInputProps> = ({
   const debouncedValue = useDebounce<string>(value);
 
   useEffect(() => {
-    if (
-      debouncedValue.length >= startSearchingOn ||
-      debouncedValue.length === 0
-    )
-      onSearch(debouncedValue);
+    if (debouncedValue.length >= startSearchingOn) onSearch(debouncedValue);
   }, [debouncedValue, onSearch, startSearchingOn]);
 
   const cleanInput = () => {
