@@ -1,4 +1,5 @@
 import { ModalContext } from "@/src/contexts/ModalContext";
+import { addPlayerToMatch } from "@/src/services/match";
 import { colors } from "@/src/theme";
 import { Match, Player } from "@/src/types";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -38,7 +39,7 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
       message: `¿Estás seguro que querés agregar al jugador ${player.firstName} ${player.lastName} al partido?`,
       primaryLabel: "Agregar",
       primaryAction: async () => {
-        // await addPlayerToMatch(match!.id, team!, player.id);
+        await addPlayerToMatch(match!.id, team!, player.id);
         // TODO - controlar error
         onPlayerAdd?.(player);
       },

@@ -1,9 +1,5 @@
 import { getCreatedMatches } from "@/src/services/match";
-import {
-  GetCreatedMatchesResponse,
-  Match,
-  MeFaltaAlguienStackParamList,
-} from "@/src/types";
+import { Match, MeFaltaAlguienStackParamList } from "@/src/types";
 import { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -36,11 +32,7 @@ export default function MeFaltaAlguien() {
       setMatches((prev) =>
         nextPage === 1 ? fakeMatches : [...prev, ...fakeMatches]
       );
-      const res = await getCreatedMatches<GetCreatedMatchesResponse>(
-        nextPage,
-        pageSize,
-        withCache
-      );
+      const res = await getCreatedMatches(nextPage, pageSize, withCache);
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
       const { matches: newMatches, totalMatches } = res.data;
       setMatches((prev) => {
