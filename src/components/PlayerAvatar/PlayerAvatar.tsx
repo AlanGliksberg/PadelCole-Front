@@ -16,7 +16,7 @@ interface PlayerAvatarProps {
   touchable?: boolean;
   match?: Match | undefined;
   team?: number | undefined;
-  callback?: () => Promise<void>;
+  callback?: (p: Player) => void;
 }
 
 const PlayerAvatar: React.FC<PlayerAvatarProps> = ({

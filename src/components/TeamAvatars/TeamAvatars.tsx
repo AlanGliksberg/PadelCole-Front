@@ -20,6 +20,9 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
   callback,
 }) => {
   const [playersState, setPlayersState] = useState<Player[]>(players);
+  const addPlayer = (player: Player) => {
+    setPlayersState((prev) => [...prev, player]);
+  };
 
   return (
     <View style={styles.container}>
@@ -33,7 +36,7 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
             isCreator={isCreator}
             match={match}
             team={team}
-            callback={callback}
+            callback={addPlayer}
           />
         );
       })}

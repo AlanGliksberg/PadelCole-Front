@@ -19,7 +19,7 @@ interface PlayerDetailsModalProps {
   closeModal: () => void;
   match: Match | null;
   team: number | null;
-  onPlayerAdd?: () => Promise<void>;
+  onPlayerAdd?: (p: Player) => void;
 }
 
 const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
@@ -40,7 +40,7 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
       primaryAction: async () => {
         // await addPlayerToMatch(match!.id, team!, player.id);
         // TODO - controlar error
-        onPlayerAdd && (await onPlayerAdd());
+        onPlayerAdd?.(player);
       },
     });
   };

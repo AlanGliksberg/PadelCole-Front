@@ -5,14 +5,14 @@ import { Match, Player } from "../types";
 interface PlayerModalsContextData {
   openPlayerDetail: (player: Player) => void;
   closePlayerDetail: () => void;
-  openAddPlayerToMatch: (m: Match, t: number, c?: () => Promise<void>) => void;
+  openAddPlayerToMatch: (m: Match, t: number, c?: (p: Player) => void) => void;
   closeAddPlayerToMatch: () => void;
 }
 
 export const PlayerModalsContext = createContext<PlayerModalsContextData>({
   openPlayerDetail: (p: Player) => {},
   closePlayerDetail: () => {},
-  openAddPlayerToMatch: (m: Match, t: number, c?: () => Promise<void>) => {},
+  openAddPlayerToMatch: (m: Match, t: number, c?: (p: Player) => void) => {},
   closeAddPlayerToMatch: () => {},
 });
 
@@ -28,12 +28,12 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<number | null>(null);
   const [callbackFn, setCallbackFn] = useState<
-    (() => Promise<void>) | undefined
+    ((p: Player) => void) | undefined
   >();
   const openAddPlayerToMatch = (
     match: Match,
     team: number,
-    callback?: () => Promise<void>
+    callback?: (p: Player) => void
   ) => {
     setSelectedMatch(match);
     setSelectedTeam(team);
