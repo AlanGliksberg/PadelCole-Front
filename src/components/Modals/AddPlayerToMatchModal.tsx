@@ -30,7 +30,7 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
   team,
   onPlayerAdd,
 }) => {
-  const { openModal } = useContext(ModalContext);
+  const { openModal, openErrorModal } = useContext(ModalContext);
 
   const playerSelect = (player: Player) => {
     onClose();
@@ -39,8 +39,15 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
       message: `¿Estás seguro que querés agregar al jugador ${player.firstName} ${player.lastName} al partido?`,
       primaryLabel: "Agregar",
       primaryAction: async () => {
-        await addPlayerToMatch(match!.id, team!, player.id);
+        const result = await addPlayerToMatch(match!.id, team!, player.id);
         // TODO - controlar error
+        if (result.error) {
+          openErrorModal(
+            "Agregar jugador",
+            "Error agregando el jugador al partido"
+          );
+          return;
+        }
         onPlayerAdd?.(player);
       },
     });

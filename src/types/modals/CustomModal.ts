@@ -10,6 +10,8 @@ export type ModalParams = {
 export interface ModalContextData {
   openModal: (params: ModalParams) => void;
   closeModal: () => void;
+  openErrorModal: (t: string, m: string) => void;
+  closeErrorModal: () => void;
 }
 
 export interface ModalProps {
