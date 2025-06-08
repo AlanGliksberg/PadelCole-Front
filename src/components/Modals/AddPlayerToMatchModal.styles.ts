@@ -16,7 +16,6 @@ export const styles = StyleSheet.create({
     marginTop: height * 0.15,
     width: "90%",
     height: 600,
-    maxHeight: "70%",
     backgroundColor: colors.white,
     borderRadius: spacing.md,
     paddingVertical: spacing.md,
