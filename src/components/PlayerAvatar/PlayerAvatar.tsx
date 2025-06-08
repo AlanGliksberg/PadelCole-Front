@@ -1,10 +1,10 @@
-import { Player } from "@/src/types";
+import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
+import { Match, Player } from "@/src/types";
 import { getPlayerInitials } from "@/src/utils/player";
+import { useContext } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./PlayerAvatar.styles";
-import { useContext } from "react";
-import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 
 type AvatarSize = "s" | "m" | "l";
 
@@ -14,6 +14,9 @@ interface PlayerAvatarProps {
   inverse?: boolean;
   isCreator?: boolean;
   touchable?: boolean;
+  match?: Match | undefined;
+  team?: number | undefined;
+  callback?: () => Promise<void>;
 }
 
 const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
@@ -22,6 +25,9 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
   inverse = false,
   isCreator = false,
   touchable = true,
+  match,
+  team,
+  callback,
 }) => {
   const { openPlayerDetail, openAddPlayerToMatch } =
     useContext(PlayerModalsContext);
@@ -42,6 +48,7 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
         />
       ) : (
         <CustomText
+          bold
           style={[styles.avatarText, inverse ? styles.avatarTextInverse : {}]}
           type={textSize}
         >
@@ -54,7 +61,7 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
   const avatarAction = player
     ? () => openPlayerDetail(player)
     : isCreator
-    ? () => openAddPlayerToMatch()
+    ? () => openAddPlayerToMatch(match!, team!, callback)
     : () => {};
 
   return touchable ? (

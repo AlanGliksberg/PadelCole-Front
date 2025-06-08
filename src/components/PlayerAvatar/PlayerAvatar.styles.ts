@@ -1,4 +1,4 @@
-import { colors, spacing } from "@/src/theme";
+import { colors } from "@/src/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -6,14 +6,13 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: spacing.xs,
+    // marginHorizontal: spacing.xs,
   },
   avatarInverse: {
     backgroundColor: colors.white,
   },
   avatarText: {
     color: colors.white,
-    fontWeight: "600",
   },
   avatarTextInverse: {
     color: colors.primary,

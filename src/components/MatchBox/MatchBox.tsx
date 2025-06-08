@@ -15,7 +15,7 @@ import { styles } from "./MatchBox.styles";
 interface MatchBoxProps {
   match: Match;
   showCreatorDetails?: boolean;
-  refreshData?: () => void;
+  refreshData?: () => Promise<void>;
 }
 
 const MatchBox: React.FC<MatchBoxProps> = ({
@@ -34,7 +34,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
       primaryLabel: "Sí, eliminar",
       primaryAction: async () => {
         await deleteMatchApi(match.id);
-        refreshData && refreshData();
+        refreshData && (await refreshData());
       },
     });
   };
@@ -83,11 +83,17 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           <TeamAvatars
             players={match.teams.find((t) => t.teamNumber === 1)!.players}
             isCreator
+            match={match}
+            team={1}
+            callback={refreshData}
           />
           <CustomText style={styles.vs}>vs</CustomText>
           <TeamAvatars
             players={match.teams.find((t) => t.teamNumber === 2)!.players}
             isCreator
+            match={match}
+            team={2}
+            callback={refreshData}
           />
         </View>
       </View>

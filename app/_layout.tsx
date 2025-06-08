@@ -15,13 +15,13 @@ export default function Layout() {
     <SafeAreaProvider>
       <StatusBar style="inverted" />
       <AuthProvider>
-        <PlayerModalsProvider>
-          <ModalProvider>
+        <ModalProvider>
+          <PlayerModalsProvider>
             <LoadingProvider>
               <RootNavigator />
             </LoadingProvider>
-          </ModalProvider>
-        </PlayerModalsProvider>
+          </PlayerModalsProvider>
+        </ModalProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );

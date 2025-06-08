@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     maxWidth: "90%",
     flexShrink: 1,
+    gap: spacing.sm,
   },
   name: {
     color: colors.white,
@@ -50,6 +51,6 @@ export const styles = StyleSheet.create({
   rowItem: {
     flexDirection: "row",
     flex: 2,
-    alignItems: "flex-end"
+    alignItems: "flex-end",
   },
 });

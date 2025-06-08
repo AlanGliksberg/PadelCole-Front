@@ -41,14 +41,14 @@ const CustomModal: React.FC<ModalProps> = ({ params, isOpen, closeModal }) => {
                 <SimpleButton
                   title={params?.secondaryLabel || "Cancelar"}
                   onPress={() => {
-                    params?.secondaryAction?.();
                     closeModal();
+                    params?.secondaryAction?.();
                   }}
                 />
                 <FullButton
                   onPress={() => {
-                    params?.primaryAction?.();
                     closeModal();
+                    params?.primaryAction?.();
                   }}
                   size="s"
                 >

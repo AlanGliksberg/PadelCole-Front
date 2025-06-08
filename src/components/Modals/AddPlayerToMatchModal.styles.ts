@@ -1,5 +1,5 @@
-import { colors, spacing, typography } from "@/src/theme";
-import { StyleSheet, Dimensions } from "react-native";
+import { colors, spacing } from "@/src/theme";
+import { Dimensions, StyleSheet } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -37,27 +37,5 @@ export const styles = StyleSheet.create({
     position: "absolute",
     right: -5,
     top: -8,
-  },
-  searchContainer: {},
-  list: {
-    marginTop: spacing.sm,
-    flex: 1
-  },
-  itemContainer: {
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.md,
-    backgroundColor: colors.surface,
-    borderRadius: 8,
-  },
-  name: {
-    fontSize: typography.body,
-    fontWeight: "600",
-  },
-  sub: {
-    marginTop: 4,
-    color: colors.placeholder,
-  },
-  separator: {
-    height: spacing.xs,
   },
 });

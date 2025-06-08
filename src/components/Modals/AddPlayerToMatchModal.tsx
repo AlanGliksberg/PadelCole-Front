@@ -1,49 +1,62 @@
+import { ModalContext } from "@/src/contexts/ModalContext";
+import { colors } from "@/src/theme";
+import { Match, Player } from "@/src/types";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useContext } from "react";
 import {
+  Keyboard,
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Keyboard,
-  FlatList,
 } from "react-native";
-import { styles } from "./AddPlayerToMatchModal.styles";
-import { MaterialIcons } from "@expo/vector-icons";
-import { colors } from "@/src/theme";
+import PlayersList from "../PlayersList/PlayersList";
 import CustomText from "../ui/CustomText/CustomText";
-import CustomSearchInput from "../ui/CustomSearchInput/CustomSearchInput";
-import { useEffect, useState } from "react";
-import { Player } from "@/src/types";
-import { getPlayers } from "@/src/services/player";
+import { styles } from "./AddPlayerToMatchModal.styles";
 
 interface PlayerDetailsModalProps {
   isOpen: boolean;
   closeModal: () => void;
+  match: Match | null;
+  team: number | null;
+  onPlayerAdd?: () => Promise<void>;
 }
 
 const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
   isOpen,
   closeModal,
+  match,
+  team,
+  onPlayerAdd,
 }) => {
-  const [players, setPlayers] = useState<Player[]>([]);
+  const { openModal } = useContext(ModalContext);
 
-  const searchPlayers = async (name: string) => {
-    // TODO - agregar loading
-    const resultPlayers = await getPlayers(name);
-    setPlayers(resultPlayers.data?.players || []);
+  const playerSelect = (player: Player) => {
+    onClose();
+    openModal({
+      title: "Agregar jugador",
+      message: `¿Estás seguro que querés agregar al jugador ${player.firstName} ${player.lastName} al partido?`,
+      primaryLabel: "Agregar",
+      primaryAction: async () => {
+        // await addPlayerToMatch(match!.id, team!, player.id);
+        // TODO - controlar error
+        onPlayerAdd && (await onPlayerAdd());
+      },
+    });
   };
 
-  useEffect(() => {
-    console.log("players:", JSON.stringify(players));
-  }, [players]);
+  const onClose = () => {
+    closeModal();
+  };
 
   return (
     <Modal
       visible={isOpen}
       animationType="fade"
       transparent={true}
-      onRequestClose={closeModal}
+      onRequestClose={onClose}
     >
-      <TouchableWithoutFeedback onPress={closeModal}>
+      <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.backdrop}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -51,42 +64,11 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
                 <CustomText style={styles.title} bold type="h3">
                   Agregar jugador
                 </CustomText>
-                <TouchableOpacity
-                  onPress={closeModal}
-                  style={styles.closeButton}
-                >
+                <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                   <MaterialIcons name="close" size={28} color={colors.text} />
                 </TouchableOpacity>
               </View>
-              <View style={styles.searchContainer}>
-                <CustomSearchInput
-                  placeholder="Buscá un jugador"
-                  startSearchingOn={3}
-                  onSearch={searchPlayers}
-                />
-              </View>
-              <FlatList
-                data={players}
-                keyExtractor={(p) => p.id.toString()}
-                style={styles.list}
-                keyboardShouldPersistTaps="never"
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={styles.itemContainer}
-                    activeOpacity={0.6}
-                    // onPress={() => handleSelectPlayer(item)}
-                  >
-                    <CustomText style={styles.name}>
-                      {item.firstName} {item.lastName}
-                    </CustomText>
-                    <CustomText type="small" style={styles.sub}>
-                      {item.position?.description} •{" "}
-                      {item.category?.description}
-                    </CustomText>
-                  </TouchableOpacity>
-                )}
-                ItemSeparatorComponent={() => <View style={styles.separator} />}
-              />
+              <PlayersList onPlayerSelect={playerSelect} />
             </View>
           </TouchableWithoutFeedback>
         </View>

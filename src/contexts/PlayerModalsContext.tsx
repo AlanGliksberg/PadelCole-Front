@@ -1,18 +1,18 @@
 import React, { createContext, ReactNode, useState } from "react";
-import { Player } from "../types";
 import { AddPlayerToMatchModal, PlayerDetailsModal } from "../components";
+import { Match, Player } from "../types";
 
 interface PlayerModalsContextData {
   openPlayerDetail: (player: Player) => void;
   closePlayerDetail: () => void;
-  openAddPlayerToMatch: () => void;
+  openAddPlayerToMatch: (m: Match, t: number, c?: () => Promise<void>) => void;
   closeAddPlayerToMatch: () => void;
 }
 
 export const PlayerModalsContext = createContext<PlayerModalsContextData>({
   openPlayerDetail: (p: Player) => {},
   closePlayerDetail: () => {},
-  openAddPlayerToMatch: () => {},
+  openAddPlayerToMatch: (m: Match, t: number, c?: () => Promise<void>) => {},
   closeAddPlayerToMatch: () => {},
 });
 
@@ -25,10 +25,25 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   const closePlayerDetail = () => setSelectedPlayer(null);
 
   const [openAddPlayerModal, setOpenAddPlayerModal] = useState<boolean>(false);
-  const openAddPlayerToMatch = () => {
+  const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
+  const [selectedTeam, setSelectedTeam] = useState<number | null>(null);
+  const [callbackFn, setCallbackFn] = useState<
+    (() => Promise<void>) | undefined
+  >();
+  const openAddPlayerToMatch = (
+    match: Match,
+    team: number,
+    callback?: () => Promise<void>
+  ) => {
+    setSelectedMatch(match);
+    setSelectedTeam(team);
+    setCallbackFn(() => callback);
     setOpenAddPlayerModal(true);
   };
   const closeAddPlayerToMatch = () => {
+    setCallbackFn(undefined);
+    setSelectedMatch(null);
+    setSelectedTeam(null);
     setOpenAddPlayerModal(false);
   };
 
@@ -49,6 +64,9 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
       <AddPlayerToMatchModal
         isOpen={openAddPlayerModal}
         closeModal={closeAddPlayerToMatch}
+        match={selectedMatch}
+        team={selectedTeam}
+        onPlayerAdd={callbackFn}
       />
     </PlayerModalsContext.Provider>
   );

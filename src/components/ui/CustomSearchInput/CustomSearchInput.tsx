@@ -1,20 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { colors } from "@/src/theme";
+import { useDebounce } from "@/src/types/hooks/useDebounce";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import { TouchableOpacity } from "react-native";
 import CustomTextInput, {
   CustomTextInputProps,
 } from "../CustomTextInput/CustomTextInput";
-import { useDebounce } from "@/src/types/hooks/useDebounce";
-import { TouchableOpacity } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { colors } from "@/src/theme";
 
 interface CustomSearchInputProps extends CustomTextInputProps {
   onSearch: (s: string) => void;
   startSearchingOn?: number;
+  onClear?: () => void;
 }
 
 const CustomSearchInput: React.FC<CustomSearchInputProps> = ({
   onSearch,
   startSearchingOn = 0,
+  onClear,
   ...rest
 }) => {
   const [value, setValue] = useState<string>("");
@@ -25,6 +27,7 @@ const CustomSearchInput: React.FC<CustomSearchInputProps> = ({
   }, [debouncedValue, onSearch, startSearchingOn]);
 
   const cleanInput = () => {
+    onClear && onClear();
     setValue("");
   };
 
@@ -33,15 +36,18 @@ const CustomSearchInput: React.FC<CustomSearchInputProps> = ({
       value={value}
       onChangeText={setValue}
       {...rest}
+      leftSlot={
+        <TouchableOpacity onPress={cleanInput}>
+          <MaterialIcons name="search" size={28} color={colors.placeholder} />
+        </TouchableOpacity>
+      }
       rightSlot={
         value ? (
           <TouchableOpacity onPress={cleanInput}>
             <MaterialIcons name="close" size={28} color={colors.placeholder} />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={cleanInput}>
-            <MaterialIcons name="search" size={28} color={colors.placeholder} />
-          </TouchableOpacity>
+          <></>
         )
       }
     />
