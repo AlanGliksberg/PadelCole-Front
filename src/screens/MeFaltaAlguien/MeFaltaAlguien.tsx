@@ -2,7 +2,7 @@ import { getCreatedMatches } from "@/src/services/match";
 import { Match, MeFaltaAlguienStackParamList } from "@/src/types";
 import { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import {
   CustomText,
@@ -26,33 +26,30 @@ export default function MeFaltaAlguien() {
     useNavigation<NavigationProp<MeFaltaAlguienStackParamList>>();
 
   const fakeMatches = Array(pageSize + 1).fill({} as Match);
-  const loadMatches = useCallback(
-    async (nextPage = 1, withCache = true) => {
-      try {
-        setError(false);
-        setMatches((prev) =>
-          nextPage === 1 ? fakeMatches : [...prev, ...fakeMatches]
-        );
-        const res = await getCreatedMatches(nextPage, pageSize, withCache);
-        if (res.error || !res.data) throw new Error("Error al cargar partidos");
-        const { matches: newMatches, totalMatches } = res.data;
-        setMatches((prev) => {
-          const realPrev = prev.filter((m) => !!m.id);
-          return nextPage === 1 ? newMatches : [...realPrev, ...newMatches];
-        });
-        setTotal(totalMatches);
-        setPage(nextPage);
-      } catch (e: any) {
-        console.log(e);
-        setError(true);
-      }
-    },
-    [fakeMatches]
-  );
+  const loadMatches = async (nextPage = 1, withCache = true) => {
+    try {
+      setError(false);
+      setMatches((prev) =>
+        nextPage === 1 ? fakeMatches : [...prev, ...fakeMatches]
+      );
+      const res = await getCreatedMatches(nextPage, pageSize, withCache);
+      if (res.error || !res.data) throw new Error("Error al cargar partidos");
+      const { matches: newMatches, totalMatches } = res.data;
+      setMatches((prev) => {
+        const realPrev = prev.filter((m) => !!m.id);
+        return nextPage === 1 ? newMatches : [...realPrev, ...newMatches];
+      });
+      setTotal(totalMatches);
+      setPage(nextPage);
+    } catch (e: any) {
+      console.log(e);
+      setError(true);
+    }
+  };
 
   useEffect(() => {
     loadMatches();
-  }, [loadMatches]);
+  }, []);
 
   return (
     <View style={styles.container}>
