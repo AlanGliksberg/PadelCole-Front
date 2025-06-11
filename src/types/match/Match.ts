@@ -1,6 +1,6 @@
 import { Application } from "../application/Application";
-import { Gender } from "../gender/Gender";
 import { Category } from "../player/Category";
+import { Gender } from "../player/Gender";
 import { Team } from "../player/Team";
 import { Status } from "./Status";
 

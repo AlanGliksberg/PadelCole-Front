@@ -2,7 +2,7 @@ import { getPlayers } from "@/src/services/player";
 import { colors } from "@/src/theme";
 import { Player } from "@/src/types";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -13,6 +13,7 @@ import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomSearchInput from "../ui/CustomSearchInput/CustomSearchInput";
 import CustomText from "../ui/CustomText/CustomText";
 import EmptyState from "./EmptyState";
+import FiltersModal from "./FiltersModal";
 import { styles } from "./PlayersList.styles";
 
 interface PlayersListProps {
@@ -21,23 +22,66 @@ interface PlayersListProps {
 
 const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
   const [players, setPlayers] = useState<Player[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [playerName, setPlayerName] = useState<string | null>(null);
+
+  const [appliedGenders, setAppliedGenders] = useState<string[]>([]);
+  const [appliedPositions, setAppliedPositions] = useState<string[]>([]);
+  const [appliedCategories, setAppliedCategories] = useState<string[]>([]);
+
+  const [tempGenders, setTempGenders] = useState<string[]>([]);
+  const [tempPositions, setTempPositions] = useState<string[]>([]);
+  const [tempCategories, setTempCategories] = useState<string[]>([]);
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggle = (
+    val: string,
+    arr: string[],
+    setter: (v: string[]) => void
+  ) => {
+    setter(arr.includes(val) ? arr.filter((x) => x !== val) : [...arr, val]);
+  };
+
+  const resetFilters = () => {
+    setTempGenders([]);
+    setTempPositions([]);
+    setTempCategories([]);
+  };
 
   const searchPlayers = useCallback(async () => {
     setLoading(true);
-    const resultPlayers = await getPlayers(playerName);
+    const resultPlayers = await getPlayers({
+      name: playerName,
+      gender: appliedGenders,
+      position: appliedPositions,
+      category: appliedCategories,
+    });
     // TODO - controlar error
     setPlayers(resultPlayers.data?.players || []);
     setLoading(false);
-  }, [playerName]);
+  }, [playerName, appliedGenders, appliedPositions, appliedCategories]);
 
   useEffect(() => {
     searchPlayers();
-  }, [searchPlayers, playerName]);
+  }, [searchPlayers]);
 
   const clearSearch = () => {
     setPlayers([]);
+  };
+
+  const openFilters = () => {
+    setTempGenders(appliedGenders);
+    setTempPositions(appliedPositions);
+    setTempCategories(appliedCategories);
+    setModalVisible(true);
+  };
+
+  const applyFilters = () => {
+    setAppliedGenders(tempGenders);
+    setAppliedPositions(tempPositions);
+    setAppliedCategories(tempCategories);
+    setModalVisible(false);
   };
 
   return (
@@ -47,6 +91,26 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
         startSearchingOn={3}
         onSearch={setPlayerName}
         onClear={clearSearch}
+      />
+      <TouchableOpacity
+        style={styles.filtersButton}
+        onPress={openFilters}
+        activeOpacity={0.7}
+      >
+        <MaterialIcons name="filter-list" size={20} color={colors.primary} />
+        <CustomText style={styles.filtersButtonText}>Filtros</CustomText>
+      </TouchableOpacity>
+      <FiltersModal
+        visible={modalVisible}
+        selectedGenders={tempGenders}
+        selectedPositions={tempPositions}
+        selectedCategories={tempCategories}
+        onToggleGender={(g) => toggle(g, tempGenders, setTempGenders)}
+        onTogglePosition={(p) => toggle(p, tempPositions, setTempPositions)}
+        onToggleCategory={(c) => toggle(c, tempCategories, setTempCategories)}
+        onApply={applyFilters}
+        onCancel={() => setModalVisible(false)}
+        resetFilters={resetFilters}
       />
       {loading ? (
         <View style={styles.loadingContainer}>
@@ -75,8 +139,8 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
               {onPlayerSelect && (
                 <TouchableOpacity
                   style={styles.addIconContainer}
-                  activeOpacity={0.6}
                   onPress={() => onPlayerSelect(item)}
+                  activeOpacity={0.6}
                 >
                   <MaterialIcons
                     name="add-circle-outline"

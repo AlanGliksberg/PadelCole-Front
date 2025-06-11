@@ -1,6 +1,6 @@
-import { Gender } from "../gender/Gender";
 import { User } from "../user/User";
 import { Category } from "./Category";
+import { Gender } from "./Gender";
 import { Position } from "./Position";
 
 export type Player = {

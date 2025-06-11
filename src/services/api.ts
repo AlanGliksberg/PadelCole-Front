@@ -3,6 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import { API_URL } from "../config/env";
 import { USER_TOKEN_SESSION_KEY } from "../constants/auth";
 import { ApiParams, ApiResponse } from "../types";
+import { getQueryParams } from "../utils/api";
 import { CACHE_TTL, cacheGetCall, getCachedCall } from "./cache";
 
 const axiosInstance: AxiosInstance = axios.create({
@@ -35,7 +36,7 @@ export const post = async <T>(uri: string, apiParams: ApiParams) => {
 
 export const get = async <T>(uri: string, apiParams: ApiParams = {}) => {
   const url = apiParams?.queryParams
-    ? `${uri}?${new URLSearchParams(apiParams.queryParams).toString()}`
+    ? `${uri}?${getQueryParams(apiParams.queryParams)}`
     : uri;
 
   if (apiParams.withCache) {

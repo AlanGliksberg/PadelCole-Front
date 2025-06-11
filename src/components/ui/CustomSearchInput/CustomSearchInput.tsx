@@ -1,5 +1,5 @@
+import { useDebounce } from "@/src/hooks/useDebounce";
 import { colors } from "@/src/theme";
-import { useDebounce } from "@/src/types/hooks/useDebounce";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
