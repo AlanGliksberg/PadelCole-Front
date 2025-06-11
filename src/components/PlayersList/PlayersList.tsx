@@ -84,6 +84,8 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
     setModalVisible(false);
   };
 
+  // TODO - permitir crear un jugador temporal en algun lado
+
   return (
     <View style={styles.searchContainer}>
       <CustomSearchInput

@@ -32,11 +32,15 @@ export default function MeFaltaAlguien() {
       setMatches((prev) =>
         nextPage === 1 ? fakeMatches : [...prev, ...fakeMatches]
       );
-      const res = await getCreatedMatches(nextPage, pageSize, withCache);
+      let res = await getCreatedMatches(nextPage, pageSize, withCache);
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
-      const { matches: newMatches, totalMatches } = res.data;
+      if (total !== res.data.totalMatches) {
+        res = await getCreatedMatches(1, nextPage * pageSize, withCache);
+      }
+      const { matches: newMatches, totalMatches } = res.data!;
       setMatches((prev) => {
-        const realPrev = prev.filter((m) => !!m.id);
+        const newIds = newMatches.map((m) => m.id);
+        const realPrev = prev.filter((m) => !!m.id && !newIds.includes(m.id));
         return nextPage === 1 ? newMatches : [...realPrev, ...newMatches];
       });
       setTotal(totalMatches);
