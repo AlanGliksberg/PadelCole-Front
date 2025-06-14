@@ -12,6 +12,7 @@ import {
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomSearchInput from "../ui/CustomSearchInput/CustomSearchInput";
 import CustomText from "../ui/CustomText/CustomText";
+import ErrorSection from "../ui/ErrorSection/ErrorSection";
 import EmptyState from "./EmptyState";
 import FiltersModal from "./FiltersModal";
 import { styles } from "./PlayersList.styles";
@@ -23,6 +24,7 @@ interface PlayersListProps {
 const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [playerName, setPlayerName] = useState<string | null>(null);
 
   const [appliedGenders, setAppliedGenders] = useState<string[]>([]);
@@ -51,22 +53,33 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
 
   const searchPlayers = useCallback(async () => {
     setLoading(true);
-    const resultPlayers = await getPlayers({
-      name: playerName,
-      gender: appliedGenders,
-      position: appliedPositions,
-      category: appliedCategories,
-    });
-    // TODO - controlar error
-    setPlayers(resultPlayers.data?.players || []);
-    setLoading(false);
-  }, [playerName, appliedGenders, appliedPositions, appliedCategories]);
+    setError(false);
+    try {
+      const resultPlayers = await getPlayers({
+        name: playerName,
+        gender: appliedGenders,
+        position: appliedPositions,
+        category: appliedCategories,
+      });
+
+      if (resultPlayers.error || !resultPlayers.data)
+        throw new Error("Error buscando jugadores");
+
+      setPlayers(resultPlayers.data.players || []);
+    } catch (e) {
+      console.log("Error:", e);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, [appliedCategories, appliedGenders, appliedPositions, playerName]);
 
   useEffect(() => {
     searchPlayers();
   }, [searchPlayers]);
 
   const clearSearch = () => {
+    setPlayerName("");
     setPlayers([]);
   };
 
@@ -119,43 +132,53 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
           <ActivityIndicator size="large" color={colors.primary} />
         </View>
       ) : (
-        <FlatList
-          data={players}
-          keyExtractor={(p) => p.id.toString()}
-          style={styles.list}
-          keyboardShouldPersistTaps="never"
-          renderItem={({ item }) => (
-            <View style={styles.itemContainer}>
-              <View style={styles.playerInfo}>
-                <PlayerAvatar player={item} />
-                <View>
-                  <CustomText bold type="body">
-                    {item.firstName} {item.lastName}
-                  </CustomText>
-                  <CustomText type="small" style={styles.sub}>
-                    {item.category?.description} • {item.position?.description}{" "}
-                    • {item.gender?.name}
-                  </CustomText>
-                </View>
-              </View>
-              {onPlayerSelect && (
-                <TouchableOpacity
-                  style={styles.addIconContainer}
-                  onPress={() => onPlayerSelect(item)}
-                  activeOpacity={0.6}
-                >
-                  <MaterialIcons
-                    name="add-circle-outline"
-                    size={28}
-                    color={colors.primary}
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
+        <>
+          {error && (
+            <ErrorSection
+              message="Error buscando jugadores"
+              onRetry={searchPlayers}
+            />
           )}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          ListEmptyComponent={() => <EmptyState />}
-        />
+          {!error && (
+            <FlatList
+              data={players}
+              keyExtractor={(p) => p.id.toString()}
+              style={styles.list}
+              keyboardShouldPersistTaps="never"
+              renderItem={({ item }) => (
+                <View style={styles.itemContainer}>
+                  <View style={styles.playerInfo}>
+                    <PlayerAvatar player={item} />
+                    <View>
+                      <CustomText bold type="body">
+                        {item.firstName} {item.lastName}
+                      </CustomText>
+                      <CustomText type="small" style={styles.sub}>
+                        {item.category?.description} •{" "}
+                        {item.position?.description} • {item.gender?.name}
+                      </CustomText>
+                    </View>
+                  </View>
+                  {onPlayerSelect && (
+                    <TouchableOpacity
+                      style={styles.addIconContainer}
+                      onPress={() => onPlayerSelect(item)}
+                      activeOpacity={0.6}
+                    >
+                      <MaterialIcons
+                        name="add-circle-outline"
+                        size={28}
+                        color={colors.primary}
+                      />
+                    </TouchableOpacity>
+                  )}
+                </View>
+              )}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+              ListEmptyComponent={() => <EmptyState />}
+            />
+          )}
+        </>
       )}
     </View>
   );

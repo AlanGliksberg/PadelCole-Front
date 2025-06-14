@@ -40,7 +40,6 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
       primaryLabel: "Agregar",
       primaryAction: async () => {
         const result = await addPlayerToMatch(match!.id, team!, player.id);
-        // TODO - controlar error
         if (result.error) {
           openErrorModal(
             "Agregar jugador",

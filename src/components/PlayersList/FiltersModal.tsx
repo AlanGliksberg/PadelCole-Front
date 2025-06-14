@@ -228,7 +228,6 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
                     </View>
                   </ScrollView>
 
-                  {/* TODO - cambiar por restablecer*/}
                   <View style={styles.actions}>
                     <SimpleButton
                       title="Restablecer"
