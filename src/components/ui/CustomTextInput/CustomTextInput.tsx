@@ -9,6 +9,7 @@ export interface CustomTextInputProps extends TextInputProps {
   rightSlot?: React.ReactNode;
   label?: string;
   error?: string;
+  mandatory?: boolean;
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
@@ -17,14 +18,22 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   rightSlot,
   label,
   error,
+  mandatory,
   ...rest
 }) => {
   return (
     <View>
       {label && (
-        <CustomText type="medium" style={styles.label}>
-          {label}
-        </CustomText>
+        <View style={styles.labelContainer}>
+          <CustomText type="medium" style={styles.label}>
+            {label}
+          </CustomText>
+          {mandatory && (
+            <CustomText type="xsmall" style={styles.label}>
+              {" *"}
+            </CustomText>
+          )}
+        </View>
       )}
 
       <View style={[styles.searchSection, error && styles.errorInput]}>

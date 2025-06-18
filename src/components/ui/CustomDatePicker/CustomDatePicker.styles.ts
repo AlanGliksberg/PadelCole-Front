@@ -1,4 +1,4 @@
-import { colors, spacing } from "@/src/theme";
+import { colors, spacing, typography } from "@/src/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -13,10 +13,18 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: spacing.sm,
   },
+  labelContainer: {
+    flexDirection: "row",
+  },
   label: {
     marginBottom: spacing.xs,
   },
   placeholder: {
     color: colors.placeholder,
+  },
+  errorText: {
+    color: colors.error,
+    fontSize: typography.caption,
+    marginLeft: 5,
   },
 });

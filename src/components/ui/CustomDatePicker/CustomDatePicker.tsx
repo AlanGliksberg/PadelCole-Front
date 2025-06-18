@@ -8,12 +8,18 @@ interface CustomDatePickerProps {
   date: Date | null;
   minimumDate?: Date;
   onChange: (d: Date) => void;
+  mandatory?: boolean;
+  placeholder?: string;
+  error?: string;
 }
 
 const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   date,
   minimumDate,
   onChange,
+  mandatory,
+  placeholder,
+  error,
 }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -24,9 +30,16 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
 
   return (
     <View>
-      <CustomText type="medium" style={styles.label}>
-        Fecha
-      </CustomText>
+      <View style={styles.labelContainer}>
+        <CustomText type="medium" style={styles.label}>
+          Fecha
+        </CustomText>
+        {mandatory && (
+          <CustomText type="xsmall" style={styles.label}>
+            {" *"}
+          </CustomText>
+        )}
+      </View>
       <TouchableOpacity
         style={styles.pickerButton}
         onPress={() => setShowDatePicker(true)}
@@ -35,10 +48,12 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
           <CustomText>{date.toLocaleDateString()}</CustomText>
         ) : (
           <CustomText style={styles.placeholder}>
-            Seleccioná la fecha
+            {placeholder || "Seleccioná la fecha"}
           </CustomText>
         )}
       </TouchableOpacity>
+      {error && <CustomText style={styles.errorText}>{error}</CustomText>}
+
       {showDatePicker && (
         <DateTimePicker
           value={date || new Date()}

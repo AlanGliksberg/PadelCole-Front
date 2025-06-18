@@ -4,6 +4,8 @@ import { View } from "react-native";
 
 import useCategories from "@/src/hooks/useCategories";
 import useGenders from "@/src/hooks/useGenders";
+import { matchSchema } from "@/src/schemas/matchSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
 import CustomDatePicker from "../ui/CustomDatePicker/CustomDatePicker";
 import CustomSelect from "../ui/CustomSelect/CustomSelect";
 import CustomText from "../ui/CustomText/CustomText";
@@ -14,12 +16,12 @@ import { styles } from "./MatchForm.styles";
 
 export interface MatchFormValues {
   name: string;
-  description?: string;
+  description: string | undefined;
   date: Date | null;
   time: Date | null;
-  duration: 60 | 90 | 120;
-  genderId: number;
-  categoryId: number;
+  duration: 60 | 90 | 120 | null;
+  genderId: number | null;
+  categoryId: number | null;
 }
 
 export type MatchFormProps = {
@@ -39,10 +41,11 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
       description: "",
       date: null,
       time: null,
-      duration: 90,
-      genderId: 0,
-      categoryId: 0,
+      duration: null,
+      genderId: null,
+      categoryId: null,
     },
+    resolver: yupResolver(matchSchema) as any,
   });
 
   const { data: genders = [], loading: loadingGenders } = useGenders();
@@ -60,14 +63,14 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
         <Controller
           control={control}
           name="name"
-          rules={{ required: "El nombre es obligatorio" }}
           render={({ field: { onChange, value } }) => (
             <CustomTextInput
-              label="Nombre/Ubicación"
+              label="Nombre"
               value={value}
               onChangeText={onChange}
-              placeholder="Escribí un nombre"
+              placeholder="Nombre o ubicación"
               error={errors.name?.message}
+              mandatory
             />
           )}
         />
@@ -81,7 +84,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
               label="Descripción"
               value={value}
               onChangeText={onChange}
-              placeholder="Agregá detalles"
+              placeholder="Dirección o detalles"
               error={errors.description?.message}
             />
           )}
@@ -96,6 +99,9 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
               onChange={onChange}
               date={value}
               minimumDate={new Date()}
+              mandatory
+              placeholder="Fecha del partido"
+              error={errors.date?.message}
             />
           )}
         />
@@ -105,7 +111,13 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
           control={control}
           name="time"
           render={({ field: { onChange, value } }) => (
-            <CustomTimePicker onChange={onChange} time={value} />
+            <CustomTimePicker
+              onChange={onChange}
+              time={value}
+              mandatory
+              placeholder="Hora del partido"
+              error={errors.time?.message}
+            />
           )}
         />
 
@@ -126,6 +138,8 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
               value={value}
               onSelect={onChange}
               error={errors.duration?.message}
+              mandatory
+              placeholder="Duración del partido"
             />
           )}
         />
@@ -147,6 +161,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
                 loadingGenders ? "Cargando..." : "Género del partido"
               }
               error={errors.genderId?.message}
+              mandatory
             />
           )}
         />
@@ -170,9 +185,10 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
                   ? "Primero elegí el género"
                   : loadingCats
                   ? "Cargando..."
-                  : "Seleccioná la categoría"
+                  : "Categoría del partido"
               }
               error={errors.categoryId?.message}
+              mandatory
             />
           )}
         />

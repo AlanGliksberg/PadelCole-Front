@@ -2,6 +2,9 @@ import { colors, spacing, typography } from "@/src/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  labelContainer: {
+    flexDirection: "row",
+  },
   label: {
     marginBottom: spacing.xs,
   },
@@ -23,9 +26,9 @@ export const styles = StyleSheet.create({
     color: colors.placeholder,
   },
   errorText: {
-    marginTop: spacing.sm,
     color: colors.error,
-    fontSize: typography.body,
+    fontSize: typography.caption,
+    marginLeft: 5,
   },
   backdrop: {
     flex: 1,
@@ -44,5 +47,10 @@ export const styles = StyleSheet.create({
   selected: {
     backgroundColor: colors.primary,
     borderRadius: 4,
+  },
+  separator: {
+    width: "100%",
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: "#ccc",
   },
 });

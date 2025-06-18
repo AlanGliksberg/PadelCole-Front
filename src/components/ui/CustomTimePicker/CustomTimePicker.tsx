@@ -7,11 +7,17 @@ import { styles } from "./CustomTimePicker.styles";
 interface CustomTimePickerProps {
   time: Date | null;
   onChange: (d: Date) => void;
+  mandatory?: boolean;
+  placeholder: string;
+  error?: string;
 }
 
 const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
   time,
   onChange,
+  mandatory,
+  placeholder,
+  error,
 }) => {
   const [showTimePicker, setShowTimePicker] = useState(false);
 
@@ -26,25 +32,43 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
 
   return (
     <View>
-      <CustomText type="medium" style={styles.label}>
-        Hora
-      </CustomText>
+      <View style={styles.labelContainer}>
+        <CustomText type="medium" style={styles.label}>
+          Hora
+        </CustomText>
+        {mandatory && (
+          <CustomText type="xsmall" style={styles.label}>
+            {" *"}
+          </CustomText>
+        )}
+      </View>
+
       <TouchableOpacity
         style={styles.pickerButton}
         onPress={() => setShowTimePicker(true)}
       >
         {time ? (
-          <CustomText>{time.toLocaleTimeString().slice(0, 5)}</CustomText>
+          <CustomText>
+            {time.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </CustomText>
         ) : (
-          <CustomText style={styles.placeholder}>Seleccioná la hora</CustomText>
+          <CustomText style={styles.placeholder}>
+            {placeholder || "Seleccioná la hora"}
+          </CustomText>
         )}
       </TouchableOpacity>
+      {error && <CustomText style={styles.errorText}>{error}</CustomText>}
+
       {showTimePicker && (
         <DateTimePicker
           value={selectedTime}
           mode="time"
           display="default"
           onChange={action}
+          is24Hour
         />
       )}
     </View>

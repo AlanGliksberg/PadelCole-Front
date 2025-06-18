@@ -23,6 +23,7 @@ export interface CustomSelectProps<T extends Item> {
   labelExtractor: (item: T) => string;
   disabled?: boolean;
   error?: string;
+  mandatory?: boolean;
 }
 
 const CustomSelect = <T extends Item>({
@@ -33,17 +34,26 @@ const CustomSelect = <T extends Item>({
   onSelect,
   keyExtractor,
   labelExtractor,
-  disabled = false,
+  disabled,
   error,
+  mandatory,
 }: CustomSelectProps<T>) => {
   const [modalVisible, setModalVisible] = useState(false);
   const selectedItem = data.find((item) => item.id === value) || null;
 
   return (
     <View>
-      <CustomText type="medium" style={styles.label}>
-        {label}
-      </CustomText>
+      <View style={styles.labelContainer}>
+        <CustomText type="medium" style={styles.label}>
+          {label}
+        </CustomText>
+        {mandatory && (
+          <CustomText type="xsmall" style={styles.label}>
+            {" *"}
+          </CustomText>
+        )}
+      </View>
+
       <TouchableOpacity
         style={[styles.selectButton, disabled && styles.disabled]}
         onPress={() => !disabled && setModalVisible(true)}
@@ -72,7 +82,6 @@ const CustomSelect = <T extends Item>({
             keyExtractor={keyExtractor}
             renderItem={({ item }) => {
               const isSelected = item.id === value;
-
               return (
                 <TouchableOpacity
                   style={[styles.item, isSelected && styles.selected]}
@@ -85,6 +94,7 @@ const CustomSelect = <T extends Item>({
                 </TouchableOpacity>
               );
             }}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
           />
         </View>
       </Modal>
