@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, Resolver, useForm } from "react-hook-form";
 import { View } from "react-native";
 
 import useCategories from "@/src/hooks/useCategories";
@@ -45,7 +45,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
       genderId: null,
       categoryId: null,
     },
-    resolver: yupResolver(matchSchema) as any,
+    resolver: yupResolver(matchSchema) as Resolver<MatchFormValues>,
   });
 
   const { data: genders = [], loading: loadingGenders } = useGenders();
