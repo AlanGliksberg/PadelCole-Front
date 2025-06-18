@@ -7,4 +7,5 @@ export const typography = {
   medium: 14,
   small: 12,
   xsmall: 10,
+  caption: 12,
 };

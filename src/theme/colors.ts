@@ -15,5 +15,6 @@ export const colors = {
   closedStatus: "#C8E6C9",
   completedStatus: "#BBDEFB",
   skeleton: "#e0e0e0",
-  input: "#F2F2F7"
+  input: "#F2F2F7",
+  border: "#E5E7EB",
 };

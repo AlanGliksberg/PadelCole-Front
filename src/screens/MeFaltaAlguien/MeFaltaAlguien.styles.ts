@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.primary,
     textAlign: "center",
-    marginBottom: spacing.sm,
+    marginBottom: spacing.lg,
   },
   emptySubtitle: {
     fontSize: typography.body,

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors, spacing, typography } from "../../../theme";
+import { colors, typography } from "../../../theme";
 
 export const styles = StyleSheet.create({
   text: {
@@ -13,7 +13,6 @@ export const styles = StyleSheet.create({
     fontSize: typography.h2,
     fontWeight: "700",
     color: colors.primary,
-    marginBottom: spacing.lg,
     textAlign: "center",
   },
   buttonText: {

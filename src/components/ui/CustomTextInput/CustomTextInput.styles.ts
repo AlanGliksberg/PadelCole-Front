@@ -1,8 +1,10 @@
-// CustomTextInput.styles.ts
 import { StyleSheet } from "react-native";
 import { colors, spacing, typography } from "../../../theme";
 
 export const styles = StyleSheet.create({
+  label: {
+    marginBottom: spacing.xs,
+  },
   searchSection: {
     flexDirection: "row",
     alignItems: "center",
@@ -10,7 +12,6 @@ export const styles = StyleSheet.create({
     height: 48,
     backgroundColor: colors.input,
     borderRadius: 8,
-    marginBottom: spacing.md,
     paddingHorizontal: spacing.sm,
   },
   leftSide: {
@@ -39,5 +40,14 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: spacing.sm,
+  },
+  errorText: {
+    color: colors.error,
+    fontSize: typography.caption,
+    marginLeft: 5,
+  },
+  errorInput: {
+    borderColor: colors.error,
+    borderWidth: 1,
   },
 });

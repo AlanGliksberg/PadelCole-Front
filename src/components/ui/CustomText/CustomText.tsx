@@ -14,7 +14,7 @@ type TextType =
   | "xsmall";
 
 export interface CustomTextProps extends TextProps {
-  style?: TextStyle | TextStyle[];
+  style?: TextStyle | (TextStyle | undefined)[];
   bold?: boolean;
   type?: TextType;
   uppercase?: boolean;

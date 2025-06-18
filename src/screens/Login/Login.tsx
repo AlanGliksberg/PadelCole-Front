@@ -50,17 +50,16 @@ export default function Login() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View style={styles.card}>
-          <CustomText.Title>¡Bienvenido!</CustomText.Title>
+          <CustomText.Title style={styles.title}>¡Bienvenido!</CustomText.Title>
 
-          <CustomTextInput
-            placeholder="Correo electrónico"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-
-          <View>
+          <View style={styles.inputsContainer}>
+            <CustomTextInput
+              placeholder="Correo electrónico"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
             <CustomTextInput
               placeholder="Contraseña"
               secureTextEntry={!showPassword}

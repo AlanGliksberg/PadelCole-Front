@@ -39,7 +39,7 @@ export const getPositions = async () => {
   });
 };
 
-export const getCategories = async (filterBoth: boolean = false) => {
+export const getCategories = async (filterBoth: boolean) => {
   return await get<{ categories: Category[] }>(GET_CATEGORIES_URI, {
     withCache: true,
     queryParams: { filterBoth },

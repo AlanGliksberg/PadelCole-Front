@@ -18,6 +18,13 @@ export const styles = StyleSheet.create({
     boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
     elevation: 5,
   },
+  title: {
+    marginBottom: spacing.lg,
+  },
+  inputsContainer: {
+    gap: 20,
+    marginBottom: spacing.lg,
+  },
   googleButton: {
     backgroundColor: colors.google,
   },
