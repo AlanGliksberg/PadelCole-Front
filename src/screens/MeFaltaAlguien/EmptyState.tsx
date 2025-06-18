@@ -1,6 +1,6 @@
 import { CustomText, FullButton } from "@/src/components";
 import { colors } from "@/src/theme";
-import { AppStackParamList } from "@/src/types";
+import { AppStackParamList, MeFaltaAlguienStackParamList } from "@/src/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
@@ -8,7 +8,10 @@ import { TouchableOpacity, View } from "react-native";
 import { styles } from "./MeFaltaAlguien.styles";
 
 const EmptyState: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<AppStackParamList>>();
+  const navigation =
+    useNavigation<
+      NavigationProp<AppStackParamList & MeFaltaAlguienStackParamList>
+    >();
 
   return (
     <View style={styles.emptyContainer}>
@@ -31,7 +34,7 @@ const EmptyState: React.FC = () => {
       <FullButton
         style={styles.emptyPrimaryButton}
         size="l"
-        onPress={() => navigation.navigate("QuieroJugar")}
+        onPress={() => navigation.navigate("CrearPartido")}
       >
         <CustomText.ButtonText uppercase>Creá tu partido</CustomText.ButtonText>
       </FullButton>

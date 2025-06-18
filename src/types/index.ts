@@ -1,6 +1,6 @@
 export { ApiParams, ApiResponse } from "./api/Api";
 export { PageParams } from "./api/Common";
-export { GetCreatedMatchesResponse } from "./api/MatchResponse";
+export { CreateMatchBody, GetCreatedMatchesResponse } from "./api/Match";
 export { GetPlayerParams } from "./api/Player";
 export { JWTPayload } from "./auth/JWTPayload";
 export { LoginResponse } from "./auth/LoginResponse";

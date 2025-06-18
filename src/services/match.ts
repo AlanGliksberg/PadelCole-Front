@@ -1,9 +1,11 @@
 import {
   ADD_PLAYER_TO_MATCH_URI,
+  CREATE_MATCH_URI,
   DELETE_MATCH_URI,
   GET_MY_MATCHES_URI,
 } from "../constants/api";
-import { GetCreatedMatchesResponse, Match } from "../types";
+import { CreateMatchBody, GetCreatedMatchesResponse } from "../types";
+import { CommonMatchResponse } from "../types/api/Match";
 import { deleteApi, get, post } from "./api";
 
 export const getCreatedMatches = async (
@@ -18,7 +20,9 @@ export const getCreatedMatches = async (
 };
 
 export const deleteMatchApi = async (matchId: number) => {
-  return await deleteApi<Match>(`${DELETE_MATCH_URI}/${matchId.toString()}`);
+  return await deleteApi<CommonMatchResponse>(
+    `${DELETE_MATCH_URI}/${matchId.toString()}`
+  );
 };
 
 export const addPlayerToMatch = async (
@@ -26,7 +30,13 @@ export const addPlayerToMatch = async (
   teamNumber: number,
   playerId: number
 ) => {
-  return await post<any>(ADD_PLAYER_TO_MATCH_URI, {
+  return await post<CommonMatchResponse>(ADD_PLAYER_TO_MATCH_URI, {
     body: { matchId, teamNumber, playerId },
+  });
+};
+
+export const createMatch = async (data: CreateMatchBody) => {
+  return await post<CommonMatchResponse>(CREATE_MATCH_URI, {
+    body: data,
   });
 };

@@ -30,7 +30,10 @@ const MeFaltaAlguienStack: React.FC = () => (
     <Stack.Screen
       name="MeFaltaAlguien"
       component={MeFaltaAlguien}
-      options={{ title: FALTA_ALGUIEN_PAGE_NAME, headerBackVisible: false }}
+      options={{
+        title: FALTA_ALGUIEN_PAGE_NAME,
+        headerBackVisible: false,
+      }}
     />
     <Stack.Screen
       name="CrearPartido"

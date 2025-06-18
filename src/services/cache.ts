@@ -1,3 +1,4 @@
+import { GET_MY_MATCHES_URI } from "../constants/api";
 import { ApiResponse } from "../types";
 
 interface CacheEntry {
@@ -8,7 +9,7 @@ interface CacheEntry {
 export const cache = new Map<string, Map<string, CacheEntry>>();
 export const CACHE_TTL = 5 * 60 * 1000;
 
-export const invalidateCache = (uri: string) => {
+const removeCache = (uri: string) => {
   cache.delete(uri);
 };
 
@@ -36,4 +37,8 @@ export const cacheGetCall = (
   const valueDictionary = new Map<string, CacheEntry>();
   valueDictionary.set(url, { timestamp: Date.now(), data: result });
   cache.set(uri, valueDictionary);
+};
+
+export const removeGetCreatedMatchesCache = () => {
+  removeCache(GET_MY_MATCHES_URI);
 };

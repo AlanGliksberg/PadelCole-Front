@@ -1,8 +1,9 @@
+import { removeGetCreatedMatchesCache } from "@/src/services/cache";
 import { getCreatedMatches } from "@/src/services/match";
 import { Match, MeFaltaAlguienStackParamList } from "@/src/types";
-import { NavigationProp } from "@react-navigation/native";
+import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FlatList, View } from "react-native";
 import {
   CustomText,
@@ -26,17 +27,14 @@ export default function MeFaltaAlguien() {
     useNavigation<NavigationProp<MeFaltaAlguienStackParamList>>();
 
   const fakeMatches = Array(pageSize + 1).fill({} as Match);
-  const loadMatches = async (nextPage = 1, withCache = true) => {
+  const loadMatches = async (nextPage = 1) => {
     try {
       setError(false);
       setMatches((prev) =>
         nextPage === 1 ? fakeMatches : [...prev, ...fakeMatches]
       );
-      let res = await getCreatedMatches(nextPage, pageSize, withCache);
+      const res = await getCreatedMatches(nextPage, pageSize);
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
-      if (total !== res.data.totalMatches) {
-        res = await getCreatedMatches(1, nextPage * pageSize, withCache);
-      }
       const { matches: newMatches, totalMatches } = res.data!;
       setMatches((prev) => {
         const newIds = newMatches.map((m) => m.id);
@@ -51,9 +49,9 @@ export default function MeFaltaAlguien() {
     }
   };
 
-  useEffect(() => {
+  useFocusEffect(() => {
     loadMatches();
-  }, []);
+  });
 
   return (
     <View style={styles.container}>
@@ -80,7 +78,10 @@ export default function MeFaltaAlguien() {
                 <MatchBox
                   match={item}
                   showCreatorDetails
-                  refreshData={() => loadMatches(1, false)}
+                  refreshData={async () => {
+                    removeGetCreatedMatchesCache();
+                    await loadMatches();
+                  }}
                 />
               ) : (
                 <MatchBoxSkeleton />
