@@ -1,4 +1,5 @@
 import { LoadingContext } from "@/src/contexts/LoadingContext";
+import { ModalContext } from "@/src/contexts/ModalContext";
 import { login } from "@/src/services/auth";
 import { colors } from "@/src/theme";
 import { AntDesign } from "@expo/vector-icons";
@@ -24,13 +25,20 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const { saveToken } = useContext(AuthContext);
   const { hideLoading, showLoading, loading } = useContext(LoadingContext);
+  const { openErrorModal } = useContext(ModalContext);
 
   const handleLogin = async () => {
     showLoading();
     const res = await login(email, password);
     if (res.error || !res.data) {
-      // TODO - manejar credenciales incorrectas o error
       hideLoading();
+      if (res.code === 1)
+        openErrorModal("Error", "Las credenciales ingresadas son incorrectas");
+      else
+        openErrorModal(
+          "Error",
+          "Ocurrió un error inesperado. Intente nuevamente."
+        );
       return;
     }
     saveToken(res.data?.token);

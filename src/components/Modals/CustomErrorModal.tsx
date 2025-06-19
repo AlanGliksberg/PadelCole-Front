@@ -30,14 +30,14 @@ const CustomErrorModal: React.FC<ModalProps> = ({
             <View style={styles.container}>
               <View style={styles.headerRow}>
                 <View style={styles.titleContainer}>
+                  <CustomText bold style={styles.title}>
+                    {params?.title}
+                  </CustomText>
                   <MaterialIcons
                     name="error-outline"
                     size={32}
                     color={colors.error}
                   />
-                  <CustomText bold style={styles.title}>
-                    {params?.title}
-                  </CustomText>
                 </View>
                 <TouchableOpacity
                   onPress={closeModal}

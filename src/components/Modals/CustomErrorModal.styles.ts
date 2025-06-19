@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     color: colors.text,
     fontSize: typography.h3,
     textAlign: "center",
-    marginLeft: spacing.sm,
+    marginRight: spacing.sm,
   },
   titleContainer: {
     flex: 1,
