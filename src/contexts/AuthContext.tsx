@@ -1,7 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import * as SplashScreen from "expo-splash-screen";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { USER_TOKEN_SESSION_KEY } from "../constants/auth";
+import { clearCache } from "../services/cache";
 import { JWTPayload } from "../types";
 import { decodeToken } from "../utils/auth";
 
@@ -40,6 +42,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const saveToken = async (jwt: string) => {
+    clearCache();
+    await GoogleSignin.signOut();
     await AsyncStorage.setItem(USER_TOKEN_SESSION_KEY, jwt);
     storeToken(jwt);
   };

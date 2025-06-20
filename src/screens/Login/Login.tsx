@@ -1,9 +1,14 @@
+import { IOS_CLIENT_ID, WEB_CLIENT_ID } from "@/src/constants/auth";
 import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
-import { login } from "@/src/services/auth";
+import { googleLogin, login } from "@/src/services/auth";
 import { colors } from "@/src/theme";
 import { AntDesign } from "@expo/vector-icons";
-import React, { useContext, useState } from "react";
+import {
+  GoogleSignin,
+  isSuccessResponse,
+} from "@react-native-google-signin/google-signin";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Keyboard,
   TouchableOpacity,
@@ -27,6 +32,13 @@ export default function Login() {
   const { hideLoading, showLoading, loading } = useContext(LoadingContext);
   const { openErrorModal } = useContext(ModalContext);
 
+  useEffect(() => {
+    GoogleSignin.configure({
+      iosClientId: IOS_CLIENT_ID,
+      webClientId: WEB_CLIENT_ID,
+    });
+  }, []);
+
   const handleLogin = async () => {
     showLoading();
     const res = await login(email, password);
@@ -44,8 +56,35 @@ export default function Login() {
     saveToken(res.data?.token);
     hideLoading();
   };
-  const handleGoogle = () => {
-    // TODO
+
+  const handleGoogle = async () => {
+    showLoading();
+    try {
+      await GoogleSignin.hasPlayServices();
+      const result = await GoogleSignin.signIn();
+      let res = null;
+      if (isSuccessResponse(result)) {
+        res = await googleLogin(result.data.idToken!);
+      }
+      if (!res || res.error || !res.data) {
+        hideLoading();
+        openErrorModal(
+          "Error",
+          "No se pudo iniciar sesión con Google. Intentá nuevamente."
+        );
+        return;
+      }
+
+      saveToken(res.data.token);
+    } catch (e) {
+      console.log("Error:", e);
+      openErrorModal(
+        "Error",
+        "No se pudo iniciar sesión con Google. Intentá nuevamente."
+      );
+    } finally {
+      hideLoading();
+    }
   };
   const handleRegister = () => {
     // TODO

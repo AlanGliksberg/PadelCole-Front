@@ -12,6 +12,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.Thunder.padelcole",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -24,6 +25,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "expo-dev-client",
       "expo-router",
       [
         "expo-splash-screen",
@@ -34,7 +36,13 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.174614424193-6ntfdudfko20mjcs94sj6vnc8cv0n5u1"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
@@ -43,6 +51,12 @@
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "45b2c7b0-0119-41ad-a42b-3aa55c93d6c0"
+      }
     }
   }
 }

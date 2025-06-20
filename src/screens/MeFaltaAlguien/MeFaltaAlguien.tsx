@@ -3,7 +3,7 @@ import { getCreatedMatches } from "@/src/services/match";
 import { Match, MeFaltaAlguienStackParamList } from "@/src/types";
 import { NavigationProp, useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FlatList, View } from "react-native";
 import {
   CustomText,
@@ -49,10 +49,11 @@ export default function MeFaltaAlguien() {
     }
   };
 
-  useFocusEffect(() => {
-    loadMatches();
-  });
-
+  useFocusEffect(
+    useCallback(() => {
+      loadMatches();
+    }, [])
+  );
   return (
     <View style={styles.container}>
       <View style={styles.matchesContainer}>
