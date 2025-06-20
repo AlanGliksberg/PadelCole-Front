@@ -1,4 +1,3 @@
-import { IOS_CLIENT_ID, WEB_CLIENT_ID } from "@/src/constants/auth";
 import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
 import { googleLogin, login } from "@/src/services/auth";
@@ -6,9 +5,10 @@ import { colors } from "@/src/theme";
 import { AntDesign } from "@expo/vector-icons";
 import {
   GoogleSignin,
+  isCancelledResponse,
   isSuccessResponse,
 } from "@react-native-google-signin/google-signin";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Keyboard,
   TouchableOpacity,
@@ -31,13 +31,6 @@ export default function Login() {
   const { saveToken } = useContext(AuthContext);
   const { hideLoading, showLoading, loading } = useContext(LoadingContext);
   const { openErrorModal } = useContext(ModalContext);
-
-  useEffect(() => {
-    GoogleSignin.configure({
-      iosClientId: IOS_CLIENT_ID,
-      webClientId: WEB_CLIENT_ID,
-    });
-  }, []);
 
   const handleLogin = async () => {
     showLoading();
@@ -62,10 +55,12 @@ export default function Login() {
     try {
       await GoogleSignin.hasPlayServices();
       const result = await GoogleSignin.signIn();
+
       let res = null;
       if (isSuccessResponse(result)) {
         res = await googleLogin(result.data.idToken!);
-      }
+      } else if (isCancelledResponse(result)) return;
+
       if (!res || res.error || !res.data) {
         hideLoading();
         openErrorModal(
