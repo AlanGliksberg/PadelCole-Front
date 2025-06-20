@@ -1,11 +1,13 @@
-import MatchForm, {
-  MatchFormValues,
-} from "@/src/components/MatchForm/MatchForm";
+import MatchForm from "@/src/components/MatchForm/MatchForm";
 import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
 import { removeGetCreatedMatchesCache } from "@/src/services/cache";
 import { createMatch } from "@/src/services/match";
-import { CreateMatchBody, MeFaltaAlguienStackParamList } from "@/src/types";
+import {
+  CreateMatchBody,
+  MatchFormValues,
+  MeFaltaAlguienStackParamList,
+} from "@/src/types";
 import { dateToString, timeToString } from "@/src/utils/common";
 import { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "expo-router";

@@ -4,6 +4,7 @@ const PLAYER_BASE_URI = "/player";
 
 export const LOGIN_URI = `${AUTH_BASE_URI}/login`;
 export const GOOGLE_LOGIN_URI = `${AUTH_BASE_URI}/google`;
+export const REGISTER_URI = `${AUTH_BASE_URI}/register`;
 
 export const GET_MY_MATCHES_URI = `${MATCH_BASE_URI}/me`;
 export const DELETE_MATCH_URI = MATCH_BASE_URI;

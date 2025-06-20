@@ -5,6 +5,8 @@ import { View } from "react-native";
 import useCategories from "@/src/hooks/useCategories";
 import useGenders from "@/src/hooks/useGenders";
 import { matchSchema } from "@/src/schemas/matchSchema";
+import { MatchFormValues } from "@/src/types";
+import { matchFormDefaultValues } from "@/src/types/forms/MatchForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CustomDatePicker from "../ui/CustomDatePicker/CustomDatePicker";
 import CustomSelect from "../ui/CustomSelect/CustomSelect";
@@ -13,16 +15,6 @@ import CustomTextInput from "../ui/CustomTextInput/CustomTextInput";
 import CustomTimePicker from "../ui/CustomTimePicker/CustomTimePicker";
 import FullButton from "../ui/FullButton/FullButton";
 import { styles } from "./MatchForm.styles";
-
-export interface MatchFormValues {
-  name: string;
-  description: string | undefined;
-  date: Date | null;
-  time: Date | null;
-  duration: 60 | 90 | 120 | null;
-  genderId: number | null;
-  categoryId: number | null;
-}
 
 export type MatchFormProps = {
   initialValues?: MatchFormValues;
@@ -36,15 +28,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
     watch,
     formState: { errors },
   } = useForm<MatchFormValues>({
-    defaultValues: initialValues || {
-      name: "",
-      description: "",
-      date: null,
-      time: null,
-      duration: null,
-      genderId: null,
-      categoryId: null,
-    },
+    defaultValues: initialValues || matchFormDefaultValues,
     resolver: yupResolver(matchSchema) as Resolver<MatchFormValues>,
   });
 

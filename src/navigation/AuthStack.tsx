@@ -1,15 +1,21 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Login } from "../screens";
-// import ForgotPassword from '../screens/ForgotPassword';
+import { Login, Register } from "../screens";
+import { colors } from "../theme";
 
 const Stack = createNativeStackNavigator();
 
 export function AuthStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        animation: "slide_from_right",
+        contentStyle: { backgroundColor: colors.background },
+      }}
+    >
       <Stack.Screen name="Login" component={Login} />
-      {/* <Stack.Screen name="Forgot" component={ForgotPassword} /> */}
+      <Stack.Screen name="Register" component={Register} />
     </Stack.Navigator>
   );
 }

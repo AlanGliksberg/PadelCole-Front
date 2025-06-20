@@ -1,5 +1,5 @@
-import { GOOGLE_LOGIN_URI, LOGIN_URI } from "../constants/api";
-import { LoginResponse } from "../types";
+import { GOOGLE_LOGIN_URI, LOGIN_URI, REGISTER_URI } from "../constants/api";
+import { LoginResponse, RegisterPayload, RegisterResponse } from "../types";
 import { post } from "./api";
 
 export const login = async (email: string, password: string) => {
@@ -9,5 +9,11 @@ export const login = async (email: string, password: string) => {
 export const googleLogin = async (idToken: string) => {
   return await post<LoginResponse>(GOOGLE_LOGIN_URI, {
     body: { idToken },
+  });
+};
+
+export const register = async (data: RegisterPayload) => {
+  return await post<RegisterResponse>(REGISTER_URI, {
+    body: data,
   });
 };

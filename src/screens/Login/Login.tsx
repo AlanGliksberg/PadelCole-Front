@@ -2,12 +2,15 @@ import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
 import { googleLogin, login } from "@/src/services/auth";
 import { colors } from "@/src/theme";
+import { AuthStackParamList } from "@/src/types";
 import { AntDesign } from "@expo/vector-icons";
 import {
   GoogleSignin,
   isCancelledResponse,
   isSuccessResponse,
 } from "@react-native-google-signin/google-signin";
+import { NavigationProp } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 import React, { useContext, useState } from "react";
 import {
   Keyboard,
@@ -31,6 +34,7 @@ export default function Login() {
   const { saveToken } = useContext(AuthContext);
   const { hideLoading, showLoading, loading } = useContext(LoadingContext);
   const { openErrorModal } = useContext(ModalContext);
+  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
 
   const handleLogin = async () => {
     showLoading();
@@ -42,7 +46,7 @@ export default function Login() {
       else
         openErrorModal(
           "Error",
-          "Ocurrió un error inesperado. Intente nuevamente."
+          "Ocurrió un error inesperado. Intentá nuevamente en unos momentos."
         );
       return;
     }
@@ -82,7 +86,7 @@ export default function Login() {
     }
   };
   const handleRegister = () => {
-    // TODO
+    navigation.navigate("Register");
   };
   const handleForgot = () => {
     // TODO
