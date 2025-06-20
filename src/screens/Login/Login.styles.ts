@@ -36,6 +36,14 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     display: "flex",
+    gap: spacing.md,
+  },
+  mainButtonsContainer: {
+    display: "flex",
+    gap: spacing.sm,
+  },
+  secondaryButtonsContainer: {
+    display: "flex",
     gap: spacing.sm,
   },
 });

@@ -123,28 +123,32 @@ export default function Login() {
           </View>
 
           <View style={styles.buttonContainer}>
-            <FullButton onPress={handleLogin} disabled={loading}>
-              <CustomText.ButtonText uppercase>
-                Iniciar sesión
-              </CustomText.ButtonText>
-            </FullButton>
+            <View style={styles.mainButtonsContainer}>
+              <FullButton onPress={handleLogin} disabled={loading}>
+                <CustomText.ButtonText uppercase>
+                  Iniciar sesión
+                </CustomText.ButtonText>
+              </FullButton>
 
-            <FullButton
-              style={styles.googleButton}
-              onPress={handleGoogle}
-              disabled={loading}
-            >
-              <AntDesign name="google" size={20} color="#fff" />
-              <CustomText.ButtonText uppercase>
-                Continuar con Google
-              </CustomText.ButtonText>
-            </FullButton>
+              <FullButton
+                style={styles.googleButton}
+                onPress={handleGoogle}
+                disabled={loading}
+              >
+                <AntDesign name="google" size={20} color="#fff" />
+                <CustomText.ButtonText uppercase>
+                  Continuar con Google
+                </CustomText.ButtonText>
+              </FullButton>
+            </View>
 
-            <SimpleButton title="Registrarse" onPress={handleRegister} />
-            <SimpleButton
-              title="¿Olvidaste tu contraseña?"
-              onPress={handleForgot}
-            />
+            <View style={styles.secondaryButtonsContainer}>
+              <SimpleButton title="Registrarse" onPress={handleRegister} />
+              <SimpleButton
+                title="¿Olvidaste tu contraseña?"
+                onPress={handleForgot}
+              />
+            </View>
           </View>
         </View>
       </View>
