@@ -70,6 +70,7 @@ const Register: React.FC = () => {
     }
   };
 
+  // TODO - agregar TYC
   return (
     <KeyboardAvoidingView
       style={styles.container}

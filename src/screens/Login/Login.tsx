@@ -66,6 +66,7 @@ export default function Login() {
       } else if (isCancelledResponse(result)) return;
 
       if (!res || res.error || !res.data) {
+        console.log("Error:", res);
         hideLoading();
         openErrorModal(
           "Error",
