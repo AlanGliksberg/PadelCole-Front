@@ -24,7 +24,7 @@ import {
   RegisterPayload,
 } from "@/src/types";
 import { registerDefaultValues } from "@/src/types/forms/RegisterForm";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import { styles } from "./Register.styles";
@@ -79,6 +79,15 @@ const Register: React.FC = () => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons name="arrow-back" size={18} color={colors.primary} />
+            <CustomText type="small" style={styles.buttonText}>
+              Volver
+            </CustomText>
+          </TouchableOpacity>
           <CustomText.Title style={styles.title}>Registro</CustomText.Title>
 
           <ScrollView

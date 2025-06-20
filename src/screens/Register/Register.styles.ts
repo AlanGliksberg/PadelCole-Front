@@ -1,4 +1,3 @@
-// src/screens/Register.styles.ts
 import { StyleSheet } from "react-native";
 import { colors, spacing, typography } from "../../theme";
 
@@ -7,7 +6,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     padding: spacing.md,
-    marginTop: 90,
+    marginTop: 30,
+  },
+  backButton: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 2,
+  },
+  buttonText: {
+    color: colors.primary,
   },
   inner: {
     flex: 1,
@@ -24,6 +31,7 @@ export const styles = StyleSheet.create({
     gap: 10,
   },
   title: {
+    marginTop: 50,
     fontSize: typography.h1,
     color: colors.primary,
     marginBottom: spacing.lg,
