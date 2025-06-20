@@ -1,15 +1,26 @@
-// src/screens/Welcome.tsx
 import { CustomText, FullButton } from "@/src/components";
+import { AuthContext } from "@/src/contexts/AuthContext";
 import { colors } from "@/src/theme";
 import { Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import React from "react";
-import { ScrollView, View } from "react-native";
+import React, { useContext } from "react";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { styles } from "./Welcome.styles";
 
 const Welcome: React.FC = () => {
+  const { logout } = useContext(AuthContext);
+  const handleBack = () => {
+    logout();
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+        <Ionicons name="arrow-back" size={18} color={colors.primary} />
+        <CustomText type="small" style={styles.buttonText}>
+          Volver
+        </CustomText>
+      </TouchableOpacity>
       <CustomText type="h1" style={styles.title} bold>
         ¡Bienvenido a PlayConnect!
       </CustomText>
@@ -62,7 +73,7 @@ const Welcome: React.FC = () => {
           </View>
         </View>
 
-        <View style={styles.paragraph}>
+        <View>
           <CustomText type="body">
             Vamos a generar un sistema de categorías similar al que ya conocés,
             calculado con puntos que irán sumando y restando según los
@@ -73,19 +84,18 @@ const Welcome: React.FC = () => {
             nivel de juego.
           </CustomText>
         </View>
-
-        <FullButton
-          style={styles.button}
-          onPress={() => {
-            /* navegar */
-          }}
-        >
-          <CustomText.ButtonText type="medium">
-            Declarar mi categoría
-          </CustomText.ButtonText>
-          <AntDesign name="arrowright" size={20} color={colors.white} />
-        </FullButton>
       </View>
+      <FullButton
+        style={styles.button}
+        onPress={() => {
+          /* navegar */
+        }}
+      >
+        <CustomText.ButtonText type="medium">
+          Declarar mi categoría
+        </CustomText.ButtonText>
+        <AntDesign name="arrowright" size={20} color={colors.white} />
+      </FullButton>
     </ScrollView>
   );
 };

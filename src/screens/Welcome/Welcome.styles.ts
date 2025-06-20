@@ -5,7 +5,15 @@ export const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: spacing.md,
-    marginTop: 80,
+    marginTop: 30,
+  },
+  backButton: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 2,
+  },
+  buttonText: {
+    color: colors.primary,
   },
   card: {
     marginTop: 25,
@@ -20,6 +28,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     color: colors.primary,
+    marginTop: 40,
     marginBottom: spacing.sm,
     textAlign: "center",
   },
@@ -50,10 +59,8 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.primary,
   },
-  paragraph: {
-    marginBottom: spacing.md,
-  },
   button: {
+    marginTop: spacing.xl,
     alignSelf: "center",
   },
 });
