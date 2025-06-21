@@ -21,12 +21,14 @@ const Welcome: React.FC = () => {
           Volver
         </CustomText>
       </TouchableOpacity>
-      <CustomText type="h1" style={styles.title} bold>
-        ¡Bienvenido a PlayConnect!
-      </CustomText>
-      <CustomText type="body" style={styles.subtitle}>
-        Estamos creando la comunidad más grande de pádel en Argentina
-      </CustomText>
+      <View style={styles.titleContainer}>
+        <CustomText type="h1" style={styles.title} bold>
+          ¡Bienvenido a PlayConnect!
+        </CustomText>
+        <CustomText type="body" style={styles.subtitle}>
+          Estamos creando la comunidad más grande de pádel en Argentina
+        </CustomText>
+      </View>
       <View style={styles.card}>
         <View style={styles.list}>
           <View style={styles.item}>
@@ -73,17 +75,15 @@ const Welcome: React.FC = () => {
           </View>
         </View>
 
-        <View>
-          <CustomText type="body">
-            Vamos a generar un sistema de categorías similar al que ya conocés,
-            calculado con puntos que irán sumando y restando según los
-            resultados de tus partidos.
-          </CustomText>
-          <CustomText bold>
-            Para empezar, necesitamos que nos brindes algunos datos sobre tu
-            nivel de juego.
-          </CustomText>
-        </View>
+        <CustomText type="body" style={styles.paragraph1}>
+          Vamos a generar un sistema de categorías similar al que ya conocés,
+          calculado con puntos que irán sumando y restando según los resultados
+          de tus partidos.
+        </CustomText>
+        <CustomText bold style={styles.paragraph1}>
+          Para empezar, necesitamos que nos brindes algunos datos sobre tu nivel
+          de juego.
+        </CustomText>
       </View>
       <FullButton
         style={styles.button}

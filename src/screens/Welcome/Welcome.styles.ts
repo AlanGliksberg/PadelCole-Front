@@ -26,14 +26,19 @@ export const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
   },
+  titleContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
   title: {
     color: colors.primary,
     marginTop: 40,
-    marginBottom: spacing.sm,
+    marginVertical: spacing.sm,
     textAlign: "center",
   },
   subtitle: {
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
+    width: "90%",
     textAlign: "center",
   },
   list: {
@@ -62,5 +67,12 @@ export const styles = StyleSheet.create({
   button: {
     marginTop: spacing.xl,
     alignSelf: "center",
+  },
+  paragraph1: {
+    textAlign: "center",
+    marginBottom: spacing.sm,
+  },
+  paragraph2: {
+    textAlign: "center",
   },
 });
