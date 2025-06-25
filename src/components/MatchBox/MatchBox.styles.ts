@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   iconContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   iconButton: {
     padding: spacing.xs,
@@ -115,5 +115,19 @@ export const styles = StyleSheet.create({
   dateContainer: {
     flexDirection: "row",
     gap: 3,
+  },
+  statusContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  moreOptionsButton: {
+    padding: spacing.xs,
+    marginLeft: spacing.sm,
+  },
+  menuContainer: {
+    position: "absolute",
+    top: spacing.sm,
+    right: spacing.sm,
+    zIndex: 10,
   },
 });

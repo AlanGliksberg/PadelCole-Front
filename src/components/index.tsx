@@ -13,6 +13,7 @@ export { default as CustomSearchInput } from "./ui/CustomSearchInput/CustomSearc
 export { default as CustomSelect } from "./ui/CustomSelect/CustomSelect";
 export { default as CustomText } from "./ui/CustomText/CustomText";
 export { default as CustomTextInput } from "./ui/CustomTextInput/CustomTextInput";
+export { default as DropdownMenu } from "./ui/DropdownMenu/DropdownMenu";
 export { default as ErrorSection } from "./ui/ErrorSection/ErrorSection";
 export { default as FullButton } from "./ui/FullButton/FullButton";
 export { default as SimpleButton } from "./ui/SimpleButton/SimpleButton";

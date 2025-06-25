@@ -1,15 +1,16 @@
 import { AuthContext } from "@/src/contexts/AuthContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
 import { deleteMatchApi } from "@/src/services/match";
-import { colors, typography } from "@/src/theme";
+import { colors } from "@/src/theme";
 import { Match } from "@/src/types";
 import { parseDateToString } from "@/src/utils/common";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useContext } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import TeamAvatars from "../TeamAvatars/TeamAvatars";
 import BorderedButton from "../ui/BorderedButton/BorderedButton";
 import CustomText from "../ui/CustomText/CustomText";
+import DropdownMenu from "../ui/DropdownMenu/DropdownMenu";
 import { styles } from "./MatchBox.styles";
 
 interface MatchBoxProps {
@@ -38,6 +39,25 @@ const MatchBox: React.FC<MatchBoxProps> = ({
       },
     });
   };
+
+  const handleEdit = () => {
+    // TODO: Implementar edición del partido
+    console.log("Edit match:", match.id);
+  };
+
+  const dropdownOptions = [
+    {
+      label: "Editar",
+      onPress: handleEdit,
+      icon: "edit",
+    },
+    {
+      label: "Eliminar",
+      onPress: deleteMatch,
+      icon: "delete",
+      destructive: true,
+    },
+  ];
 
   return (
     <View style={styles.card}>
@@ -98,34 +118,14 @@ const MatchBox: React.FC<MatchBoxProps> = ({
         </View>
       </View>
       <View style={styles.column2}>
-        <View>
+        <View style={styles.statusContainer}>
           <CustomText.ButtonText
             style={[styles.status, styles[match.status.name]]}
           >
             {match.status.description}
           </CustomText.ButtonText>
           {isCreator && showCreatorDetails && (
-            <View style={styles.iconContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  // onEdit && onEdit(match)
-                }}
-                style={styles.iconButton}
-              >
-                <MaterialIcons
-                  name="edit"
-                  size={typography.h4}
-                  color={colors.primary}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={deleteMatch} style={styles.iconButton}>
-                <MaterialIcons
-                  name="delete"
-                  size={typography.h4}
-                  color={colors.error}
-                />
-              </TouchableOpacity>
-            </View>
+            <DropdownMenu options={dropdownOptions} />
           )}
         </View>
         {isCreator && showCreatorDetails && (
