@@ -1,6 +1,6 @@
 import * as validator from "yup";
 
-const REQUIRED_LABEL = "Este campo es obligatorio";
+export const REQUIRED_LABEL = "Este campo es obligatorio";
 const MIN_LABEL = (min: number) => `Mínimo ${min} caracteres`;
 const MAX_LABEL = (max: number) => `Máximo ${max} caracteres`;
 

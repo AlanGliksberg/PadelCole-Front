@@ -1,4 +1,4 @@
 export type SetPlayerStackParamList = {
   Welcome: undefined;
-  SetPlayer: undefined;
+  Questonary: undefined;
 };

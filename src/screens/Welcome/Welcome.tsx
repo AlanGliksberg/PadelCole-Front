@@ -1,8 +1,11 @@
 import { CustomText, FullButton } from "@/src/components";
 import { AuthContext } from "@/src/contexts/AuthContext";
 import { colors } from "@/src/theme";
+import { SetPlayerStackParamList } from "@/src/types/navigation/SetPlayerStack";
 import { Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { NavigationProp } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 import React, { useContext } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { styles } from "./Welcome.styles";
@@ -12,6 +15,7 @@ const Welcome: React.FC = () => {
   const handleBack = () => {
     logout();
   };
+  const navigation = useNavigation<NavigationProp<SetPlayerStackParamList>>();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -23,7 +27,7 @@ const Welcome: React.FC = () => {
       </TouchableOpacity>
       <View style={styles.titleContainer}>
         <CustomText type="h1" style={styles.title} bold>
-          ¡Bienvenido a PlayConnect!
+          ¡Bienvenid@ a PlayConnect!
         </CustomText>
         <CustomText type="body" style={styles.subtitle}>
           Estamos creando la comunidad más grande de pádel en Argentina
@@ -88,7 +92,7 @@ const Welcome: React.FC = () => {
       <FullButton
         style={styles.button}
         onPress={() => {
-          /* navegar */
+          navigation.navigate("Questonary");
         }}
       >
         <CustomText.ButtonText type="medium">

@@ -1,6 +1,6 @@
 import { typography } from "@/src/theme";
 import React from "react";
-import { Text, TextProps, TextStyle } from "react-native";
+import { Falsy, Text, TextProps, TextStyle } from "react-native";
 import { styles } from "./CustomText.styles";
 
 type TextType =
@@ -14,7 +14,7 @@ type TextType =
   | "xsmall";
 
 export interface CustomTextProps extends TextProps {
-  style?: TextStyle | (TextStyle | undefined)[];
+  style?: TextStyle | (TextStyle | Falsy)[];
   bold?: boolean;
   type?: TextType;
   uppercase?: boolean;

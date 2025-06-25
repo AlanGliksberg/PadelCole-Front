@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import {
   FlatList,
   Modal,
+  TextStyle,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import CustomText from "../CustomText/CustomText";
+import CustomText, { CustomTextProps } from "../CustomText/CustomText";
 import { styles } from "./CustomSelect.styles";
 
 type Item = {
@@ -15,6 +16,8 @@ type Item = {
 
 export interface CustomSelectProps<T extends Item> {
   label: string;
+  labelStyles?: TextStyle;
+  labelProps?: CustomTextProps;
   placeholder?: string;
   data: T[];
   value: T["id"] | null;
@@ -28,6 +31,8 @@ export interface CustomSelectProps<T extends Item> {
 
 const CustomSelect = <T extends Item>({
   label,
+  labelStyles,
+  labelProps,
   placeholder = "Seleccioná...",
   data,
   value,
@@ -44,7 +49,11 @@ const CustomSelect = <T extends Item>({
   return (
     <View>
       <View style={styles.labelContainer}>
-        <CustomText type="medium" style={styles.label}>
+        <CustomText
+          type="medium"
+          style={[styles.label, labelStyles]}
+          {...labelProps}
+        >
           {label}
         </CustomText>
         {mandatory && (

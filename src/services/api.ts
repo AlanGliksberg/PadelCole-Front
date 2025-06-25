@@ -29,7 +29,7 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export const post = async <T>(uri: string, apiParams: ApiParams) => {
+export const post = async <T>(uri: string, apiParams: ApiParams = {}) => {
   apiParams.method = "POST";
   return await fetch<T>(uri, apiParams);
 };

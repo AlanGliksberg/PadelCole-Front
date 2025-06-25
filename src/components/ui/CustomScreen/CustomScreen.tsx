@@ -23,7 +23,10 @@ const CustomScreen: React.FC<CustomScreenProps> = ({
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+    <SafeAreaView
+      style={styles.container}
+      edges={["top", "left", "right", "bottom"]}
+    >
       <View style={styles.header}>
         {showBack ? (
           <TouchableOpacity

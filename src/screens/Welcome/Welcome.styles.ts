@@ -5,12 +5,12 @@ export const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: spacing.md,
-    marginTop: 30,
   },
   backButton: {
     display: "flex",
     flexDirection: "row",
     gap: 2,
+    marginBottom: 25,
   },
   buttonText: {
     color: colors.primary,
@@ -29,15 +29,15 @@ export const styles = StyleSheet.create({
   titleContainer: {
     display: "flex",
     alignItems: "center",
+    marginBottom: spacing.sm,
   },
   title: {
     color: colors.primary,
-    marginTop: 40,
     marginVertical: spacing.sm,
     textAlign: "center",
+    marginHorizontal: -spacing.md,
   },
   subtitle: {
-    marginBottom: spacing.sm,
     width: "90%",
     textAlign: "center",
   },

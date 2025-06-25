@@ -1,11 +1,15 @@
 import {
+  CREATE_PLAYER_URI,
   GET_CATEGORIES_URI,
   GET_GENDERS_URI,
   GET_PLAYERS_URI,
   GET_POSITIONS_URI,
+  GET_QUESTIONS_URI,
 } from "../constants/api";
 import { Category, Gender, GetPlayerParams, Player, Position } from "../types";
-import { get } from "./api";
+import { CreatePlayerPayload } from "../types/api/Player";
+import { Question } from "../types/player/Question";
+import { get, post } from "./api";
 
 export const getPlayers = async (params: GetPlayerParams) => {
   if (
@@ -43,5 +47,17 @@ export const getCategories = async (filterBoth: boolean) => {
   return await get<{ categories: Category[] }>(GET_CATEGORIES_URI, {
     withCache: true,
     queryParams: { filterBoth },
+  });
+};
+
+export const getQuestions = async () => {
+  return await get<{ questions: Question[] }>(GET_QUESTIONS_URI, {
+    withCache: true,
+  });
+};
+
+export const createPlayer = async (data: CreatePlayerPayload) => {
+  return await post<{ player: Player }>(CREATE_PLAYER_URI, {
+    body: data,
   });
 };
