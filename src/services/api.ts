@@ -59,6 +59,11 @@ export const deleteApi = async <T>(uri: string, apiParams: ApiParams = {}) => {
   return await fetch<T>(uri, apiParams);
 };
 
+export const put = async <T>(uri: string, apiParams: ApiParams = {}) => {
+  apiParams.method = "PUT";
+  return await fetch<T>(uri, apiParams);
+};
+
 const fetch = async <T>(
   uri: string,
   { method, body, customHeaders = {} }: ApiParams
@@ -77,6 +82,10 @@ const fetch = async <T>(
         });
       case "DELETE":
         return await axiosInstance.delete<never, ApiResponse<T>>(uri, {
+          headers,
+        });
+      case "PUT":
+        return await axiosInstance.put<never, ApiResponse<T>>(uri, body, {
           headers,
         });
     }

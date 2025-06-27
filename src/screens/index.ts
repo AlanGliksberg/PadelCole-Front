@@ -1,4 +1,5 @@
 export { default as CrearPartido } from "./CrearPartido/CrearPartido";
+export { default as EditarPartido } from "./EditarPartido/EditarPartido";
 export { default as Home } from "./Home/Home";
 export { default as Login } from "./Login/Login";
 export { default as MeFaltaAlguien } from "./MeFaltaAlguien/MeFaltaAlguien";

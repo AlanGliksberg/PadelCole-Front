@@ -3,9 +3,10 @@ import React from "react";
 import { CustomScreen } from "../components";
 import {
   CREAR_PARTIDO_PAGE_NAME,
+  EDITAR_PARTIDO_PAGE_NAME,
   FALTA_ALGUIEN_PAGE_NAME,
 } from "../constants/pages";
-import { CrearPartido, MeFaltaAlguien } from "../screens";
+import { CrearPartido, EditarPartido, MeFaltaAlguien } from "../screens";
 import { MeFaltaAlguienStackParamList } from "../types";
 
 const Stack = createNativeStackNavigator<MeFaltaAlguienStackParamList>();
@@ -39,6 +40,11 @@ const MeFaltaAlguienStack: React.FC = () => (
       name="CrearPartido"
       component={CrearPartido}
       options={{ title: CREAR_PARTIDO_PAGE_NAME, headerBackVisible: true }}
+    />
+    <Stack.Screen
+      name="EditarPartido"
+      component={EditarPartido}
+      options={{ title: EDITAR_PARTIDO_PAGE_NAME, headerBackVisible: true }}
     />
   </Stack.Navigator>
 );

@@ -21,9 +21,26 @@ export type CreateMatchBody = {
   teams?: TeamCreate;
 };
 
+export type UpdateMatchBody = {
+  location?: string;
+  description?: string;
+  date?: string;
+  time?: string;
+  duration?: number;
+  genderId?: number;
+  categoryId?: number;
+  pointsDeviation?: number;
+  teams?: TeamDTO;
+};
+
 export type TeamCreate = {
   team1: PlayerCreate[];
   team2: PlayerCreate[];
+};
+
+export type TeamDTO = {
+  team1?: PlayerDTO[];
+  team2?: PlayerDTO[];
 };
 
 export type PlayerCreate =
@@ -37,3 +54,7 @@ export type PlayerCreate =
       genderId: number;
       phone?: string;
     };
+
+export type PlayerDTO = {
+  id: number;
+};

@@ -3,10 +3,11 @@ import {
   CREATE_MATCH_URI,
   DELETE_MATCH_URI,
   GET_MY_MATCHES_URI,
+  UPDATE_MATCH_URI,
 } from "../constants/api";
 import { CreateMatchBody, GetCreatedMatchesResponse } from "../types";
-import { CommonMatchResponse } from "../types/api/Match";
-import { deleteApi, get, post } from "./api";
+import { CommonMatchResponse, UpdateMatchBody } from "../types/api/Match";
+import { deleteApi, get, post, put } from "./api";
 
 export const getCreatedMatches = async (
   page: number,
@@ -39,4 +40,13 @@ export const createMatch = async (data: CreateMatchBody) => {
   return await post<CommonMatchResponse>(CREATE_MATCH_URI, {
     body: data,
   });
+};
+
+export const updateMatch = async (matchId: number, data: UpdateMatchBody) => {
+  return await put<CommonMatchResponse>(
+    `${UPDATE_MATCH_URI}/${matchId.toString()}`,
+    {
+      body: data,
+    }
+  );
 };

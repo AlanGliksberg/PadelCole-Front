@@ -21,3 +21,15 @@ export const timeToString = (time: Date) => {
     hour12: false,
   });
 };
+
+export const parseStringToTime = (timeString: string): Date => {
+  const [hours, minutes] = timeString.split(":").map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+  return date;
+};
+
+export const parseStringToDate = (dateString: string): Date => {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return new Date(year, month - 1, day);
+};

@@ -3,8 +3,11 @@ import { ModalContext } from "@/src/contexts/ModalContext";
 import { deleteMatchApi } from "@/src/services/match";
 import { colors } from "@/src/theme";
 import { Match } from "@/src/types";
+import { MeFaltaAlguienStackParamList } from "@/src/types/navigation/MeFaltaAlguienStack";
 import { parseDateToString } from "@/src/utils/common";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useContext } from "react";
 import { View } from "react-native";
 import TeamAvatars from "../TeamAvatars/TeamAvatars";
@@ -12,6 +15,8 @@ import BorderedButton from "../ui/BorderedButton/BorderedButton";
 import CustomText from "../ui/CustomText/CustomText";
 import DropdownMenu from "../ui/DropdownMenu/DropdownMenu";
 import { styles } from "./MatchBox.styles";
+
+type NavigationProp = NativeStackNavigationProp<MeFaltaAlguienStackParamList>;
 
 interface MatchBoxProps {
   match: Match;
@@ -26,6 +31,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
 }) => {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
+  const navigation = useNavigation<NavigationProp>();
   const isCreator = user?.playerId === match.creatorPlayerId;
 
   const deleteMatch = () => {
@@ -41,8 +47,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
   };
 
   const handleEdit = () => {
-    // TODO: Implementar edición del partido
-    console.log("Edit match:", match.id);
+    navigation.navigate("EditarPartido", { match });
   };
 
   const dropdownOptions = [
