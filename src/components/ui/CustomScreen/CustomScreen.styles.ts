@@ -29,7 +29,8 @@ export const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: spacing.lg,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.lg,
   },
   loading: {
     ...StyleSheet.absoluteFillObject,
