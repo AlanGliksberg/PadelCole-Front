@@ -1,5 +1,7 @@
+import { ModalContext } from "@/src/contexts/ModalContext";
+import { addPlayerToMatch } from "@/src/services/match";
 import { Match, Player } from "@/src/types";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View } from "react-native";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import { styles } from "./TeamAvatars.styles";
@@ -20,8 +22,25 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
   callback,
 }) => {
   const [playersState, setPlayersState] = useState<Player[]>(players);
+  const { openModal, openErrorModal } = useContext(ModalContext);
   const addPlayer = (player: Player) => {
-    setPlayersState((prev) => [...prev, player]);
+    openModal({
+      title: "Agregar jugador",
+      message: `¿Estás seguro que querés agregar al jugador ${player.firstName} ${player.lastName} al partido?`,
+      primaryLabel: "Agregar",
+      primaryAction: async () => {
+        const result = await addPlayerToMatch(match!.id, team!, player.id);
+        if (result.error) {
+          openErrorModal(
+            "Agregar jugador",
+            "Error agregando el jugador al partido"
+          );
+          return;
+        }
+        setPlayersState((prev) => [...prev, player]);
+        callback?.();
+      },
+    });
   };
 
   return (

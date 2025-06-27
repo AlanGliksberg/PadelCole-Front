@@ -22,4 +22,7 @@ export const styles = StyleSheet.create({
   button: {
     marginTop: spacing.lg,
   },
+  teamsContainer: {
+    marginTop: spacing.lg,
+  },
 });

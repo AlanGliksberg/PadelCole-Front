@@ -1,9 +1,6 @@
-import { ModalContext } from "@/src/contexts/ModalContext";
-import { addPlayerToMatch } from "@/src/services/match";
 import { colors } from "@/src/theme";
 import { Match, Player } from "@/src/types";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useContext } from "react";
 import {
   Keyboard,
   Modal,
@@ -30,26 +27,9 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
   team,
   onPlayerAdd,
 }) => {
-  const { openModal, openErrorModal } = useContext(ModalContext);
-
   const playerSelect = (player: Player) => {
     onClose();
-    openModal({
-      title: "Agregar jugador",
-      message: `¿Estás seguro que querés agregar al jugador ${player.firstName} ${player.lastName} al partido?`,
-      primaryLabel: "Agregar",
-      primaryAction: async () => {
-        const result = await addPlayerToMatch(match!.id, team!, player.id);
-        if (result.error) {
-          openErrorModal(
-            "Agregar jugador",
-            "Error agregando el jugador al partido"
-          );
-          return;
-        }
-        onPlayerAdd?.(player);
-      },
-    });
+    onPlayerAdd?.(player);
   };
 
   const onClose = () => {

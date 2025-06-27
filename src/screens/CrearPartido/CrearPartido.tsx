@@ -30,16 +30,33 @@ const CrearPartido: React.FC = () => {
       categoryId: form.categoryId!,
       duration: form.duration!,
       genderId: form.genderId!,
+      teams: {
+        team1:
+          form.teams
+            .find((t) => t.teamNumber === 1)
+            ?.players.map((p) => ({ id: p.id })) || [],
+        team2:
+          form.teams
+            .find((t) => t.teamNumber === 2)
+            ?.players.map((p) => ({ id: p.id })) || [],
+      },
     };
     showLoading();
     const res = await createMatch(data);
     hideLoading();
-    if (res.error)
-      openErrorModal(
-        "Crear partido",
-        "Hubo un error inesperado creando el partido"
-      );
-    else {
+    if (res.error) {
+      if (res.code === 4) {
+        openErrorModal(
+          "Crear partido",
+          "El género de uno o más jugadores no coincide con el género del partido"
+        );
+      } else {
+        openErrorModal(
+          "Crear partido",
+          "Hubo un error inesperado creando el partido"
+        );
+      }
+    } else {
       removeGetCreatedMatchesCache();
       navigation.navigate("MeFaltaAlguien");
     }

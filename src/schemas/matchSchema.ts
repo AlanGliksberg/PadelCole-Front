@@ -11,4 +11,5 @@ export const matchSchema = validator.object({
     .oneOf([60, 90, 120], "Duración inválida"),
   genderId: validator.number().isRequired(),
   categoryId: validator.number().isRequired(),
+  teams: validator.array().optional(),
 });

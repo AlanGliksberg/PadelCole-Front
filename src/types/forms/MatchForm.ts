@@ -1,3 +1,5 @@
+import { Team } from "../player/Team";
+
 export interface MatchFormValues {
   name: string;
   description: string | undefined;
@@ -6,6 +8,7 @@ export interface MatchFormValues {
   duration: 60 | 90 | 120 | null;
   genderId: number | null;
   categoryId: number | null;
+  teams: Team[];
 }
 
 export const matchFormDefaultValues = {
@@ -16,4 +19,5 @@ export const matchFormDefaultValues = {
   duration: null,
   genderId: null,
   categoryId: null,
+  teams: [],
 };

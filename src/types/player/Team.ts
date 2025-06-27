@@ -6,3 +6,8 @@ export type Team = {
   teamNumber: 1 | 2;
   players: Player[];
 };
+
+export type CreateTeam = {
+  teamNumber: 1 | 2;
+  players: Player[];
+};

@@ -1,7 +1,7 @@
 import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 import { Match, Player } from "@/src/types";
 import { getPlayerInitials } from "@/src/utils/player";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./PlayerAvatar.styles";

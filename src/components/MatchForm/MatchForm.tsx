@@ -5,8 +5,9 @@ import { View } from "react-native";
 import useCategories from "@/src/hooks/useCategories";
 import useGenders from "@/src/hooks/useGenders";
 import { matchSchema } from "@/src/schemas/matchSchema";
-import { MatchFormValues } from "@/src/types";
+import { MatchFormValues, Player } from "@/src/types";
 import { matchFormDefaultValues } from "@/src/types/forms/MatchForm";
+import { CreateTeam } from "@/src/types/player/Team";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CustomDatePicker from "../ui/CustomDatePicker/CustomDatePicker";
 import CustomSelect from "../ui/CustomSelect/CustomSelect";
@@ -14,6 +15,7 @@ import CustomText from "../ui/CustomText/CustomText";
 import CustomTextInput from "../ui/CustomTextInput/CustomTextInput";
 import CustomTimePicker from "../ui/CustomTimePicker/CustomTimePicker";
 import FullButton from "../ui/FullButton/FullButton";
+import CourtDistribution from "./CourtDistribution";
 import { styles } from "./MatchForm.styles";
 
 export type MatchFormProps = {
@@ -37,6 +39,26 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
 
   const selectedGender = watch("genderId");
   const categories = allCategories.filter((c) => c.genderId === selectedGender);
+
+  const getNewTeams = (
+    teams: CreateTeam[] = [],
+    player: Player,
+    teamNumber: 1 | 2,
+    playerIndex: number
+  ) => {
+    const updatedTeams = [...teams];
+    let team = updatedTeams.find((t) => t.teamNumber === teamNumber);
+    if (!team) {
+      team = {
+        teamNumber: teamNumber,
+        players: [],
+      };
+      updatedTeams.push(team);
+    }
+
+    team.players.push(player);
+    return updatedTeams;
+  };
 
   return (
     <View style={styles.form}>
@@ -176,6 +198,28 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
             />
           )}
         />
+
+        {/* Jugadores */}
+        <View style={styles.teamsContainer}>
+          <Controller
+            control={control}
+            name="teams"
+            render={({ field: { onChange, value } }) => (
+              <CourtDistribution
+                teams={value}
+                onPlayerAdd={(player, teamNumber, playerIndex) => {
+                  const teams = getNewTeams(
+                    value,
+                    player,
+                    teamNumber,
+                    playerIndex
+                  );
+                  onChange(teams);
+                }}
+              />
+            )}
+          />
+        </View>
       </View>
 
       {/* Botón de guardar */}
