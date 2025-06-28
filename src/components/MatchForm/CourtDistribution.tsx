@@ -1,7 +1,9 @@
+import { colors } from "@/src/theme";
 import { Player } from "@/src/types/player/Player";
 import { Team } from "@/src/types/player/Team";
+import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./CourtDistribution.styles";
@@ -51,6 +53,18 @@ export default function CourtDistribution({
                 callback={handlePlayerAdd}
                 removeCallback={handlePlayerRemove}
               />
+              {player && (
+                <TouchableOpacity
+                  onPress={() => onPlayerRemove?.(player, teamNumber)}
+                  style={styles.closeButton}
+                >
+                  <MaterialIcons
+                    name="close"
+                    size={18}
+                    color={colors.placeholder}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
           );
         })}

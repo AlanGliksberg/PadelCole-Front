@@ -31,6 +31,7 @@ export const styles = StyleSheet.create({
     color: colors.primary,
   },
   playerSlot: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     minHeight: 80,
@@ -38,6 +39,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     padding: spacing.sm,
     width: "100%",
+    position: "relative",
   },
   playerName: {
     textAlign: "center",
@@ -67,5 +69,9 @@ export const styles = StyleSheet.create({
     width: 2,
     opacity: 0.7,
     backgroundColor: colors.primary,
+  },
+  closeButton: {
+    position: "absolute",
+    right: 25,
   },
 });
