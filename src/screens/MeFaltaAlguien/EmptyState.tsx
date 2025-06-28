@@ -30,7 +30,6 @@ const EmptyState: React.FC = () => {
       <CustomText style={styles.emptyDescription}>
         Te conseguimos a los jugadores para que solo te preocupes por disfrutar.
       </CustomText>
-      {/* TODO - funcionalidad de crea partido */}
       <FullButton
         style={styles.emptyPrimaryButton}
         size="l"
