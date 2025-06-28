@@ -31,11 +31,19 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
       primaryAction: async () => {
         const result = await addPlayerToMatch(match!.id, team!, player.id);
         if (result.error) {
-          openErrorModal(
-            "Agregar jugador",
-            "Error agregando el jugador al partido"
-          );
-          return;
+          if (result.code === 16) {
+            openErrorModal(
+              "Agregar jugador",
+              "El jugador ya se encuentra en el partido"
+            );
+            return;
+          } else {
+            openErrorModal(
+              "Agregar jugador",
+              "Error agregando el jugador al partido"
+            );
+            return;
+          }
         }
         setPlayersState((prev) => [...prev, player]);
         callback?.();

@@ -74,6 +74,11 @@ const EditarPartido: React.FC = () => {
           "Editar partido",
           "El género de uno o más jugadores no coincide con el género del partido"
         );
+      } else if (res.code === 16) {
+        openErrorModal(
+          "Editar partido",
+          "No se puede repetir un jugador en el partido"
+        );
       } else {
         openErrorModal(
           "Editar partido",
