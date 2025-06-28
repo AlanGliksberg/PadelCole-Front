@@ -13,11 +13,13 @@ interface CourtDistributionProps {
     teamNumber: 1 | 2,
     playerIndex: number
   ) => void;
+  onPlayerRemove?: (player: Player, teamNumber: 1 | 2) => void;
 }
 
 export default function CourtDistribution({
   teams = [],
   onPlayerAdd,
+  onPlayerRemove,
 }: CourtDistributionProps) {
   const team1 = teams.find((t) => t.teamNumber === 1);
   const team2 = teams.find((t) => t.teamNumber === 2);
@@ -35,6 +37,10 @@ export default function CourtDistribution({
             onPlayerAdd?.(selectedPlayer, teamNumber, playerIndex);
           };
 
+          const handlePlayerRemove = (selectedPlayer: Player) => {
+            onPlayerRemove?.(selectedPlayer, teamNumber);
+          };
+
           return (
             <View key={playerIndex} style={styles.playerSlot}>
               <PlayerAvatar
@@ -43,6 +49,7 @@ export default function CourtDistribution({
                 touchable
                 isCreator
                 callback={handlePlayerAdd}
+                removeCallback={handlePlayerRemove}
               />
             </View>
           );

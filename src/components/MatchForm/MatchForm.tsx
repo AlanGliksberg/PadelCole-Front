@@ -60,6 +60,17 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
     return updatedTeams;
   };
 
+  const getNewTeamsWithoutPlayer = (
+    teams: CreateTeam[] = [],
+    player: Player,
+    teamNumber: 1 | 2
+  ) => {
+    const updatedTeams = [...teams];
+    let team = updatedTeams.find((t) => t.teamNumber === teamNumber)!;
+    team.players = team.players.filter((p) => p.id !== player.id);
+    return updatedTeams;
+  };
+
   return (
     <View style={styles.form}>
       <View style={styles.card}>
@@ -213,6 +224,14 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
                     player,
                     teamNumber,
                     playerIndex
+                  );
+                  onChange(teams);
+                }}
+                onPlayerRemove={(player, teamNumber) => {
+                  const teams = getNewTeamsWithoutPlayer(
+                    value,
+                    player,
+                    teamNumber
                   );
                   onChange(teams);
                 }}

@@ -37,10 +37,8 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
 
   const canRemove =
     isCreator &&
-    match &&
-    team &&
     removeCallback &&
-    match.status.name === MATCH_STATUS.PENDING;
+    (!match || match.status.name === MATCH_STATUS.PENDING);
 
   const textSize = size === "s" ? "small" : size === "m" ? "h2" : "h1";
   const avatarContent = (
