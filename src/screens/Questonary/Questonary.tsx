@@ -76,7 +76,7 @@ const Questonary: React.FC = () => {
       openErrorModal("Error", "Hubo un error al crear el jugador");
     } else {
       openModal({
-        title: "¡Bienvenido@!",
+        title: "¡Bienvenid@!",
         message:
           "Ya configuraste tu perfil. Ahora podés empezar a buscar partidos y conectar con otros jugadores ¡Que disfrutes del juego!",
         primaryLabel: "Ingresar",
