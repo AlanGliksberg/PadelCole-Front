@@ -82,7 +82,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
           name="name"
           render={({ field: { onChange, value } }) => (
             <CustomTextInput
-              label="Nombre"
+              label="Ubicación"
               value={value}
               onChangeText={onChange}
               placeholder="Nombre o ubicación"
