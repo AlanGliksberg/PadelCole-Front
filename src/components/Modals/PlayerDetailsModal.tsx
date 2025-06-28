@@ -10,19 +10,27 @@ import {
 } from "react-native";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomText from "../ui/CustomText/CustomText";
+import SimpleButton from "../ui/SimpleButton/SimpleButton";
 import { styles } from "./PlayerDetailsModal.styles";
 
 interface PlayerDetailsModalProps {
   player: Player | null;
   closePlayerDetail: () => void;
+  removeCallback?: () => void;
 }
 
-// TODO - ver si se puede que, si lo esta viendo el creador de un partido,
-// dar la opcion de eliminar el jugador del partido
 const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
   player,
   closePlayerDetail,
+  removeCallback,
 }) => {
+  const onPressRemove = () => {
+    closePlayerDetail();
+    removeCallback?.();
+  };
+
+  if (!player) return null;
+
   return (
     <Modal
       visible={player !== null}
@@ -36,13 +44,13 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
             <View style={styles.header}>
               <View style={styles.nameContainer}>
                 <PlayerAvatar
-                  player={player!}
+                  player={player}
                   size="m"
                   inverse
                   touchable={false}
                 />
                 <CustomText style={styles.name}>
-                  {`${player?.firstName} ${player?.lastName}`}
+                  {`${player.firstName} ${player.lastName}`}
                 </CustomText>
               </View>
               <View>
@@ -57,7 +65,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
                   Género:{" "}
                 </CustomText>
                 <CustomText type="small">
-                  {player?.gender?.name || "No informado"}
+                  {player.gender?.name || "No informado"}
                 </CustomText>
               </View>
               <View style={styles.rowItem}>
@@ -65,7 +73,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
                   Posición:{" "}
                 </CustomText>
                 <CustomText type="small">
-                  {player?.position?.description || "No informado"}
+                  {player.position?.description || "No informado"}
                 </CustomText>
               </View>
             </View>
@@ -75,7 +83,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
                   Categoría:{" "}
                 </CustomText>
                 <CustomText type="small">
-                  {player?.category?.description || "No informado"}
+                  {player.category?.description || "No informado"}
                 </CustomText>
               </View>
               <View style={styles.rowItem}>
@@ -83,10 +91,18 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
                   Teléfono:{" "}
                 </CustomText>
                 <CustomText type="small">
-                  {player?.phone || "No informado"}
+                  {player.phone || "No informado"}
                 </CustomText>
               </View>
             </View>
+            {removeCallback && (
+              <View style={styles.buttonContainer}>
+                <SimpleButton
+                  title="Eliminar de partido"
+                  onPress={onPressRemove}
+                />
+              </View>
+            )}
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>

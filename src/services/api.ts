@@ -83,6 +83,7 @@ const fetch = async <T>(
       case "DELETE":
         return await axiosInstance.delete<never, ApiResponse<T>>(uri, {
           headers,
+          data: body,
         });
       case "PUT":
         return await axiosInstance.put<never, ApiResponse<T>>(uri, body, {

@@ -3,7 +3,7 @@ import { AddPlayerToMatchModal, PlayerDetailsModal } from "../components";
 import { Match, Player } from "../types";
 
 interface PlayerModalsContextData {
-  openPlayerDetail: (player: Player) => void;
+  openPlayerDetail: (player: Player, removeCallback?: () => void) => void;
   closePlayerDetail: () => void;
   openAddPlayerToMatch: (m: Match, t: number, c?: (p: Player) => void) => void;
   closeAddPlayerToMatch: () => void;
@@ -20,9 +20,19 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
-  const openPlayerDetail = (selectedPlayer: Player) =>
+  const [removePlayerCallback, setRemovePlayerCallback] =
+    useState<() => void>();
+  const openPlayerDetail = (
+    selectedPlayer: Player,
+    removeCallback?: () => void
+  ) => {
     setSelectedPlayer(selectedPlayer);
-  const closePlayerDetail = () => setSelectedPlayer(null);
+    setRemovePlayerCallback(() => removeCallback);
+  };
+  const closePlayerDetail = () => {
+    setSelectedPlayer(null);
+    setRemovePlayerCallback(undefined);
+  };
 
   const [openAddPlayerModal, setOpenAddPlayerModal] = useState<boolean>(false);
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
@@ -60,6 +70,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
       <PlayerDetailsModal
         player={selectedPlayer}
         closePlayerDetail={closePlayerDetail}
+        removeCallback={removePlayerCallback}
       />
       <AddPlayerToMatchModal
         isOpen={openAddPlayerModal}

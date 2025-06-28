@@ -1,3 +1,4 @@
+import { MATCH_STATUS } from "@/src/constants/match";
 import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 import { Match, Player } from "@/src/types";
 import { getPlayerInitials } from "@/src/utils/player";
@@ -17,6 +18,7 @@ interface PlayerAvatarProps {
   match?: Match | undefined;
   team?: number | undefined;
   callback?: (p: Player) => void;
+  removeCallback?: (p: Player) => void;
 }
 
 const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
@@ -28,9 +30,17 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
   match,
   team,
   callback,
+  removeCallback,
 }) => {
   const { openPlayerDetail, openAddPlayerToMatch } =
     useContext(PlayerModalsContext);
+
+  const canRemove =
+    isCreator &&
+    match &&
+    team &&
+    removeCallback &&
+    match.status.name === MATCH_STATUS.PENDING;
 
   const textSize = size === "s" ? "small" : size === "m" ? "h2" : "h1";
   const avatarContent = (
@@ -59,7 +69,11 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
   );
 
   const avatarAction = player
-    ? () => openPlayerDetail(player)
+    ? () =>
+        openPlayerDetail(
+          player,
+          canRemove ? () => removeCallback(player) : undefined
+        )
     : isCreator
     ? () => openAddPlayerToMatch(match!, team!, callback)
     : () => {};

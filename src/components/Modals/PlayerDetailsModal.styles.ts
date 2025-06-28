@@ -53,4 +53,11 @@ export const styles = StyleSheet.create({
     flex: 2,
     alignItems: "flex-end",
   },
+  buttonContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+  },
 });

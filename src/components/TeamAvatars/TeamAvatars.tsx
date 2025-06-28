@@ -1,5 +1,5 @@
 import { ModalContext } from "@/src/contexts/ModalContext";
-import { addPlayerToMatch } from "@/src/services/match";
+import { addPlayerToMatch, deletePlayerFromMatch } from "@/src/services/match";
 import { Match, Player } from "@/src/types";
 import React, { useContext, useState } from "react";
 import { View } from "react-native";
@@ -43,6 +43,23 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
     });
   };
 
+  const removePlayer = (player: Player) => {
+    openModal({
+      title: "Eliminar jugador",
+      message: `¿Estás seguro que querés eliminar al jugador ${player.firstName} ${player.lastName} del partido?`,
+      primaryLabel: "Eliminar",
+      primaryAction: async () => {
+        const result = await deletePlayerFromMatch(match!.id, player.id);
+        if (result.error) {
+          openErrorModal("Eliminar jugador", "Error eliminando el jugador");
+          return;
+        }
+        setPlayersState((prev) => prev.filter((p) => p.id !== player.id));
+        callback?.();
+      },
+    });
+  };
+
   return (
     <View style={styles.container}>
       {[0, 1].map((idx) => {
@@ -56,6 +73,7 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
             match={match}
             team={team}
             callback={addPlayer}
+            removeCallback={removePlayer}
           />
         );
       })}
