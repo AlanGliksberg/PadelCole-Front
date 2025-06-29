@@ -20,7 +20,8 @@ export const styles = StyleSheet.create({
     maxWidth: "90%",
     minHeight: "35%",
     maxHeight: "70%",
-    padding: spacing.lg,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
   },
   header: {
     flexDirection: "row",
@@ -38,6 +39,9 @@ export const styles = StyleSheet.create({
   },
   content: {
     flexGrow: 0,
+  },
+  applicationsContainer: {
+    gap: spacing.sm,
   },
   emptyState: {
     flex: 1,

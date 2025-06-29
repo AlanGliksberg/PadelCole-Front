@@ -85,15 +85,17 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
               >
-                {match.applications.map((application) => (
-                  <ApplicationItem
-                    key={application.id}
-                    application={application}
-                    onAccept={handleAcceptApplication}
-                    onReject={handleRejectApplication}
-                    loading={loading}
-                  />
-                ))}
+                <View style={styles.applicationsContainer}>
+                  {match.applications.map((application) => (
+                    <ApplicationItem
+                      key={application.id}
+                      application={application}
+                      onAccept={handleAcceptApplication}
+                      onReject={handleRejectApplication}
+                      loading={loading}
+                    />
+                  ))}
+                </View>
               </ScrollView>
             ) : (
               <View style={styles.emptyState}>
