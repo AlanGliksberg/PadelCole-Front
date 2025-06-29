@@ -2,15 +2,12 @@ import { createContext, ReactNode, useState } from "react";
 import { CustomErrorModal } from "../components";
 import CustomModal from "../components/Modals/CustomModal";
 import { ModalContextData, ModalParams } from "../types";
-import { Match } from "../types/match/Match";
 
 export const ModalContext = createContext<ModalContextData>({
   openModal: (p: ModalParams) => {},
   closeModal: () => {},
   openErrorModal: (t: string, m: string) => {},
   closeErrorModal: () => {},
-  openApplicationsModal: (match: Match) => {},
-  closeApplicationsModal: () => {},
 });
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
@@ -36,14 +33,6 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   };
   const closeErrorModal = () => setErrorModalOpen(false);
 
-  const [applicationsMatch, setApplicationsMatch] = useState<Match | null>(
-    null
-  );
-
-  const openApplicationsModal = (match: Match) => setApplicationsMatch(match);
-
-  const closeApplicationsModal = () => setApplicationsMatch(null);
-
   return (
     <ModalContext.Provider
       value={{
@@ -51,8 +40,6 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
         closeModal,
         openErrorModal,
         closeErrorModal,
-        openApplicationsModal,
-        closeApplicationsModal,
       }}
     >
       {children}

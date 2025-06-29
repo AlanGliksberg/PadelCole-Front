@@ -1,14 +1,19 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { AddPlayerToMatchModal, PlayerDetailsModal } from "../components";
 import ApplicationsModal from "../components/Modals/ApplicationsModal";
+import { removeGetCreatedMatchesCache } from "../services/cache";
 import { Match, Player } from "../types";
+import { Application } from "../types/application/Application";
 
 interface PlayerModalsContextData {
   openPlayerDetail: (player: Player, removeCallback?: () => void) => void;
   closePlayerDetail: () => void;
   openAddPlayerToMatch: (m: Match, t: number, c?: (p: Player) => void) => void;
   closeAddPlayerToMatch: () => void;
-  openApplicationsModal: (match: Match) => void;
+  openApplicationsModal: (
+    match: Match,
+    refreshData?: () => Promise<void>
+  ) => void;
   closeApplicationsModal: () => void;
 }
 
@@ -17,7 +22,10 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
   closePlayerDetail: () => {},
   openAddPlayerToMatch: (m: Match, t: number, c?: (p: Player) => void) => {},
   closeAddPlayerToMatch: () => {},
-  openApplicationsModal: (match: Match) => {},
+  openApplicationsModal: (
+    match: Match,
+    refreshData?: () => Promise<void>
+  ) => {},
   closeApplicationsModal: () => {},
 });
 
@@ -65,10 +73,29 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   const [applicationsMatch, setApplicationsMatch] = useState<Match | null>(
     null
   );
-
-  const openApplicationsModal = (match: Match) => setApplicationsMatch(match);
-
+  const [refreshData, setRefreshData] = useState<
+    (() => Promise<void>) | undefined
+  >();
+  const openApplicationsModal = (
+    match: Match,
+    refreshData?: () => Promise<void>
+  ) => {
+    setApplicationsMatch(match);
+    setRefreshData(() => refreshData);
+  };
   const closeApplicationsModal = () => setApplicationsMatch(null);
+  const refreshApplications = async (applications: Application[]) => {
+    setApplicationsMatch((prev) =>
+      prev
+        ? {
+            ...prev,
+            applications,
+          }
+        : null
+    );
+    refreshData && (await refreshData());
+    removeGetCreatedMatchesCache();
+  };
 
   return (
     <PlayerModalsContext.Provider
@@ -98,6 +125,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         closeModal={closeApplicationsModal}
         isOpen={!!applicationsMatch}
         match={applicationsMatch}
+        refreshApplications={refreshApplications}
       />
     </PlayerModalsContext.Provider>
   );

@@ -4,7 +4,7 @@ export type Application = {
   id: number;
   matchId: number;
   playerId: string;
-  teamNumber: number;
+  teamNumber: 1 | 2 | null;
   message: string | null;
   phone: string | null;
   reason: string | null;

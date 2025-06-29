@@ -2,15 +2,15 @@ import { colors } from "@/src/theme";
 import { Application } from "@/src/types/application/Application";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
-import React, { useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Modal, TouchableOpacity, View } from "react-native";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./ApplicationItem.styles";
 
 interface ApplicationItemProps {
   application: Application;
-  onAccept: (application: Application) => void;
+  onAccept: (application: Application, selectedTeam: 1 | 2) => void;
   onReject: (application: Application) => void;
   loading: boolean;
 }
@@ -22,23 +22,43 @@ const ApplicationItem: React.FC<ApplicationItemProps> = ({
   loading,
 }) => {
   const [openTeamSelector, setOpenTeamSelector] = useState(false);
-  const [selectedTeam, setSelectedTeam] = useState(application.teamNumber);
+  const [selectedTeam, setSelectedTeam] = useState<1 | 2>(1);
+  const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
+  const teamSelectRef = useRef<any>(null);
 
-  // Actualizar el equipo seleccionado cuando cambie la aplicación
   useEffect(() => {
-    setSelectedTeam(application.teamNumber);
+    setSelectedTeam(application.teamNumber || 1);
   }, [application.teamNumber]);
 
   const copyToClipboard = async (phone: string) => {
-    await Clipboard.setStringAsync(phone);
+    try {
+      await Clipboard.setStringAsync(phone);
+      Alert.alert("Copiado", "El número de teléfono se copió al portapapeles");
+    } catch (error) {
+      Alert.alert("Error", "No se pudo copiar el número de teléfono");
+    }
   };
 
-  const handleTeamChange = (teamNumber: number) => {
+  const handleTeamChange = (teamNumber: 1 | 2) => {
     setSelectedTeam(teamNumber);
     setOpenTeamSelector(false);
   };
 
   const toggleTeamSelector = () => {
+    if (teamSelectRef.current) {
+      teamSelectRef.current.measure(
+        (
+          x: number,
+          y: number,
+          width: number,
+          height: number,
+          pageX: number,
+          pageY: number
+        ) => {
+          setDropdownPosition({ x: pageX, y: pageY + height + 5 });
+        }
+      );
+    }
     setOpenTeamSelector(!openTeamSelector);
   };
 
@@ -53,6 +73,7 @@ const ApplicationItem: React.FC<ApplicationItemProps> = ({
             </CustomText>
             <View style={styles.teamSelectContainer}>
               <TouchableOpacity
+                ref={teamSelectRef}
                 style={styles.teamSelect}
                 onPress={toggleTeamSelector}
               >
@@ -69,23 +90,6 @@ const ApplicationItem: React.FC<ApplicationItemProps> = ({
                   color={colors.description}
                 />
               </TouchableOpacity>
-
-              {openTeamSelector && (
-                <View style={styles.teamDropdown}>
-                  <TouchableOpacity
-                    style={styles.teamOption}
-                    onPress={() => handleTeamChange(1)}
-                  >
-                    <CustomText type="xsmall">Equipo 1</CustomText>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.teamOption}
-                    onPress={() => handleTeamChange(2)}
-                  >
-                    <CustomText type="xsmall">Equipo 2</CustomText>
-                  </TouchableOpacity>
-                </View>
-              )}
             </View>
           </View>
         </View>
@@ -98,7 +102,7 @@ const ApplicationItem: React.FC<ApplicationItemProps> = ({
             <MaterialIcons name="close" size={20} color={colors.error} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onAccept(application)}
+            onPress={() => onAccept(application, selectedTeam)}
             disabled={loading}
             style={styles.acceptButton}
           >
@@ -135,6 +139,43 @@ const ApplicationItem: React.FC<ApplicationItemProps> = ({
           </TouchableOpacity>
         </View>
       )}
+
+      <Modal
+        visible={openTeamSelector}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setOpenTeamSelector(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setOpenTeamSelector(false)}
+        >
+          <View
+            style={[
+              styles.teamDropdownModal,
+              {
+                position: "absolute",
+                left: dropdownPosition.x,
+                top: dropdownPosition.y,
+              },
+            ]}
+          >
+            <TouchableOpacity
+              style={styles.teamOption}
+              onPress={() => handleTeamChange(1)}
+            >
+              <CustomText type="xsmall">Equipo 1</CustomText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.teamOption}
+              onPress={() => handleTeamChange(2)}
+            >
+              <CustomText type="xsmall">Equipo 2</CustomText>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 };

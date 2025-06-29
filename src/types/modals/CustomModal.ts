@@ -1,3 +1,4 @@
+import { Application } from "../application/Application";
 import { Match } from "../match/Match";
 
 export type ModalParams = {
@@ -14,8 +15,6 @@ export interface ModalContextData {
   closeModal: () => void;
   openErrorModal: (t: string, m: string) => void;
   closeErrorModal: () => void;
-  openApplicationsModal: (match: Match) => void;
-  closeApplicationsModal: () => void;
 }
 
 export interface ModalProps {
@@ -28,4 +27,5 @@ export interface ApplicationsModalProps {
   match: Match | null;
   isOpen: boolean;
   closeModal: () => void;
+  refreshApplications: (applications: Application[]) => void;
 }

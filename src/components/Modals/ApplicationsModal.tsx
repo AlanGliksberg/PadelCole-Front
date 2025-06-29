@@ -1,14 +1,14 @@
+import { ModalContext } from "@/src/contexts/ModalContext";
 import {
-  acceptApplicationApi,
-  rejectApplicationApi,
-} from "@/src/services/match";
+  acceptApplication,
+  rejectApplication,
+} from "@/src/services/application";
 import { colors } from "@/src/theme";
 import { Application } from "@/src/types/application/Application";
 import { ApplicationsModalProps } from "@/src/types/modals/CustomModal";
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
-  Alert,
   Modal,
   ScrollView,
   TouchableOpacity,
@@ -23,37 +23,63 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   match,
   isOpen,
   closeModal,
+  refreshApplications,
 }) => {
   const [loading, setLoading] = useState(false);
+  const { openModal, openErrorModal } = useContext(ModalContext);
 
   if (!match) return null;
 
-  const handleAcceptApplication = async (application: Application) => {
+  const handleAcceptApplication = async (
+    application: Application,
+    selectedTeam: 1 | 2
+  ) => {
     setLoading(true);
-    try {
-      await acceptApplicationApi(application.id);
-      Alert.alert("Éxito", "Postulación aceptada", [
-        { text: "OK", onPress: closeModal },
-      ]);
-    } catch (error) {
-      Alert.alert("Error", "No se pudo aceptar la postulación");
-    } finally {
+    const res = await acceptApplication(application.id, selectedTeam);
+    if (res.error) {
+      openErrorModal(
+        "Postulación",
+        "Hubo un error inesperado al aceptar la postulación. Intentá nuevamente"
+      );
       setLoading(false);
+      return;
     }
+
+    openModal({
+      title: "Postulación",
+      message: `Se ha agregado correctamente al jugador ${application.player.firstName} ${application.player.lastName} al partido`,
+      primaryAction: () => {
+        refreshApplications(
+          match.applications.filter((a) => a.id !== application.id)
+        );
+      },
+    });
+
+    setLoading(false);
   };
 
   const handleRejectApplication = async (application: Application) => {
     setLoading(true);
-    try {
-      await rejectApplicationApi(application.id);
-      Alert.alert("Éxito", "Postulación rechazada", [
-        { text: "OK", onPress: closeModal },
-      ]);
-    } catch (error) {
-      Alert.alert("Error", "No se pudo rechazar la postulación");
-    } finally {
+    const res = await rejectApplication(application.id);
+    if (res.error) {
+      openErrorModal(
+        "Postulación",
+        "Hubo un error inesperado al rechazar la postulación. Intentá nuevamente"
+      );
       setLoading(false);
+      return;
     }
+
+    openModal({
+      title: "Postulación",
+      message: `Se ha rechazado correctamente al jugador ${application.player.firstName} ${application.player.lastName} del partido`,
+      primaryAction: () => {
+        refreshApplications(
+          match.applications.filter((a) => a.id !== application.id)
+        );
+      },
+    });
+    setLoading(false);
   };
 
   return (

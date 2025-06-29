@@ -53,7 +53,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
   };
 
   const handleApplications = () => {
-    openApplicationsModal(match);
+    openApplicationsModal(match, refreshData);
   };
 
   const dropdownOptions = [

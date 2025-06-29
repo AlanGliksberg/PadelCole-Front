@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
   },
   teamSelectContainer: {
     marginTop: spacing.xs,
+    position: "relative",
   },
   teamSelect: {
     flexDirection: "row",
@@ -53,8 +54,8 @@ export const styles = StyleSheet.create({
     borderColor: colors.border,
     borderRadius: 8,
     marginTop: 2,
-    zIndex: 10,
-    elevation: 3,
+    zIndex: 9999,
+    elevation: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -114,5 +115,28 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  teamDropdownModal: {
+    backgroundColor: colors.background,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 8,
+    padding: spacing.xs,
+    minWidth: 80,
+    maxWidth: 100,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
