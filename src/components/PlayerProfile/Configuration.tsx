@@ -18,27 +18,16 @@ export default function Configuration({
   return (
     <View style={styles.tabContent}>
       <View style={styles.section}>
-        <CustomText style={styles.sectionTitle}>
-          Configuración de Cuenta
-        </CustomText>
+        <CustomText style={styles.sectionTitle}>Configuración</CustomText>
 
-        <View style={{ gap: 8 }}>
+        <View style={styles.configurationContainer}>
           <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: 16,
-              backgroundColor: colors.surface,
-              borderRadius: 8,
-            }}
+            style={styles.configButton}
             onPress={onChangePassword}
           >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
-            >
-              <MaterialIcons name="lock" size={20} color={colors.description} />
-              <CustomText style={{ fontSize: 16, color: colors.text }}>
+            <View style={styles.configButtonContent}>
+              <MaterialIcons name="lock" size={20} color={colors.primary} />
+              <CustomText style={styles.configButtonText}>
                 Cambiar contraseña
               </CustomText>
             </View>
@@ -50,21 +39,12 @@ export default function Configuration({
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: 16,
-              backgroundColor: colors.surface,
-              borderRadius: 8,
-            }}
+            style={styles.configButtonLogout}
             onPress={onLogout}
           >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
-            >
+            <View style={styles.configButtonContent}>
               <MaterialIcons name="logout" size={20} color={colors.error} />
-              <CustomText style={{ fontSize: 16, color: colors.error }}>
+              <CustomText style={styles.configButtonTextLogout}>
                 Cerrar sesión
               </CustomText>
             </View>
@@ -74,95 +54,6 @@ export default function Configuration({
               color={colors.description}
             />
           </TouchableOpacity>
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <CustomText style={styles.sectionTitle}>
-          Información de la App
-        </CustomText>
-
-        <View style={{ gap: 8 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: 16,
-              backgroundColor: colors.surface,
-              borderRadius: 8,
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
-            >
-              <MaterialIcons name="info" size={20} color={colors.description} />
-              <CustomText style={{ fontSize: 16, color: colors.text }}>
-                Versión
-              </CustomText>
-            </View>
-            <CustomText style={{ fontSize: 16, color: colors.description }}>
-              1.0.0
-            </CustomText>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: 16,
-              backgroundColor: colors.surface,
-              borderRadius: 8,
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
-            >
-              <MaterialIcons
-                name="description"
-                size={20}
-                color={colors.description}
-              />
-              <CustomText style={{ fontSize: 16, color: colors.text }}>
-                Términos y condiciones
-              </CustomText>
-            </View>
-            <MaterialIcons
-              name="chevron-right"
-              size={20}
-              color={colors.description}
-            />
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: 16,
-              backgroundColor: colors.surface,
-              borderRadius: 8,
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
-            >
-              <MaterialIcons
-                name="privacy-tip"
-                size={20}
-                color={colors.description}
-              />
-              <CustomText style={{ fontSize: 16, color: colors.text }}>
-                Política de privacidad
-              </CustomText>
-            </View>
-            <MaterialIcons
-              name="chevron-right"
-              size={20}
-              color={colors.description}
-            />
-          </View>
         </View>
       </View>
     </View>

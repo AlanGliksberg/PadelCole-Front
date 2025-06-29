@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native";
 import { colors, spacing, typography } from "../../theme";
 
 export const styles = StyleSheet.create({
+  tabsSectionContainer: {
+    gap: spacing.md,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -43,15 +46,15 @@ export const styles = StyleSheet.create({
   },
   editAvatarButton: {
     position: "absolute",
-    bottom: 0,
-    right: 0,
+    bottom: -4,
+    right: 110,
     backgroundColor: colors.primary,
     borderRadius: 20,
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: colors.surface,
   },
   profileInfo: {
@@ -201,6 +204,43 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.error + "10",
   },
   logoutText: {
+    color: colors.error,
+  },
+  configurationContainer: {
+    gap: 8,
+    marginTop: 16,
+  },
+  configButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: colors.background,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  configButtonLogout: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: colors.background,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.error + "30",
+  },
+  configButtonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  configButtonText: {
+    fontSize: 16,
+    color: colors.text,
+  },
+  configButtonTextLogout: {
+    fontSize: 16,
     color: colors.error,
   },
 });

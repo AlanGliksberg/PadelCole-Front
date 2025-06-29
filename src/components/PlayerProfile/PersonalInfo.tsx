@@ -68,47 +68,6 @@ export default function PersonalInfo({
           </View>
         </View>
       </View>
-
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <CustomText style={styles.sectionTitle}>Preferencias</CustomText>
-        </View>
-
-        <View style={styles.detailsContainer}>
-          <View style={styles.detailRow}>
-            <MaterialCommunityIcons
-              name="calendar"
-              size={20}
-              color={colors.description}
-            />
-            <CustomText style={styles.detailText}>
-              Días preferidos: Lunes, Miércoles, Viernes
-            </CustomText>
-          </View>
-
-          <View style={styles.detailRow}>
-            <MaterialCommunityIcons
-              name="clock"
-              size={20}
-              color={colors.description}
-            />
-            <CustomText style={styles.detailText}>
-              Horarios preferidos: 18:00 - 22:00
-            </CustomText>
-          </View>
-
-          <View style={styles.detailRow}>
-            <MaterialCommunityIcons
-              name="map-marker"
-              size={20}
-              color={colors.description}
-            />
-            <CustomText style={styles.detailText}>
-              Ubicación preferida: Club de Pádel Central
-            </CustomText>
-          </View>
-        </View>
-      </View>
     </View>
   );
 }

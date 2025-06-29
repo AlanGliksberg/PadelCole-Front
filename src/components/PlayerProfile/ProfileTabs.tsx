@@ -30,6 +30,7 @@ export default function ProfileTabs({
 }: ProfileTabsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("personal");
 
+  // TODO - usar loading
   const renderTabContent = () => {
     switch (activeTab) {
       case "personal":
@@ -49,7 +50,7 @@ export default function ProfileTabs({
   };
 
   return (
-    <View>
+    <View style={styles.tabsSectionContainer}>
       <View style={styles.tabsContainer}>
         <TouchableOpacity
           style={[styles.tab, activeTab === "personal" && styles.activeTab]}

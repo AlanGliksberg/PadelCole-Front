@@ -7,7 +7,7 @@ import { Image, TouchableOpacity, View } from "react-native";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./PlayerAvatar.styles";
 
-type AvatarSize = "s" | "m" | "l";
+type AvatarSize = "s" | "m" | "l" | "xl";
 
 interface PlayerAvatarProps {
   player: Player | null;
