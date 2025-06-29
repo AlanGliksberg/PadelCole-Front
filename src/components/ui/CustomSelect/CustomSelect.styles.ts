@@ -4,9 +4,6 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   labelContainer: {
     flexDirection: "row",
-    marginBottom: spacing.sm,
-  },
-  label: {
     marginBottom: spacing.xs,
   },
   selectButton: {

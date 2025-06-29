@@ -25,14 +25,8 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
     <View>
       {label && (
         <View style={styles.labelContainer}>
-          <CustomText type="medium" style={styles.label}>
-            {label}
-          </CustomText>
-          {mandatory && (
-            <CustomText type="xsmall" style={styles.label}>
-              {" *"}
-            </CustomText>
-          )}
+          <CustomText type="medium">{label}</CustomText>
+          {mandatory && <CustomText type="xsmall">{" *"}</CustomText>}
         </View>
       )}
 

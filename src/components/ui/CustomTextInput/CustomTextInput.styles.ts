@@ -4,8 +4,6 @@ import { colors, spacing, typography } from "../../../theme";
 export const styles = StyleSheet.create({
   labelContainer: {
     flexDirection: "row",
-  },
-  label: {
     marginBottom: spacing.xs,
   },
   searchSection: {

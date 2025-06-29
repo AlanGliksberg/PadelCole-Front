@@ -66,7 +66,6 @@ export const deletePlayerFromMatch = async (
   matchId: number,
   playerId: number
 ) => {
-  console.log({ matchId, playerId });
   return await deleteApi<CommonMatchResponse>(ADD_PLAYER_TO_MATCH_URI, {
     body: { matchId, playerId },
   });

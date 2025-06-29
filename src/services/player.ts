@@ -11,8 +11,18 @@ import { CreatePlayerPayload } from "../types/api/Player";
 import { Question } from "../types/player/Question";
 import { get, post } from "./api";
 
+export const getAllPlayers = async () => {
+  return await get<{ players: Player[] }>(GET_PLAYERS_URI, {
+    withCache: true,
+  });
+};
+
 export const getPlayers = async (params: GetPlayerParams) => {
+  // Si se está buscando por ID (cuando el nombre es un número), permitir la búsqueda sin filtros
+  const isSearchingById = !isNaN(Number(params.name)) && params.name !== "";
+
   if (
+    !isSearchingById && // No aplicar restricción si se busca por ID
     !params.name &&
     !params.category?.some(Boolean) &&
     !params.gender?.some(Boolean) &&

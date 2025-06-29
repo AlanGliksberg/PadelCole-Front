@@ -49,18 +49,10 @@ const CustomSelect = <T extends Item>({
   return (
     <View>
       <View style={styles.labelContainer}>
-        <CustomText
-          type="medium"
-          style={[styles.label, labelStyles]}
-          {...labelProps}
-        >
+        <CustomText type="medium" style={labelStyles} {...labelProps}>
           {label}
         </CustomText>
-        {mandatory && (
-          <CustomText type="xsmall" style={styles.label}>
-            {" *"}
-          </CustomText>
-        )}
+        {mandatory && <CustomText type="xsmall">{" *"}</CustomText>}
       </View>
 
       <TouchableOpacity

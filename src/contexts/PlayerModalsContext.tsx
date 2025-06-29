@@ -1,6 +1,8 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { AddPlayerToMatchModal, PlayerDetailsModal } from "../components";
 import ApplicationsModal from "../components/Modals/ApplicationsModal";
+import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
+import EditProfileModal from "../components/Modals/EditProfileModal";
 import { removeGetCreatedMatchesCache } from "../services/cache";
 import { Match, Player } from "../types";
 import { Application } from "../types/application/Application";
@@ -15,6 +17,10 @@ interface PlayerModalsContextData {
     refreshData?: () => Promise<void>
   ) => void;
   closeApplicationsModal: () => void;
+  openChangePasswordModal: () => void;
+  closeChangePasswordModal: () => void;
+  openEditProfileModal: (player: Player, onUpdate: () => void) => void;
+  closeEditProfileModal: () => void;
 }
 
 export const PlayerModalsContext = createContext<PlayerModalsContextData>({
@@ -27,6 +33,10 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
     refreshData?: () => Promise<void>
   ) => {},
   closeApplicationsModal: () => {},
+  openChangePasswordModal: () => {},
+  closeChangePasswordModal: () => {},
+  openEditProfileModal: (player: Player, onUpdate: () => void) => {},
+  closeEditProfileModal: () => {},
 });
 
 export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
@@ -97,6 +107,34 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     removeGetCreatedMatchesCache();
   };
 
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+
+  const openChangePasswordModal = () => {
+    setShowChangePasswordModal(true);
+  };
+  const closeChangePasswordModal = () => {
+    setShowChangePasswordModal(false);
+  };
+
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [editProfilePlayer, setEditProfilePlayer] = useState<Player | null>(
+    null
+  );
+  const [editProfileCallback, setEditProfileCallback] = useState<
+    (() => void) | null
+  >(null);
+  const openEditProfileModal = (player: Player, onUpdate: () => void) => {
+    setEditProfilePlayer(player);
+    setEditProfileCallback(() => onUpdate);
+    setShowEditProfileModal(true);
+  };
+
+  const closeEditProfileModal = () => {
+    setShowEditProfileModal(false);
+    setEditProfilePlayer(null);
+    setEditProfileCallback(null);
+  };
+
   return (
     <PlayerModalsContext.Provider
       value={{
@@ -106,6 +144,10 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         closeAddPlayerToMatch,
         openApplicationsModal,
         closeApplicationsModal,
+        openChangePasswordModal,
+        closeChangePasswordModal,
+        openEditProfileModal,
+        closeEditProfileModal,
       }}
     >
       {children}
@@ -126,6 +168,16 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         isOpen={!!applicationsMatch}
         match={applicationsMatch}
         refreshApplications={refreshApplications}
+      />
+      <ChangePasswordModal
+        isVisible={showChangePasswordModal}
+        onClose={closeChangePasswordModal}
+      />
+      <EditProfileModal
+        isVisible={showEditProfileModal}
+        onClose={closeEditProfileModal}
+        player={editProfilePlayer}
+        onUpdate={editProfileCallback || (() => {})}
       />
     </PlayerModalsContext.Provider>
   );

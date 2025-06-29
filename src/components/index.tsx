@@ -5,6 +5,7 @@ export { default as ApplicationsModal } from "./Modals/ApplicationsModal";
 export { default as CustomErrorModal } from "./Modals/CustomErrorModal";
 export { default as CustomModal } from "./Modals/CustomModal";
 export { default as PlayerDetailsModal } from "./Modals/PlayerDetailsModal";
+export { default as PlayerProfile } from "./PlayerProfile/PlayerProfile";
 export { default as BorderedButton } from "./ui/BorderedButton/BorderedButton";
 export { default as CustomDatePicker } from "./ui/CustomDatePicker/CustomDatePicker";
 export { default as CustomRadioButton } from "./ui/CustomRadioButton/CustomRadioButton";
