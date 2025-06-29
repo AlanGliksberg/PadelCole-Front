@@ -30,6 +30,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
   };
 
   if (!player) return null;
+  console.log({ player });
 
   return (
     <Modal

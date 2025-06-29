@@ -1,6 +1,7 @@
 export { default as MatchBox } from "./MatchBox/MatchBox";
 export { default as MatchBoxSkeleton } from "./MatchBox/MatchBoxSkeleton";
 export { default as AddPlayerToMatchModal } from "./Modals/AddPlayerToMatchModal";
+export { default as ApplicationsModal } from "./Modals/ApplicationsModal";
 export { default as CustomErrorModal } from "./Modals/CustomErrorModal";
 export { default as CustomModal } from "./Modals/CustomModal";
 export { default as PlayerDetailsModal } from "./Modals/PlayerDetailsModal";

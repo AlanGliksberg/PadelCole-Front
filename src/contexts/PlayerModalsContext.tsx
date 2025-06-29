@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { AddPlayerToMatchModal, PlayerDetailsModal } from "../components";
+import ApplicationsModal from "../components/Modals/ApplicationsModal";
 import { Match, Player } from "../types";
 
 interface PlayerModalsContextData {
@@ -7,6 +8,8 @@ interface PlayerModalsContextData {
   closePlayerDetail: () => void;
   openAddPlayerToMatch: (m: Match, t: number, c?: (p: Player) => void) => void;
   closeAddPlayerToMatch: () => void;
+  openApplicationsModal: (match: Match) => void;
+  closeApplicationsModal: () => void;
 }
 
 export const PlayerModalsContext = createContext<PlayerModalsContextData>({
@@ -14,6 +17,8 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
   closePlayerDetail: () => {},
   openAddPlayerToMatch: (m: Match, t: number, c?: (p: Player) => void) => {},
   closeAddPlayerToMatch: () => {},
+  openApplicationsModal: (match: Match) => {},
+  closeApplicationsModal: () => {},
 });
 
 export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
@@ -57,6 +62,14 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     setOpenAddPlayerModal(false);
   };
 
+  const [applicationsMatch, setApplicationsMatch] = useState<Match | null>(
+    null
+  );
+
+  const openApplicationsModal = (match: Match) => setApplicationsMatch(match);
+
+  const closeApplicationsModal = () => setApplicationsMatch(null);
+
   return (
     <PlayerModalsContext.Provider
       value={{
@@ -64,6 +77,8 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         closePlayerDetail,
         openAddPlayerToMatch,
         closeAddPlayerToMatch,
+        openApplicationsModal,
+        closeApplicationsModal,
       }}
     >
       {children}
@@ -78,6 +93,11 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         match={selectedMatch}
         team={selectedTeam}
         onPlayerAdd={callbackFn}
+      />
+      <ApplicationsModal
+        closeModal={closeApplicationsModal}
+        isOpen={!!applicationsMatch}
+        match={applicationsMatch}
       />
     </PlayerModalsContext.Provider>
   );

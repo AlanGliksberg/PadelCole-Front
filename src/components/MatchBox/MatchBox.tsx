@@ -1,5 +1,6 @@
 import { AuthContext } from "@/src/contexts/AuthContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
+import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 import { deleteMatchApi } from "@/src/services/match";
 import { colors } from "@/src/theme";
 import { Match } from "@/src/types";
@@ -31,6 +32,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
 }) => {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
+  const { openApplicationsModal } = useContext(PlayerModalsContext);
   const navigation = useNavigation<NavigationProp>();
   const isCreator = user?.playerId === match.creatorPlayerId;
 
@@ -48,6 +50,10 @@ const MatchBox: React.FC<MatchBoxProps> = ({
 
   const handleEdit = () => {
     navigation.navigate("EditarPartido", { match });
+  };
+
+  const handleApplications = () => {
+    openApplicationsModal(match);
   };
 
   const dropdownOptions = [
@@ -134,7 +140,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           )}
         </View>
         {isCreator && showCreatorDetails && (
-          <BorderedButton size="xl">
+          <BorderedButton size="xl" onPress={handleApplications}>
             <CustomText type="xsmall" style={styles.applicationsButtonText}>
               Postulaciones
             </CustomText>

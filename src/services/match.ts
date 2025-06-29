@@ -71,3 +71,21 @@ export const deletePlayerFromMatch = async (
     body: { matchId, playerId },
   });
 };
+
+export const acceptApplicationApi = async (applicationId: number) => {
+  try {
+    const response = await put(`/applications/${applicationId}/accept`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const rejectApplicationApi = async (applicationId: number) => {
+  try {
+    const response = await put(`/applications/${applicationId}/reject`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
