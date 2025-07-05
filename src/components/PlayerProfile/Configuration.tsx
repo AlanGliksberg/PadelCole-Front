@@ -1,20 +1,32 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import React, { useContext } from "react";
+import { Alert, TouchableOpacity, View } from "react-native";
 
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { colors } from "@/src/theme";
 import { styles } from "./PlayerProfile.styles";
+import { AuthContext } from "@/src/contexts/AuthContext";
+import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
+import { ModalContext } from "@/src/contexts/ModalContext";
 
-interface ConfigurationProps {
-  onLogout: () => void;
-  onChangePassword: () => void;
-}
+export default function Configuration() {
+  const { logout } = useContext(AuthContext);
+  const { openChangePasswordModal } = useContext(PlayerModalsContext);
+  const { openModal } = useContext(ModalContext);
 
-export default function Configuration({
-  onLogout,
-  onChangePassword,
-}: ConfigurationProps) {
+  const handleLogout = () => {
+    openModal({
+      title: "Cerrar sesión",
+      message: "¿Estás seguro que querés cerrar sesión?",
+      primaryAction: logout,
+      primaryLabel: "Cerrar sesión",
+    });
+  };
+
+  const handleChangePassword = () => {
+    openChangePasswordModal();
+  };
+
   return (
     <View style={styles.tabContent}>
       <View style={styles.section}>
@@ -23,7 +35,7 @@ export default function Configuration({
         <View style={styles.configurationContainer}>
           <TouchableOpacity
             style={styles.configButton}
-            onPress={onChangePassword}
+            onPress={handleChangePassword}
           >
             <View style={styles.configButtonContent}>
               <MaterialIcons name="lock" size={20} color={colors.primary} />
@@ -40,7 +52,7 @@ export default function Configuration({
 
           <TouchableOpacity
             style={styles.configButtonLogout}
-            onPress={onLogout}
+            onPress={handleLogout}
           >
             <View style={styles.configButtonContent}>
               <MaterialIcons name="logout" size={20} color={colors.error} />

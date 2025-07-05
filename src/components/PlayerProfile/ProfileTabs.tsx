@@ -14,15 +14,11 @@ export type TabType = "personal" | "historial" | "configuracion";
 interface ProfileTabsProps {
   player: Player | null;
   handleRefresh: () => void;
-  onLogout: () => void;
-  onChangePassword: () => void;
 }
 
 export default function ProfileTabs({
   player,
   handleRefresh,
-  onLogout,
-  onChangePassword,
 }: ProfileTabsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("personal");
 
@@ -34,12 +30,7 @@ export default function ProfileTabs({
       case "historial":
         return <MatchHistory />;
       case "configuracion":
-        return (
-          <Configuration
-            onLogout={onLogout}
-            onChangePassword={onChangePassword}
-          />
-        );
+        return <Configuration />;
       default:
         return <PersonalInfo player={player} handleRefresh={handleRefresh} />;
     }

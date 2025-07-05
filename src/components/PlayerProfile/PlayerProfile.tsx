@@ -1,12 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Alert, ScrollView, View } from "react-native";
-
+import { ScrollView, View } from "react-native";
 import CustomText from "@/src/components/ui/CustomText/CustomText";
-import { AuthContext } from "@/src/contexts/AuthContext";
-import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
-import { getCreatedMatches, getMatchesCount } from "@/src/services/match";
 import { getCurrentPlayer } from "@/src/services/player";
-import { Match } from "@/src/types/match/Match";
 import { Player } from "@/src/types/player/Player";
 import { styles } from "./PlayerProfile.styles";
 import { ProfileHeader, ProfileTabs } from "./index";
@@ -18,9 +13,6 @@ interface PlayerProfileProps {
 }
 
 export default function PlayerProfile({ playerId }: PlayerProfileProps) {
-  const { logout } = useContext(AuthContext);
-  const { openChangePasswordModal } = useContext(PlayerModalsContext);
-
   const [player, setPlayer] = useState<Player | null>(null);
   const { hideLoading, showLoading, loading } = useContext(LoadingContext);
   const [error, setError] = useState<string | null>(null);
@@ -55,17 +47,6 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     await loadPlayerData();
   };
 
-  const handleLogout = () => {
-    Alert.alert("Cerrar sesión", "¿Estás seguro que quieres cerrar sesión?", [
-      { text: "Cancelar", style: "cancel" },
-      { text: "Cerrar sesión", style: "destructive", onPress: logout },
-    ]);
-  };
-
-  const handleChangePassword = () => {
-    openChangePasswordModal();
-  };
-
   if (loading) {
     return <></>;
   }
@@ -88,12 +69,7 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
       <View style={styles.content}>
         <ProfileHeader player={player} />
 
-        <ProfileTabs
-          player={player}
-          handleRefresh={handleRefresh}
-          onLogout={handleLogout}
-          onChangePassword={handleChangePassword}
-        />
+        <ProfileTabs player={player} handleRefresh={handleRefresh} />
       </View>
     </ScrollView>
   );
