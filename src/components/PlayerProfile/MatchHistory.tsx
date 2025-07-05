@@ -8,12 +8,10 @@ import { colors } from "@/src/theme";
 import { Match } from "@/src/types/match/Match";
 import { styles } from "./PlayerProfile.styles";
 
-interface MatchHistoryProps {
-  matches: Match[];
-  loading: boolean;
-}
+export default function MatchHistory() {
+  const loading = true;
+  const matches: Match[] = [];
 
-export default function MatchHistory({ matches, loading }: MatchHistoryProps) {
   if (loading) {
     return (
       <View style={styles.tabContent}>

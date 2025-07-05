@@ -2,6 +2,7 @@ import {
   ADD_PLAYER_TO_MATCH_URI,
   CREATE_MATCH_URI,
   DELETE_MATCH_URI,
+  GET_MATCHES_COUNT_URI,
   GET_MY_MATCHES_URI,
   REMOVE_PLAYER_FROM_MATCH_URI,
   UPDATE_MATCH_URI,
@@ -68,5 +69,11 @@ export const deletePlayerFromMatch = async (
 ) => {
   return await deleteApi<CommonMatchResponse>(ADD_PLAYER_TO_MATCH_URI, {
     body: { matchId, playerId },
+  });
+};
+
+export const getMatchesCount = async () => {
+  return await get<{ count: number }>(GET_MATCHES_COUNT_URI, {
+    withCache: true,
   });
 };

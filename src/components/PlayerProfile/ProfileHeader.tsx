@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { AuthContext } from "@/src/contexts/AuthContext";
@@ -7,14 +7,32 @@ import { Match } from "@/src/types/match/Match";
 import { Player } from "@/src/types/player/Player";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import { styles } from "./PlayerProfile.styles";
+import { getMatchesCount } from "@/src/services/match";
+import { colors } from "@/src/theme";
 
 interface ProfileHeaderProps {
   player: Player | null;
-  matches: Match[];
 }
 
-export default function ProfileHeader({ player, matches }: ProfileHeaderProps) {
+export default function ProfileHeader({ player }: ProfileHeaderProps) {
   const { user } = useContext(AuthContext);
+  const [matchesCount, setMatchesCount] = useState<number | string>(0);
+  const [loadingMatchesCount, setLoadingMatchesCount] = useState(false);
+
+  useEffect(() => {
+    const loadMatchesCount = async () => {
+      setLoadingMatchesCount(true);
+      const response = await getMatchesCount();
+      if (!response.error && response.data) {
+        setMatchesCount(response.data.count);
+      } else {
+        setMatchesCount("S/I");
+      }
+      setLoadingMatchesCount(false);
+    };
+
+    loadMatchesCount();
+  }, []);
 
   return (
     <View style={styles.profileHeader}>
@@ -46,7 +64,13 @@ export default function ProfileHeader({ player, matches }: ProfileHeaderProps) {
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
-            <CustomText style={styles.statValue}>{matches.length}</CustomText>
+            <CustomText style={styles.statValue}>
+              {loadingMatchesCount ? (
+                <ActivityIndicator size="small" color={colors.primary} />
+              ) : (
+                matchesCount
+              )}
+            </CustomText>
             <CustomText style={styles.statLabel}>Partidos</CustomText>
           </View>
         </View>

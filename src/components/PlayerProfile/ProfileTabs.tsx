@@ -13,8 +13,6 @@ export type TabType = "personal" | "historial" | "configuracion";
 
 interface ProfileTabsProps {
   player: Player | null;
-  matches: Match[];
-  loading: boolean;
   handleRefresh: () => void;
   onLogout: () => void;
   onChangePassword: () => void;
@@ -22,8 +20,6 @@ interface ProfileTabsProps {
 
 export default function ProfileTabs({
   player,
-  matches,
-  loading,
   handleRefresh,
   onLogout,
   onChangePassword,
@@ -36,7 +32,7 @@ export default function ProfileTabs({
       case "personal":
         return <PersonalInfo player={player} handleRefresh={handleRefresh} />;
       case "historial":
-        return <MatchHistory matches={matches} loading={loading} />;
+        return <MatchHistory />;
       case "configuracion":
         return (
           <Configuration

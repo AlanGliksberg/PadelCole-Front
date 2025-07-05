@@ -1,4 +1,8 @@
-import { GET_CURRENT_PLAYER_URI, GET_MY_MATCHES_URI } from "../constants/api";
+import {
+  GET_CURRENT_PLAYER_URI,
+  GET_MATCHES_COUNT_URI,
+  GET_MY_MATCHES_URI,
+} from "../constants/api";
 import { ApiResponse } from "../types";
 
 interface CacheEntry {
@@ -45,4 +49,8 @@ export const removeGetCreatedMatchesCache = () => {
 
 export const removeGetCurrentPlayerCache = () => {
   removeCache(GET_CURRENT_PLAYER_URI);
+};
+
+export const removeMatchesCache = () => {
+  removeCache(GET_MATCHES_COUNT_URI);
 };
