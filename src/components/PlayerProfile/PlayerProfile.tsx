@@ -5,11 +5,12 @@ import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { AuthContext } from "@/src/contexts/AuthContext";
 import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 import { getCreatedMatches } from "@/src/services/match";
-import { getAllPlayers, getCurrentPlayer } from "@/src/services/player";
+import { getCurrentPlayer } from "@/src/services/player";
 import { Match } from "@/src/types/match/Match";
 import { Player } from "@/src/types/player/Player";
 import { styles } from "./PlayerProfile.styles";
 import { ProfileHeader, ProfileTabs } from "./index";
+import { removeGetCurrentPlayerCache } from "@/src/services/cache";
 
 interface PlayerProfileProps {
   playerId: number;
@@ -66,6 +67,7 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
 
   const handleRefresh = async () => {
     // TODO - borrar cache
+    removeGetCurrentPlayerCache();
     await loadPlayerData();
   };
 
