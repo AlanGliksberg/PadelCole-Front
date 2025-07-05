@@ -1,10 +1,16 @@
 import {
+  CHANGE_PASSWORD_URI,
   GOOGLE_LOGIN_URI,
   LOGIN_URI,
   REFRESH_TOKEN_URI,
   REGISTER_URI,
 } from "../constants/api";
-import { LoginResponse, RegisterPayload, RegisterResponse } from "../types";
+import {
+  ChangePasswordDTO,
+  LoginResponse,
+  RegisterPayload,
+  RegisterResponse,
+} from "../types";
 import { post } from "./api";
 
 export const login = async (email: string, password: string) => {
@@ -26,5 +32,11 @@ export const register = async (data: RegisterPayload) => {
 export const refreshToken = async (token: string) => {
   return await post<LoginResponse>(REFRESH_TOKEN_URI, {
     body: { token },
+  });
+};
+
+export const changePassword = async (data: ChangePasswordDTO) => {
+  return await post<void>(CHANGE_PASSWORD_URI, {
+    body: data,
   });
 };

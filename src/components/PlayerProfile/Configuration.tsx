@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useContext } from "react";
-import { Alert, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { colors } from "@/src/theme";
@@ -11,6 +11,7 @@ import { ModalContext } from "@/src/contexts/ModalContext";
 
 export default function Configuration() {
   const { logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { openChangePasswordModal } = useContext(PlayerModalsContext);
   const { openModal } = useContext(ModalContext);
 
@@ -24,7 +25,16 @@ export default function Configuration() {
   };
 
   const handleChangePassword = () => {
-    openChangePasswordModal();
+    if (user?.googleId) {
+      openModal({
+        title: "Cambiar contraseña",
+        message:
+          "No podés cambiar la contraseña porque está asociada a tu cuenta Google",
+        primaryLabel: "Aceptar",
+      });
+    } else {
+      openChangePasswordModal();
+    }
   };
 
   return (

@@ -1,6 +1,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useContext, useEffect, useState } from "react";
-import { Modal, ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  Modal,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { ModalContext } from "@/src/contexts/ModalContext";
 
@@ -47,6 +53,10 @@ export default function EditProfileModal({
 
   const handleClose = () => {
     onClose();
+  };
+
+  const handleModalPress = () => {
+    Keyboard.dismiss();
   };
 
   const onSubmit = async () => {
@@ -98,7 +108,7 @@ export default function EditProfileModal({
         <TouchableOpacity
           style={styles.container}
           activeOpacity={1}
-          onPress={(e) => e.stopPropagation()}
+          onPress={handleModalPress}
         >
           <View style={styles.header}>
             <CustomText style={styles.title}>

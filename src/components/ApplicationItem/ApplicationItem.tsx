@@ -3,7 +3,7 @@ import { Application } from "@/src/types/application/Application";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Modal, TouchableOpacity, View } from "react-native";
+import { Modal, TouchableOpacity, View } from "react-native";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./ApplicationItem.styles";
@@ -33,9 +33,8 @@ const ApplicationItem: React.FC<ApplicationItemProps> = ({
   const copyToClipboard = async (phone: string) => {
     try {
       await Clipboard.setStringAsync(phone);
-      Alert.alert("Copiado", "El número de teléfono se copió al portapapeles");
     } catch (error) {
-      Alert.alert("Error", "No se pudo copiar el número de teléfono");
+      console.error(error);
     }
   };
 

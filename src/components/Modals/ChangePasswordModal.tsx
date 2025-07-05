@@ -1,29 +1,23 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Alert, Modal, TouchableOpacity, View } from "react-native";
-import * as yup from "yup";
+import { Keyboard, Modal, TouchableOpacity, View } from "react-native";
 
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import CustomTextInput from "@/src/components/ui/CustomTextInput/CustomTextInput";
 import FullButton from "@/src/components/ui/FullButton/FullButton";
+import { ModalContext } from "@/src/contexts/ModalContext";
+import { changePasswordSchema } from "@/src/schemas/changePasswordSchema";
+import { changePassword } from "@/src/services/auth";
 import { colors } from "@/src/theme";
 import { styles } from "./ChangePasswordModal.styles";
 
-const changePasswordSchema = yup.object({
-  currentPassword: yup.string().required("La contraseña actual es requerida"),
-  newPassword: yup
-    .string()
-    .min(6, "La contraseña debe tener al menos 6 caracteres")
-    .required("La nueva contraseña es requerida"),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("newPassword")], "Las contraseñas no coinciden")
-    .required("Confirma la nueva contraseña"),
-});
-
-type ChangePasswordFormData = yup.InferType<typeof changePasswordSchema>;
+type ChangePasswordFormData = {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 interface ChangePasswordModalProps {
   isVisible: boolean;
@@ -35,6 +29,10 @@ export default function ChangePasswordModal({
   onClose,
 }: ChangePasswordModalProps) {
   const [loading, setLoading] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { openErrorModal, openModal } = useContext(ModalContext);
 
   const {
     control,
@@ -46,32 +44,41 @@ export default function ChangePasswordModal({
   });
 
   const onSubmit = async (data: ChangePasswordFormData) => {
-    try {
-      setLoading(true);
+    setLoading(true);
 
-      // TODO: Implementar el servicio para cambiar contraseña
-      console.log("Cambiando contraseña:", data);
+    const response = await changePassword({
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+    });
 
-      // Simular llamada a API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      Alert.alert("Éxito", "Tu contraseña ha sido cambiada correctamente", [
-        { text: "OK", onPress: handleClose },
-      ]);
-    } catch (error) {
-      Alert.alert(
+    if (response.error) {
+      openErrorModal(
         "Error",
-        "No se pudo cambiar la contraseña. Inténtalo de nuevo.",
-        [{ text: "OK" }]
+        "No se pudo cambiar la contraseña. Verificá que tu contraseña actual sea correcta."
       );
-    } finally {
       setLoading(false);
+      return;
     }
+
+    openModal({
+      title: "Contraseña cambiada",
+      message: "Tu contraseña ha sido cambiada correctamente",
+      primaryAction: handleClose,
+    });
+
+    setLoading(false);
   };
 
   const handleClose = () => {
     reset();
+    setShowCurrentPassword(false);
+    setShowNewPassword(false);
+    setShowConfirmPassword(false);
     onClose();
+  };
+
+  const handleModalPress = () => {
+    Keyboard.dismiss();
   };
 
   return (
@@ -80,13 +87,22 @@ export default function ChangePasswordModal({
       transparent
       animationType="fade"
       onRequestClose={handleClose}
+      statusBarTranslucent
     >
-      <View style={styles.overlay}>
-        <View style={styles.modalContainer}>
+      <TouchableOpacity
+        style={styles.overlay}
+        activeOpacity={1}
+        onPress={handleClose}
+      >
+        <TouchableOpacity
+          style={styles.container}
+          activeOpacity={1}
+          onPress={handleModalPress}
+        >
           <View style={styles.header}>
             <CustomText style={styles.title}>Cambiar Contraseña</CustomText>
-            <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
-              <MaterialIcons name="close" size={24} color={colors.text} />
+            <TouchableOpacity onPress={handleClose}>
+              <MaterialIcons name="close" size={24} style={styles.closeIcon} />
             </TouchableOpacity>
           </View>
 
@@ -99,9 +115,21 @@ export default function ChangePasswordModal({
                   label="Contraseña actual"
                   value={value}
                   onChangeText={onChange}
-                  secureTextEntry
+                  secureTextEntry={!showCurrentPassword}
                   error={errors.currentPassword?.message}
-                  placeholder="Ingresa tu contraseña actual"
+                  placeholder="Ingresá tu contraseña actual"
+                  autoCapitalize="none"
+                  rightSlot={
+                    <TouchableOpacity
+                      onPress={() => setShowCurrentPassword((prev) => !prev)}
+                    >
+                      <AntDesign
+                        name={showCurrentPassword ? "eye" : "eyeo"}
+                        size={24}
+                        color={colors.placeholder}
+                      />
+                    </TouchableOpacity>
+                  }
                 />
               )}
             />
@@ -114,9 +142,21 @@ export default function ChangePasswordModal({
                   label="Nueva contraseña"
                   value={value}
                   onChangeText={onChange}
-                  secureTextEntry
+                  secureTextEntry={!showNewPassword}
                   error={errors.newPassword?.message}
-                  placeholder="Ingresa tu nueva contraseña"
+                  placeholder="Ingresá tu nueva contraseña"
+                  autoCapitalize="none"
+                  rightSlot={
+                    <TouchableOpacity
+                      onPress={() => setShowNewPassword((prev) => !prev)}
+                    >
+                      <AntDesign
+                        name={showNewPassword ? "eye" : "eyeo"}
+                        size={24}
+                        color={colors.placeholder}
+                      />
+                    </TouchableOpacity>
+                  }
                 />
               )}
             />
@@ -129,9 +169,21 @@ export default function ChangePasswordModal({
                   label="Confirmar nueva contraseña"
                   value={value}
                   onChangeText={onChange}
-                  secureTextEntry
+                  secureTextEntry={!showConfirmPassword}
                   error={errors.confirmPassword?.message}
-                  placeholder="Confirma tu nueva contraseña"
+                  placeholder="Confirmá tu nueva contraseña"
+                  autoCapitalize="none"
+                  rightSlot={
+                    <TouchableOpacity
+                      onPress={() => setShowConfirmPassword((prev) => !prev)}
+                    >
+                      <AntDesign
+                        name={showConfirmPassword ? "eye" : "eyeo"}
+                        size={24}
+                        color={colors.placeholder}
+                      />
+                    </TouchableOpacity>
+                  }
                 />
               )}
             />
@@ -144,8 +196,8 @@ export default function ChangePasswordModal({
               </CustomText>
             </FullButton>
           </View>
-        </View>
-      </View>
+        </TouchableOpacity>
+      </TouchableOpacity>
     </Modal>
   );
 }

@@ -1,52 +1,47 @@
-import { colors, spacing } from "@/src/theme";
+import { colors, spacing, typography } from "@/src/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
-    padding: spacing.lg,
   },
-  modalContainer: {
+  container: {
     backgroundColor: colors.surface,
-    borderRadius: 12,
-    width: "100%",
-    maxWidth: 400,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 8,
+    padding: spacing.md,
+    borderRadius: spacing.md,
+    width: "90%",
+    alignSelf: "center",
+    maxHeight: "80%",
+    justifyContent: "space-between",
+    minHeight: 450,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: spacing.lg,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    marginBottom: spacing.md,
   },
   title: {
-    fontSize: 18,
+    fontSize: typography.h3,
     fontWeight: "bold",
     color: colors.text,
   },
-  closeButton: {
-    padding: spacing.xs,
+  closeIcon: {
+    color: colors.text,
   },
   content: {
-    padding: spacing.lg,
+    flex: 1,
     gap: spacing.md,
   },
   footer: {
-    padding: spacing.lg,
-    paddingTop: 0,
+    marginTop: spacing.md,
   },
   buttonText: {
-    fontSize: 16,
+    color: colors.white,
     fontWeight: "bold",
-    color: colors.text,
+    fontSize: typography.body,
   },
 });
