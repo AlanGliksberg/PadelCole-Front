@@ -15,3 +15,10 @@ export type CreatePlayerPayload = {
   categoryId?: number;
   answers?: number[];
 };
+
+export type UpdatePlayerPayload = {
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  positionId: number;
+};

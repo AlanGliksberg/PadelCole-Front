@@ -17,8 +17,7 @@ interface PlayerProfileProps {
 
 export default function PlayerProfile({ playerId }: PlayerProfileProps) {
   const { logout } = useContext(AuthContext);
-  const { openChangePasswordModal, openEditProfileModal } =
-    useContext(PlayerModalsContext);
+  const { openChangePasswordModal } = useContext(PlayerModalsContext);
 
   const [player, setPlayer] = useState<Player | null>(null);
   const [matches, setMatches] = useState<Match[]>([]);
@@ -85,12 +84,6 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     ]);
   };
 
-  const handleEditProfile = () => {
-    if (player) {
-      openEditProfileModal(player, handleRefresh);
-    }
-  };
-
   const handleChangePassword = () => {
     openChangePasswordModal();
   };
@@ -117,7 +110,7 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
           player={player}
           matches={matches}
           loading={loading}
-          onEditProfile={handleEditProfile}
+          handleRefresh={handleRefresh}
           onLogout={handleLogout}
           onChangePassword={handleChangePassword}
         />

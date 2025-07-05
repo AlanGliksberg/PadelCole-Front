@@ -5,11 +5,12 @@ import {
   GET_PLAYERS_URI,
   GET_POSITIONS_URI,
   GET_QUESTIONS_URI,
+  UPDATE_PLAYER_URI,
 } from "../constants/api";
 import { Category, Gender, GetPlayerParams, Player, Position } from "../types";
-import { CreatePlayerPayload } from "../types/api/Player";
+import { CreatePlayerPayload, UpdatePlayerPayload } from "../types/api/Player";
 import { Question } from "../types/player/Question";
-import { get, post } from "./api";
+import { get, post, put } from "./api";
 
 export const getAllPlayers = async () => {
   return await get<{ players: Player[] }>(GET_PLAYERS_URI, {
@@ -68,6 +69,12 @@ export const getQuestions = async () => {
 
 export const createPlayer = async (data: CreatePlayerPayload) => {
   return await post<{ player: Player }>(CREATE_PLAYER_URI, {
+    body: data,
+  });
+};
+
+export const updatePlayer = async (data: UpdatePlayerPayload) => {
+  return await put<{ player: Player }>(UPDATE_PLAYER_URI, {
     body: data,
   });
 };

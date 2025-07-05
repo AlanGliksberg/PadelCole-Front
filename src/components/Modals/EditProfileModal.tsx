@@ -1,12 +1,15 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
-import { Alert, Modal, ScrollView, TouchableOpacity, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Modal, ScrollView, TouchableOpacity, View } from "react-native";
+
+import { ModalContext } from "@/src/contexts/ModalContext";
 
 import CustomSelect from "@/src/components/ui/CustomSelect/CustomSelect";
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import CustomTextInput from "@/src/components/ui/CustomTextInput/CustomTextInput";
 import FullButton from "@/src/components/ui/FullButton/FullButton";
 import usePositions from "@/src/hooks/usePositions";
+import { updatePlayer } from "@/src/services/player";
 import { Player } from "@/src/types/player/Player";
 import { Position } from "@/src/types/player/Position";
 import { styles } from "./EditProfileModal.styles";
@@ -26,6 +29,7 @@ export default function EditProfileModal({
 }: EditProfileModalProps) {
   const [loading, setLoading] = useState(false);
   const { data: positions } = usePositions();
+  const { openErrorModal, openModal } = useContext(ModalContext);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -46,24 +50,36 @@ export default function EditProfileModal({
   };
 
   const onSubmit = async () => {
-    try {
-      setLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      Alert.alert("Éxito", "Tu perfil ha sido actualizado correctamente", [
-        { text: "OK", onPress: handleClose },
-      ]);
-      if (onUpdate) {
-        onUpdate();
-      }
-    } catch (error) {
-      Alert.alert(
+    setLoading(true);
+
+    const res = await updatePlayer({
+      firstName,
+      lastName,
+      phone,
+      positionId,
+    });
+
+    if (res.error) {
+      openErrorModal(
         "Error",
-        "No se pudo actualizar el perfil. Inténtalo de nuevo.",
-        [{ text: "OK" }]
+        "No se pudo actualizar el perfil. Intentá nuevamente."
       );
-    } finally {
       setLoading(false);
+      return;
     }
+
+    openModal({
+      title: "Perfil actualizado",
+      message: "Tu perfil ha sido actualizado correctamente",
+      primaryLabel: "Aceptar",
+      primaryAction: () => {
+        handleClose();
+        if (onUpdate) {
+          onUpdate();
+        }
+      },
+    });
+    setLoading(false);
   };
 
   return (
@@ -85,9 +101,11 @@ export default function EditProfileModal({
           onPress={(e) => e.stopPropagation()}
         >
           <View style={styles.header}>
-            <CustomText style={styles.title}>Editar Perfil</CustomText>
+            <CustomText style={styles.title}>
+              Editar datos personales
+            </CustomText>
             <TouchableOpacity onPress={handleClose}>
-              <MaterialIcons name="close" size={24} color="black" />
+              <MaterialIcons name="close" size={24} style={styles.closeIcon} />
             </TouchableOpacity>
           </View>
 
@@ -135,9 +153,7 @@ export default function EditProfileModal({
 
           <View style={styles.footer}>
             <FullButton onPress={onSubmit} disabled={loading}>
-              <CustomText
-                style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
-              >
+              <CustomText style={styles.buttonText}>
                 {loading ? "Guardando..." : "Guardar cambios"}
               </CustomText>
             </FullButton>

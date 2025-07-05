@@ -15,7 +15,7 @@ interface ProfileTabsProps {
   player: Player | null;
   matches: Match[];
   loading: boolean;
-  onEditProfile: () => void;
+  handleRefresh: () => void;
   onLogout: () => void;
   onChangePassword: () => void;
 }
@@ -24,7 +24,7 @@ export default function ProfileTabs({
   player,
   matches,
   loading,
-  onEditProfile,
+  handleRefresh,
   onLogout,
   onChangePassword,
 }: ProfileTabsProps) {
@@ -34,7 +34,7 @@ export default function ProfileTabs({
   const renderTabContent = () => {
     switch (activeTab) {
       case "personal":
-        return <PersonalInfo player={player} onEditProfile={onEditProfile} />;
+        return <PersonalInfo player={player} handleRefresh={handleRefresh} />;
       case "historial":
         return <MatchHistory matches={matches} loading={loading} />;
       case "configuracion":
@@ -45,7 +45,7 @@ export default function ProfileTabs({
           />
         );
       default:
-        return <PersonalInfo player={player} onEditProfile={onEditProfile} />;
+        return <PersonalInfo player={player} handleRefresh={handleRefresh} />;
     }
   };
 

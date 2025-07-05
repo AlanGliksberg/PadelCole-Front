@@ -1,3 +1,4 @@
+import { colors, spacing, typography } from "@/src/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -8,9 +9,9 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
+    backgroundColor: colors.surface,
+    padding: spacing.md,
+    borderRadius: spacing.md,
     width: "90%",
     alignSelf: "center",
     maxHeight: "80%",
@@ -20,21 +21,29 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: spacing.md,
   },
   title: {
-    fontSize: 18,
+    fontSize: typography.h3,
     fontWeight: "bold",
-    color: "black",
+    color: colors.text,
+  },
+  closeIcon: {
+    color: colors.text,
   },
   scrollView: {
     flexGrow: 0,
   },
   content: {
     flexGrow: 0,
-    gap: 8,
+    gap: spacing.sm,
   },
   footer: {
-    marginTop: 20,
+    marginTop: spacing.md,
+  },
+  buttonText: {
+    color: colors.white,
+    fontWeight: "bold",
+    fontSize: typography.body,
   },
 });

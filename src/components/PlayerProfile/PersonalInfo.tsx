@@ -1,21 +1,31 @@
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { useContext } from "react";
 import { TouchableOpacity, View } from "react-native";
 
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { colors } from "@/src/theme";
 import { Player } from "@/src/types/player/Player";
+import { GENDER_CODE } from "@/src/types/player/Gender";
 import { styles } from "./PlayerProfile.styles";
+import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 
 interface PersonalInfoProps {
   player: Player | null;
-  onEditProfile: () => void;
+  handleRefresh: () => void;
 }
 
 export default function PersonalInfo({
   player,
-  onEditProfile,
+  handleRefresh,
 }: PersonalInfoProps) {
+  const { openEditProfileModal } = useContext(PlayerModalsContext);
+
+  const onEditProfile = () => {
+    if (player) {
+      openEditProfileModal(player, handleRefresh);
+    }
+  };
+
   return (
     <View style={styles.tabContent}>
       <View style={styles.section}>
@@ -28,7 +38,20 @@ export default function PersonalInfo({
 
         <View style={styles.detailsContainer}>
           <View style={styles.detailRow}>
-            <MaterialIcons name="phone" size={20} color={colors.description} />
+            <MaterialCommunityIcons
+              name="account-circle"
+              size={20}
+              color={colors.primary}
+            />
+            <CustomText style={styles.detailText}>
+              {player?.firstName && player?.lastName
+                ? `${player.firstName} ${player.lastName}`
+                : "No especificado"}
+            </CustomText>
+          </View>
+
+          <View style={styles.detailRow}>
+            <MaterialIcons name="phone" size={20} color={colors.primary} />
             <CustomText style={styles.detailText}>
               {player?.phone || "No especificado"}
             </CustomText>
@@ -36,9 +59,13 @@ export default function PersonalInfo({
 
           <View style={styles.detailRow}>
             <MaterialCommunityIcons
-              name="account"
+              name={
+                player?.gender?.code === GENDER_CODE.CABALLERO
+                  ? "gender-male"
+                  : "gender-female"
+              }
               size={20}
-              color={colors.description}
+              color={colors.primary}
             />
             <CustomText style={styles.detailText}>
               {player?.gender?.name || "No especificado"}
@@ -47,20 +74,9 @@ export default function PersonalInfo({
 
           <View style={styles.detailRow}>
             <MaterialCommunityIcons
-              name="trophy"
+              name="target"
               size={20}
-              color={colors.description}
-            />
-            <CustomText style={styles.detailText}>
-              {player?.category?.description || "No especificado"}
-            </CustomText>
-          </View>
-
-          <View style={styles.detailRow}>
-            <MaterialCommunityIcons
-              name="hand-pointing-up"
-              size={20}
-              color={colors.description}
+              color={colors.primary}
             />
             <CustomText style={styles.detailText}>
               {player?.position?.description || "No especificado"}

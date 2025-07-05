@@ -17,6 +17,7 @@ export const REMOVE_PLAYER_FROM_MATCH_URI = `${MATCH_BASE_URI}/player`;
 
 export const GET_PLAYERS_URI = PLAYER_BASE_URI;
 export const CREATE_PLAYER_URI = PLAYER_BASE_URI;
+export const UPDATE_PLAYER_URI = PLAYER_BASE_URI;
 export const GET_GENDERS_URI = `${PLAYER_BASE_URI}/gender`;
 export const GET_POSITIONS_URI = `${PLAYER_BASE_URI}/position`;
 export const GET_CATEGORIES_URI = `${PLAYER_BASE_URI}/category`;
