@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Alert, ScrollView, View } from "react-native";
 
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { AuthContext } from "@/src/contexts/AuthContext";
 import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 import { getCreatedMatches } from "@/src/services/match";
-import { getAllPlayers } from "@/src/services/player";
+import { getAllPlayers, getCurrentPlayer } from "@/src/services/player";
 import { Match } from "@/src/types/match/Match";
 import { Player } from "@/src/types/player/Player";
 import { styles } from "./PlayerProfile.styles";
@@ -24,30 +24,22 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadPlayerData = async () => {
+  const loadPlayerData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
       // Cargar datos del jugador
-      const playersResponse = await getAllPlayers();
-      if (playersResponse.error || !playersResponse.data) {
+      const playerResponse = await getCurrentPlayer();
+      if (playerResponse.error || !playerResponse.data) {
         setError("Error al cargar los datos del jugador");
         return;
       }
 
-      const foundPlayer = playersResponse.data.players.find(
-        (p: Player) => p.id === playerId
-      );
-
-      if (!foundPlayer) {
-        setError("No se pudo encontrar el jugador");
-        return;
-      }
-
+      const foundPlayer = playerResponse.data.player;
       setPlayer(foundPlayer);
 
-      // Cargar partidos del jugador (por ahora usamos getCreatedMatches)
+      // TODO - cambiar a partidos jugados
       const matchesResponse = await getCreatedMatches(1, 100);
       if (matchesResponse.error || !matchesResponse.data) {
         setMatches([]);
@@ -66,11 +58,11 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [playerId]);
 
   useEffect(() => {
     loadPlayerData();
-  }, [playerId]);
+  }, [loadPlayerData, playerId]);
 
   const handleRefresh = async () => {
     // TODO - borrar cache
@@ -88,7 +80,7 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     openChangePasswordModal();
   };
 
-  // TODO - mejorar manejo de error
+  // TODO - mejorar manejo de error y agregar loading
   if (error || !player) {
     return (
       <View style={styles.container}>

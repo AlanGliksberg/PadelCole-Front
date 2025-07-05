@@ -1,6 +1,7 @@
 import {
   CREATE_PLAYER_URI,
   GET_CATEGORIES_URI,
+  GET_CURRENT_PLAYER_URI,
   GET_GENDERS_URI,
   GET_PLAYERS_URI,
   GET_POSITIONS_URI,
@@ -76,5 +77,11 @@ export const createPlayer = async (data: CreatePlayerPayload) => {
 export const updatePlayer = async (data: UpdatePlayerPayload) => {
   return await put<{ player: Player }>(UPDATE_PLAYER_URI, {
     body: data,
+  });
+};
+
+export const getCurrentPlayer = async () => {
+  return await get<{ player: Player }>(GET_CURRENT_PLAYER_URI, {
+    withCache: true,
   });
 };
