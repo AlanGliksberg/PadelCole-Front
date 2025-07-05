@@ -4,6 +4,7 @@ import { Falsy, Text, TextProps, TextStyle } from "react-native";
 import { styles } from "./CustomText.styles";
 
 type TextType =
+  | "xl"
   | "h1"
   | "h2"
   | "h3"
