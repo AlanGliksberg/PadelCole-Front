@@ -1,4 +1,5 @@
 export const typography = {
+  xl: 48,
   h1: 32,
   h2: 24,
   h3: 20,

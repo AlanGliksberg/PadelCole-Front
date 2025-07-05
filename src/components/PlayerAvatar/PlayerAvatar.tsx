@@ -40,7 +40,16 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
     removeCallback &&
     (!match || match.status.name === MATCH_STATUS.PENDING);
 
-  const textSize = size === "s" ? "small" : size === "m" ? "h2" : "h1";
+  const textSize =
+    size === "s"
+      ? "small"
+      : size === "m"
+      ? "h2"
+      : size === "l"
+      ? "h1"
+      : size === "xl"
+      ? "xl"
+      : "h1";
   const avatarContent = (
     <View
       style={[
