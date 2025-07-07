@@ -20,3 +20,4 @@ export { default as ErrorSection } from "./ui/ErrorSection/ErrorSection";
 export { default as FullButton } from "./ui/FullButton/FullButton";
 export { default as SimpleButton } from "./ui/SimpleButton/SimpleButton";
 export { default as ToggleGroup } from "./ui/ToggleGroup/ToggleGroup";
+export { default as MatchesList } from "./MatchesList/MatchesList";

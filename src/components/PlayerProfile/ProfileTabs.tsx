@@ -4,7 +4,6 @@ import { TouchableOpacity, View } from "react-native";
 
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { colors } from "@/src/theme";
-import { Match } from "@/src/types/match/Match";
 import { Player } from "@/src/types/player/Player";
 import { styles } from "./PlayerProfile.styles";
 import { Configuration, MatchHistory, PersonalInfo } from "./index";

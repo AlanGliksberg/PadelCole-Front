@@ -7,6 +7,8 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.md,
+    height: 175,
+    justifyContent: "space-around",
   },
   header: {
     marginBottom: spacing.sm,

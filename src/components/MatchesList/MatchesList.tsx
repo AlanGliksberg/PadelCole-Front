@@ -1,0 +1,113 @@
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import ErrorSection from "../ui/ErrorSection/ErrorSection";
+import { FlatList } from "react-native";
+import MatchBox from "../MatchBox/MatchBox";
+import MatchBoxSkeleton from "../MatchBox/MatchBoxSkeleton";
+import SimpleButton from "../ui/SimpleButton/SimpleButton";
+import { styles } from "./MatchesList.styles";
+import { Match } from "@/src/types";
+import { useFocusEffect } from "@react-navigation/native";
+
+interface MatchesListProps {
+  pageSize?: number;
+  loadMatches: (
+    page: number,
+    pageSize: number
+  ) => Promise<[Match[], number] | void>;
+  refreshData?: () => Promise<void>;
+  error?: boolean;
+  showCreatorDetails?: boolean;
+  EmptyComponent?: React.ReactElement;
+  viewMore?: boolean;
+}
+
+export default function MatchesList({
+  pageSize = 3,
+  loadMatches,
+  refreshData,
+  error,
+  EmptyComponent,
+  showCreatorDetails,
+  viewMore,
+}: MatchesListProps) {
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [matches, setMatches] = useState<Match[]>([]);
+
+  const fakeMatches = useMemo(
+    () => Array(pageSize).fill({} as Match),
+    [pageSize]
+  );
+
+  const loadMatchesData = useCallback(
+    async (newPage: number = 1) => {
+      setMatches((prev) =>
+        newPage === 1 ? fakeMatches : [...prev, ...fakeMatches]
+      );
+      const [matchesList, totalMatches] = (await loadMatches(
+        newPage,
+        pageSize
+      )) || [[], 0];
+
+      setMatches((prev) => {
+        const newIds = matchesList.map((m) => m.id);
+        const realPrev = prev.filter((m) => !!m.id && !newIds.includes(m.id));
+        return newPage === 1 ? matchesList : [...realPrev, ...matchesList];
+      });
+      setPage(newPage);
+      setTotal(totalMatches);
+    },
+    [loadMatches, pageSize, fakeMatches]
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (matches.length === 0) {
+        loadMatchesData(1);
+      }
+    }, [loadMatchesData, matches.length])
+  );
+
+  return (
+    <>
+      {error && (
+        <ErrorSection
+          message="Error buscando tus partidos"
+          onRetry={loadMatchesData}
+        />
+      )}
+
+      {!error && (
+        <FlatList
+          data={matches}
+          keyExtractor={(m, i) => m.id?.toString() ?? `skeleton-${i}`}
+          renderItem={({ item }) =>
+            item.id ? (
+              <MatchBox
+                match={item}
+                showCreatorDetails={showCreatorDetails}
+                refreshData={async () => {
+                  refreshData?.();
+                  await loadMatchesData();
+                }}
+              />
+            ) : (
+              <MatchBoxSkeleton />
+            )
+          }
+          contentContainerStyle={styles.list}
+          ListFooterComponent={
+            viewMore && matches.length < total ? (
+              <SimpleButton
+                title="Ver más"
+                onPress={() => loadMatchesData(page + 1)}
+                style={styles.loadMore}
+              />
+            ) : null
+          }
+          ListEmptyComponent={EmptyComponent || <></>}
+        />
+      )}
+    </>
+  );
+}

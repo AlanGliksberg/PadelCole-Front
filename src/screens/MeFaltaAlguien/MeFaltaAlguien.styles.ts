@@ -20,12 +20,6 @@ export const styles = StyleSheet.create({
   matchesText: {
     marginBottom: spacing.md,
   },
-  list: {
-    paddingBottom: spacing.lg,
-  },
-  loadMore: {
-    alignSelf: "center",
-  },
   emptyContainer: {
     flex: 1,
     alignItems: "center",

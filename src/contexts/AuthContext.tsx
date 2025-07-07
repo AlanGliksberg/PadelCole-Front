@@ -27,7 +27,6 @@ export const AuthContext = createContext<AuthContextData>({
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<JWTPayload | null>(null);
-  console.log({ user });
 
   const storeToken = async (jwt: string | null) => {
     setToken(jwt);
