@@ -1,7 +1,10 @@
+import { spacing } from "@/src/theme";
 import { StyleSheet } from "react-native";
-import { spacing } from "../../theme";
 
 export const styles = StyleSheet.create({
+  matchesContainer: {
+    marginBottom: spacing.sm,
+  },
   loadMore: {
     alignSelf: "center",
   },

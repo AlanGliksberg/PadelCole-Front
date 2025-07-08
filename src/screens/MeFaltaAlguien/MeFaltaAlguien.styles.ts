@@ -58,6 +58,5 @@ export const styles = StyleSheet.create({
   },
   matchesScroll: {
     overflow: "hidden",
-    flex: 1,
   },
 });

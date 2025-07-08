@@ -78,25 +78,23 @@ export default function MatchesList({
       )}
 
       {!error && (
-        <View>
-          <View>
-            {matches.length === 0 && (EmptyComponent || <></>)}
-            {matches.map((item, i) =>
-              item.id ? (
-                <MatchBox
-                  key={item.id}
-                  match={item}
-                  showCreatorDetails={showCreatorDetails}
-                  refreshData={async () => {
-                    refreshData?.();
-                    await loadMatchesData();
-                  }}
-                />
-              ) : (
-                <MatchBoxSkeleton key={`skeleton-${i}`} />
-              )
-            )}
-          </View>
+        <View style={styles.matchesContainer}>
+          {matches.length === 0 && (EmptyComponent || <></>)}
+          {matches.map((item, i) =>
+            item.id ? (
+              <MatchBox
+                key={item.id}
+                match={item}
+                showCreatorDetails={showCreatorDetails}
+                refreshData={async () => {
+                  refreshData?.();
+                  await loadMatchesData();
+                }}
+              />
+            ) : (
+              <MatchBoxSkeleton key={`skeleton-${i}`} />
+            )
+          )}
           {viewMore && matches.length < total && (
             <SimpleButton
               title="Ver más"
