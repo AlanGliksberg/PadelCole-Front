@@ -85,17 +85,13 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           <MaterialCommunityIcons
             name="calendar"
             size={18}
-            color={colors.description}
+            color={colors.tagText}
           />
           <CustomText style={styles.meta}>
             {parseDateToString(match.date)}
           </CustomText>
           <CustomText style={styles.meta}>-</CustomText>
-          <MaterialIcons
-            name="access-time"
-            size={18}
-            color={colors.description}
-          />
+          <MaterialIcons name="access-time" size={18} color={colors.tagText} />
           <CustomText style={styles.meta}>{match.time}</CustomText>
         </View>
         <View style={styles.row}>
