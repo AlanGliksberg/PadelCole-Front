@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
   },
   content: {
     gap: spacing.md,
-    flex: 1,
     overflow: "hidden",
   },
   profileHeader: {

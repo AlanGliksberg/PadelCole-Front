@@ -4,7 +4,8 @@ import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { getCurrentPlayer } from "@/src/services/player";
 import { Player } from "@/src/types/player/Player";
 import { styles } from "./PlayerProfile.styles";
-import { ProfileHeader, ProfileTabs } from "./index";
+import ProfileHeader from "./ProfileHeader";
+import ProfileTabs from "./ProfileTabs";
 import { removeGetCurrentPlayerCache } from "@/src/services/cache";
 import { LoadingContext } from "@/src/contexts/LoadingContext";
 
@@ -21,13 +22,11 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     try {
       showLoading();
       setError(null);
-
       const playerResponse = await getCurrentPlayer();
       if (playerResponse.error || !playerResponse.data) {
         setError("Error al cargar los datos del jugador");
         return;
       }
-
       const foundPlayer = playerResponse.data.player;
       setPlayer(foundPlayer);
     } catch (err) {
@@ -64,13 +63,10 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     );
   }
 
-  // TODO - ver si se puede hacer algun scroll copado
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <ProfileHeader player={player} />
-        <ProfileTabs player={player} handleRefresh={handleRefresh} />
-      </View>
-    </View>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <ProfileHeader player={player} />
+      <ProfileTabs player={player} handleRefresh={handleRefresh} />
+    </ScrollView>
   );
 }
