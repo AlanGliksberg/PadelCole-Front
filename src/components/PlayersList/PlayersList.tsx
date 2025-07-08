@@ -37,6 +37,12 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Detecta si hay filtros activos
+  const hasActiveFilters =
+    appliedGenders.length > 0 ||
+    appliedPositions.length > 0 ||
+    appliedCategories.length > 0;
+
   const toggle = (
     val: string,
     arr: string[],
@@ -112,7 +118,10 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
         onPress={openFilters}
         activeOpacity={0.7}
       >
-        <MaterialIcons name="filter-list" size={20} color={colors.primary} />
+        <View style={styles.filterIconContainer}>
+          <MaterialIcons name="filter-list" size={20} color={colors.primary} />
+          {hasActiveFilters && <View style={styles.activeFilterBadge} />}
+        </View>
         <CustomText style={styles.filtersButtonText}>Filtros</CustomText>
       </TouchableOpacity>
       <FiltersModal

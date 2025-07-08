@@ -74,4 +74,20 @@ export const styles = StyleSheet.create({
     lineHeight: 24,
     color: colors.placeholder,
   },
+  activeFilterBadge: {
+    position: "absolute",
+    top: -2,
+    right: -2,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: colors.accent,
+    borderWidth: 1,
+    borderColor: "white",
+  },
+  filterIconContainer: {
+    position: "relative",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

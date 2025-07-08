@@ -20,11 +20,7 @@ export const getAllPlayers = async () => {
 };
 
 export const getPlayers = async (params: GetPlayerParams) => {
-  // Si se está buscando por ID (cuando el nombre es un número), permitir la búsqueda sin filtros
-  const isSearchingById = !isNaN(Number(params.name)) && params.name !== "";
-
   if (
-    !isSearchingById && // No aplicar restricción si se busca por ID
     !params.name &&
     !params.category?.some(Boolean) &&
     !params.gender?.some(Boolean) &&
