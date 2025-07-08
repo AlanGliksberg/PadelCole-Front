@@ -32,12 +32,12 @@ export default function MatchesList({
 }: MatchesListProps) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [matches, setMatches] = useState<Match[]>([]);
 
   const fakeMatches = useMemo(
     () => Array(pageSize).fill({} as Match),
     [pageSize]
   );
+  const [matches, setMatches] = useState<Match[]>(fakeMatches);
 
   const loadMatchesData = useCallback(
     async (newPage: number = 1) => {
