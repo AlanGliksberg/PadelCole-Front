@@ -1,5 +1,5 @@
 export const colors = {
-  primary: "#5C6BC0",
+  primary: "#1F65C2",
   accent: "#d1062e",
   background: "#F4F6FB",
   surface: "#FFFFFF",
@@ -10,7 +10,8 @@ export const colors = {
   google: "#DB4437",
   error: "#E53935",
   description: "#555",
-  tag: "#333",
+  tag: "#DCE78B",
+  tagText: "#3A4200",
   pendingStatus: "#FFCC80",
   closedStatus: "#C8E6C9",
   completedStatus: "#BBDEFB",
