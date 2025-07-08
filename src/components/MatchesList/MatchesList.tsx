@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import ErrorSection from "../ui/ErrorSection/ErrorSection";
-import { FlatList } from "react-native";
 import MatchBox from "../MatchBox/MatchBox";
 import MatchBoxSkeleton from "../MatchBox/MatchBoxSkeleton";
 import SimpleButton from "../ui/SimpleButton/SimpleButton";
 import { styles } from "./MatchesList.styles";
 import { Match } from "@/src/types";
 import { useFocusEffect } from "@react-navigation/native";
+import { View } from "react-native";
 
 interface MatchesListProps {
   pageSize?: number;
@@ -78,35 +78,33 @@ export default function MatchesList({
       )}
 
       {!error && (
-        <FlatList
-          data={matches}
-          keyExtractor={(m, i) => m.id?.toString() ?? `skeleton-${i}`}
-          renderItem={({ item }) =>
-            item.id ? (
-              <MatchBox
-                match={item}
-                showCreatorDetails={showCreatorDetails}
-                refreshData={async () => {
-                  refreshData?.();
-                  await loadMatchesData();
-                }}
-              />
-            ) : (
-              <MatchBoxSkeleton />
-            )
-          }
-          contentContainerStyle={styles.list}
-          ListFooterComponent={
-            viewMore && matches.length < total ? (
-              <SimpleButton
-                title="Ver más"
-                onPress={() => loadMatchesData(page + 1)}
-                style={styles.loadMore}
-              />
-            ) : null
-          }
-          ListEmptyComponent={EmptyComponent || <></>}
-        />
+        <View>
+          <View>
+            {matches.length === 0 && (EmptyComponent || <></>)}
+            {matches.map((item, i) =>
+              item.id ? (
+                <MatchBox
+                  key={item.id}
+                  match={item}
+                  showCreatorDetails={showCreatorDetails}
+                  refreshData={async () => {
+                    refreshData?.();
+                    await loadMatchesData();
+                  }}
+                />
+              ) : (
+                <MatchBoxSkeleton key={`skeleton-${i}`} />
+              )
+            )}
+          </View>
+          {viewMore && matches.length < total && (
+            <SimpleButton
+              title="Ver más"
+              onPress={() => loadMatchesData(page + 1)}
+              style={styles.loadMore}
+            />
+          )}
+        </View>
       )}
     </>
   );

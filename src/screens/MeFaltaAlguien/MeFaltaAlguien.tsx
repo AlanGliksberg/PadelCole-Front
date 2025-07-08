@@ -4,7 +4,7 @@ import { Match, MeFaltaAlguienStackParamList } from "@/src/types";
 import { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, ScrollView } from "react-native";
 import { CustomText, FullButton, MatchesList } from "../../components";
 import EmptyState from "./EmptyState";
 import { styles } from "./MeFaltaAlguien.styles";
@@ -36,20 +36,24 @@ export default function MeFaltaAlguien() {
   return (
     <View style={styles.container}>
       <View style={styles.matchesContainer}>
-        <CustomText style={styles.matchesText} bold>
-          Tus partidos pendientes:
-        </CustomText>
+        {matches.length > 0 && (
+          <CustomText style={styles.matchesText} bold>
+            Tus partidos pendientes:
+          </CustomText>
+        )}
 
-        <MatchesList
-          loadMatches={loadMatches}
-          refreshData={async () => {
-            removeGetCreatedMatchesCache();
-          }}
-          error={error}
-          showCreatorDetails
-          EmptyComponent={<EmptyState />}
-          viewMore
-        />
+        <ScrollView style={styles.matchesScroll}>
+          <MatchesList
+            loadMatches={loadMatches}
+            refreshData={async () => {
+              removeGetCreatedMatchesCache();
+            }}
+            error={error}
+            showCreatorDetails
+            EmptyComponent={<EmptyState />}
+            viewMore
+          />
+        </ScrollView>
       </View>
 
       {matches.length > 0 && (

@@ -35,7 +35,9 @@ const EmptyState: React.FC = () => {
         size="l"
         onPress={() => navigation.navigate("CrearPartido")}
       >
-        <CustomText.ButtonText uppercase>Creá tu partido</CustomText.ButtonText>
+        <CustomText.ButtonText uppercase>
+          Creá tu partidoasd
+        </CustomText.ButtonText>
       </FullButton>
       <TouchableOpacity onPress={() => navigation.navigate("QuieroJugar")}>
         <CustomText.ButtonText

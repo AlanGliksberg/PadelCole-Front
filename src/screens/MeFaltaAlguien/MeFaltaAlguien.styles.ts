@@ -21,7 +21,6 @@ export const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   emptyContainer: {
-    flex: 1,
     alignItems: "center",
     padding: spacing.lg,
     marginTop: 90,
@@ -56,5 +55,9 @@ export const styles = StyleSheet.create({
   },
   emptySecondaryLink: {
     color: colors.primary,
+  },
+  matchesScroll: {
+    overflow: "hidden",
+    flex: 1,
   },
 });
