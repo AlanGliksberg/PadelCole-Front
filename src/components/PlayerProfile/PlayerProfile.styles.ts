@@ -149,6 +149,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    marginBottom: spacing.sm,
   },
   sectionHeader: {
     flexDirection: "row",
