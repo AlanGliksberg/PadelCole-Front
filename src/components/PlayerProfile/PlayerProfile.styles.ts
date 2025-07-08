@@ -4,12 +4,16 @@ import { colors, spacing, typography } from "../../theme";
 export const styles = StyleSheet.create({
   tabsSectionContainer: {
     gap: spacing.md,
+    flex: 1,
   },
   container: {
     backgroundColor: colors.background,
+    flex: 1,
   },
   content: {
     gap: spacing.md,
+    flex: 1,
+    overflow: "hidden",
   },
   profileHeader: {
     backgroundColor: colors.surface,
@@ -130,7 +134,9 @@ export const styles = StyleSheet.create({
     color: colors.primary,
     fontWeight: "bold",
   },
-  tabContent: {},
+  tabContent: {
+    flex: 1,
+  },
   historySection: {
     paddingTop: spacing.sm,
     gap: spacing.md,
@@ -167,7 +173,6 @@ export const styles = StyleSheet.create({
   detailText: {
     fontSize: typography.body,
     color: colors.text,
-    flex: 1,
   },
   skeletonContainer: {
     gap: spacing.md,

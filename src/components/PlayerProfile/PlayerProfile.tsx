@@ -64,7 +64,7 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     );
   }
 
-  // TODO - ajustar alto de cada seccion. ver si se puede hacer algun scroll copado
+  // TODO - ver si se puede hacer algun scroll copado
   return (
     <View style={styles.container}>
       <View style={styles.content}>
