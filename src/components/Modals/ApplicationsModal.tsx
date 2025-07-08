@@ -106,12 +106,11 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             </View>
 
             {match.applications && match.applications.length > 0 ? (
-              <ScrollView
-                style={styles.content}
-                showsVerticalScrollIndicator={false}
-                nestedScrollEnabled={true}
-              >
-                <View style={styles.applicationsContainer}>
+              <ScrollView>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  style={styles.applicationsContainer}
+                >
                   {match.applications.map((application) => (
                     <ApplicationItem
                       key={application.id}
@@ -121,7 +120,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       loading={loading}
                     />
                   ))}
-                </View>
+                </TouchableOpacity>
               </ScrollView>
             ) : (
               <View style={styles.emptyState}>

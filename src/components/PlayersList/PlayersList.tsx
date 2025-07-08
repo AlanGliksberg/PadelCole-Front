@@ -146,7 +146,10 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
               style={styles.list}
               keyboardShouldPersistTaps="never"
               renderItem={({ item }) => (
-                <View style={styles.itemContainer}>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  style={styles.itemContainer}
+                >
                   <View style={styles.playerInfo}>
                     <PlayerAvatar player={item} />
                     <View>
@@ -172,7 +175,7 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
                       />
                     </TouchableOpacity>
                   )}
-                </View>
+                </TouchableOpacity>
               )}
               ItemSeparatorComponent={() => <View style={styles.separator} />}
               ListEmptyComponent={() => <EmptyState />}

@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     width: "90%",
     maxWidth: "90%",
-    minHeight: "35%",
+    minHeight: "30%",
     maxHeight: "70%",
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.lg,
@@ -36,9 +36,6 @@ export const styles = StyleSheet.create({
   },
   closeButton: {
     padding: 4,
-  },
-  content: {
-    flexGrow: 0,
   },
   applicationsContainer: {
     gap: spacing.sm,

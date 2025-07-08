@@ -15,6 +15,7 @@ interface ApplicationItemProps {
   loading: boolean;
 }
 
+// TODO - modal de confirmacion cuando rechazo/acepto postulacion
 const ApplicationItem: React.FC<ApplicationItemProps> = ({
   application,
   onAccept,

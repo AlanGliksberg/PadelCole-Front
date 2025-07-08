@@ -14,6 +14,7 @@ import MeFaltaAlguienStack from "./MeFaltaAlguienStack";
 
 const Tab = createBottomTabNavigator<AppStackParamList>();
 
+// TODO - cuando se entra a cada pestaña se deberia scrollear arriba de todo.
 export function AppStack() {
   return (
     <Tab.Navigator
