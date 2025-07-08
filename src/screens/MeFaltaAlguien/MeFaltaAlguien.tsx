@@ -23,7 +23,7 @@ export default function MeFaltaAlguien() {
       setError(false);
       const res = await getCreatedMatches(nextPage, pageSize);
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
-      const { matches: newMatches, totalMatches } = res.data!;
+      const { matches: newMatches, totalMatches } = res.data;
       setMatches(newMatches);
       return [newMatches, totalMatches];
     } catch (e: any) {

@@ -12,6 +12,7 @@ interface TeamAvatarsProps {
   match?: Match;
   team?: number;
   callback?: () => Promise<void>;
+  canDelete?: boolean;
 }
 
 const TeamAvatars: React.FC<TeamAvatarsProps> = ({
@@ -20,6 +21,7 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
   match,
   team,
   callback,
+  canDelete,
 }) => {
   const [playersState, setPlayersState] = useState<Player[]>(players);
   const { openModal, openErrorModal } = useContext(ModalContext);
@@ -82,6 +84,7 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
             team={team}
             callback={addPlayer}
             removeCallback={removePlayer}
+            canDelete={canDelete}
           />
         );
       })}

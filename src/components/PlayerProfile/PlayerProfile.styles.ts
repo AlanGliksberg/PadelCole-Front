@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     gap: spacing.md,
   },
   container: {
-    flex: 1,
     backgroundColor: colors.background,
   },
   content: {
@@ -94,7 +93,7 @@ export const styles = StyleSheet.create({
   },
   statDivider: {
     width: 1,
-    height: 30,
+    height: 40,
     backgroundColor: colors.border,
     marginHorizontal: spacing.md,
   },
@@ -131,8 +130,10 @@ export const styles = StyleSheet.create({
     color: colors.primary,
     fontWeight: "bold",
   },
-  tabContent: {
-    flex: 1,
+  tabContent: {},
+  historySection: {
+    paddingTop: spacing.sm,
+    gap: spacing.md,
   },
   section: {
     backgroundColor: colors.surface,
@@ -171,12 +172,18 @@ export const styles = StyleSheet.create({
   skeletonContainer: {
     gap: spacing.md,
   },
-  matchesContainer: {
-    gap: spacing.md,
-  },
   emptyState: {
     alignItems: "center",
-    padding: spacing.xl,
+    justifyContent: "center",
+    height: 200,
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    padding: spacing.lg,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   emptyStateText: {
     fontSize: typography.body,

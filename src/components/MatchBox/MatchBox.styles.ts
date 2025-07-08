@@ -124,10 +124,4 @@ export const styles = StyleSheet.create({
     padding: spacing.xs,
     marginLeft: spacing.sm,
   },
-  menuContainer: {
-    position: "absolute",
-    top: spacing.sm,
-    right: spacing.sm,
-    zIndex: 10,
-  },
 });

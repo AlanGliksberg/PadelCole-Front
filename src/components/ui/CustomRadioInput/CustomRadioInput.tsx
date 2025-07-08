@@ -1,10 +1,10 @@
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
 
-import { CustomRadioButton } from "@/src/components";
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { colors } from "@/src/theme";
 import { styles } from "./CustomRadioInput.styles";
+import CustomRadioButton from "../CustomRadioButton/CustomRadioButton";
 
 interface Option {
   id: number;

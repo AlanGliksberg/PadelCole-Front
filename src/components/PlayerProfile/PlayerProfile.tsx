@@ -47,11 +47,11 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     await loadPlayerData();
   };
 
+  // TODO - mejorar manejo de error y agregar loading
   if (loading) {
     return <></>;
   }
 
-  // TODO - mejorar manejo de error y agregar loading
   if (error || !player) {
     return (
       <View style={styles.container}>
@@ -64,13 +64,13 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     );
   }
 
+  // TODO - ajustar alto de cada seccion. ver si se puede hacer algun scroll copado
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
       <View style={styles.content}>
         <ProfileHeader player={player} />
-
         <ProfileTabs player={player} handleRefresh={handleRefresh} />
       </View>
-    </ScrollView>
+    </View>
   );
 }

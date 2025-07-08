@@ -19,6 +19,7 @@ interface PlayerAvatarProps {
   team?: number | undefined;
   callback?: (p: Player) => void;
   removeCallback?: (p: Player) => void;
+  canDelete?: boolean;
 }
 
 const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
@@ -31,12 +32,14 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
   team,
   callback,
   removeCallback,
+  canDelete = false,
 }) => {
   const { openPlayerDetail, openAddPlayerToMatch } =
     useContext(PlayerModalsContext);
 
   const canRemove =
     isCreator &&
+    canDelete &&
     removeCallback &&
     (!match || match.status.name === MATCH_STATUS.PENDING);
 

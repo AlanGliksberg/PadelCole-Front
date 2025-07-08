@@ -117,6 +117,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
             match={match}
             team={1}
             callback={refreshData}
+            canDelete={showCreatorDetails}
           />
           <CustomText style={styles.vs}>vs</CustomText>
           <TeamAvatars
@@ -125,6 +126,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
             match={match}
             team={2}
             callback={refreshData}
+            canDelete={showCreatorDetails}
           />
         </View>
       </View>

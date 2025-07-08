@@ -1,75 +1,63 @@
-import React from "react";
-import { ScrollView, View } from "react-native";
-
-import MatchBox from "@/src/components/MatchBox/MatchBox";
-import MatchBoxSkeleton from "@/src/components/MatchBox/MatchBoxSkeleton";
+import React, { useState } from "react";
+import { View } from "react-native";
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { colors } from "@/src/theme";
 import { Match } from "@/src/types/match/Match";
 import { styles } from "./PlayerProfile.styles";
+import MatchesList from "../MatchesList/MatchesList";
+import { getCreatedMatches } from "@/src/services/match";
 
 export default function MatchHistory() {
-  const loading = true;
-  const matches: Match[] = [];
+  const [error, setError] = useState<boolean>(false);
 
-  if (loading) {
-    return (
-      <View style={styles.tabContent}>
-        <View style={styles.section}>
-          <CustomText style={styles.sectionTitle}>
-            Historial de Partidos
-          </CustomText>
-          <View style={styles.matchesContainer}>
-            {[1, 2, 3].map((index) => (
-              <MatchBoxSkeleton key={index} />
-            ))}
-          </View>
-        </View>
-      </View>
-    );
-  }
+  const loadMatches = async (
+    nextPage: number,
+    pageSize: number
+  ): Promise<[Match[], number] | void> => {
+    try {
+      setError(false);
+      // TODO - cambiar por partidos completados
+      const res = await getCreatedMatches(nextPage, pageSize);
+      if (res.error || !res.data) throw new Error("Error al cargar partidos");
+      const { matches: newMatches, totalMatches } = res.data;
+      return [newMatches, totalMatches];
+    } catch (e: any) {
+      console.log(e);
+      setError(true);
+      return;
+    }
+  };
 
-  if (matches.length === 0) {
-    return (
-      <View style={styles.tabContent}>
-        <View style={styles.section}>
-          <CustomText style={styles.sectionTitle}>
-            Historial de Partidos
-          </CustomText>
-          <View style={styles.emptyState}>
-            <CustomText
-              style={[styles.emptyStateText, { color: colors.description }]}
-            >
-              No tienes partidos registrados aún
-            </CustomText>
-            <CustomText
-              style={[
-                styles.emptyStateText,
-                { color: colors.placeholder, fontSize: 14 },
-              ]}
-            >
-              Cuando juegues partidos, aparecerán aquí
-            </CustomText>
-          </View>
-        </View>
-      </View>
-    );
-  }
+  const Empty = (
+    <View style={styles.emptyState}>
+      <CustomText
+        style={[styles.emptyStateText, { color: colors.description }]}
+      >
+        No tenés partidos registrados aún
+      </CustomText>
+      <CustomText
+        style={[
+          styles.emptyStateText,
+          { color: colors.placeholder, fontSize: 14 },
+        ]}
+      >
+        Cuando juegues partidos, aparecerán aquí
+      </CustomText>
+    </View>
+  );
 
   return (
     <View style={styles.tabContent}>
-      <View style={styles.section}>
+      <View style={styles.historySection}>
         <CustomText style={styles.sectionTitle}>
           Historial de Partidos
         </CustomText>
-        <ScrollView
-          style={styles.matchesContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          {matches.map((match) => (
-            <MatchBox key={match.id} match={match} />
-          ))}
-        </ScrollView>
+        <MatchesList
+          loadMatches={loadMatches}
+          error={error}
+          EmptyComponent={Empty}
+          viewMore
+        />
       </View>
     </View>
   );
