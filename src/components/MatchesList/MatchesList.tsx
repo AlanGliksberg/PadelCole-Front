@@ -62,10 +62,9 @@ export default function MatchesList({
 
   useFocusEffect(
     useCallback(() => {
-      if (matches.length === 0) {
-        loadMatchesData(1);
-      }
-    }, [loadMatchesData, matches.length])
+      loadMatchesData(1);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
   );
 
   return (
