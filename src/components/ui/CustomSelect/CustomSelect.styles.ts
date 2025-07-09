@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     padding: spacing.sm,
   },
   selected: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.selected,
     borderRadius: 4,
   },
   separator: {

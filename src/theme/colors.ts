@@ -10,6 +10,7 @@ export const colors = {
   google: "#DB4437",
   error: "#E53935",
   description: "#555",
+  selected: "#DCE78B",
   tag: "#DCE78B",
   tagText: "#3A4200",
   pendingStatus: "#FFCC80",
