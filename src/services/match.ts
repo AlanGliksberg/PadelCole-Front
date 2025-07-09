@@ -3,10 +3,10 @@ import {
   CREATE_MATCH_URI,
   DELETE_MATCH_URI,
   GET_PLAYED_MATCHES_COUNT_URI,
-  GET_MY_MATCHES_URI,
   REMOVE_PLAYER_FROM_MATCH_URI,
   UPDATE_MATCH_URI,
   GET_CREATED_MATCHES_URI,
+  GET_PLAYED_MATCHES_URI,
 } from "../constants/api";
 import { CreateMatchBody, GetMatchesResponse } from "../types";
 import { CommonMatchResponse, UpdateMatchBody } from "../types/api/Match";
@@ -18,7 +18,7 @@ export const getCreatedMatches = async (
   withCache = true
 ) => {
   return await get<GetMatchesResponse>(GET_CREATED_MATCHES_URI, {
-    queryParams: { page, pageSize, createdBy: true },
+    queryParams: { page, pageSize },
     withCache,
   });
 };
@@ -84,8 +84,8 @@ export const getPlayedMatches = async (
   pageSize: number,
   withCache = true
 ) => {
-  return await get<GetMatchesResponse>(GET_MY_MATCHES_URI, {
-    queryParams: { page, pageSize, isPlayer: true },
+  return await get<GetMatchesResponse>(GET_PLAYED_MATCHES_URI, {
+    queryParams: { page, pageSize },
     withCache,
   });
 };

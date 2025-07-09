@@ -1,7 +1,8 @@
 import {
   GET_CURRENT_PLAYER_URI,
   GET_PLAYED_MATCHES_COUNT_URI,
-  GET_MY_MATCHES_URI,
+  GET_PLAYED_MATCHES_URI,
+  GET_CREATED_MATCHES_URI,
 } from "../constants/api";
 import { ApiResponse } from "../types";
 
@@ -44,7 +45,11 @@ export const cacheGetCall = (
 };
 
 export const removeGetCreatedMatchesCache = () => {
-  removeCache(GET_MY_MATCHES_URI);
+  removeCache(GET_CREATED_MATCHES_URI);
+};
+
+export const removeGetPlayedMatchesCache = () => {
+  removeCache(GET_PLAYED_MATCHES_URI);
 };
 
 export const removeGetCurrentPlayerCache = () => {

@@ -34,6 +34,7 @@ export default function MeFaltaAlguien() {
     }
   };
 
+  // TODO - forzar refresh
   return (
     <View style={styles.container}>
       <View style={styles.matchesContainer}>
