@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: "center",
     alignItems: "center",
-    // marginHorizontal: spacing.xs,
   },
   avatarInverse: {
     backgroundColor: colors.white,

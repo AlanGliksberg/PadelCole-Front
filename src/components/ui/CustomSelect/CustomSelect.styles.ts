@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     borderColor: colors.border,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     width: "100%",
     height: 48,
     backgroundColor: colors.input,
@@ -50,5 +51,8 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: StyleSheet.hairlineWidth,
     backgroundColor: "#ccc",
+  },
+  chevronIcon: {
+    marginLeft: spacing.sm,
   },
 });

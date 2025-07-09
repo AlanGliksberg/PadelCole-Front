@@ -19,4 +19,5 @@ export const colors = {
   skeleton: "#e0e0e0",
   input: "#F2F2F7",
   border: "#E5E7EB",
+  disabled: "#ccc",
 };

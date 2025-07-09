@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import CustomText, { CustomTextProps } from "../CustomText/CustomText";
 import { styles } from "./CustomSelect.styles";
+import { Ionicons } from "@expo/vector-icons";
+import { colors } from "@/src/theme";
 
 type Item = {
   id: string | number;
@@ -65,6 +67,12 @@ const CustomSelect = <T extends Item>({
         >
           {selectedItem ? labelExtractor(selectedItem) : placeholder}
         </CustomText>
+        <Ionicons
+          name={modalVisible ? "chevron-up" : "chevron-down"}
+          size={20}
+          color={disabled ? colors.disabled : colors.text}
+          style={styles.chevronIcon}
+        />
       </TouchableOpacity>
       {error ? <CustomText style={styles.errorText}>{error}</CustomText> : null}
 
