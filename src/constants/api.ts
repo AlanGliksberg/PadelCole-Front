@@ -14,7 +14,7 @@ export const DELETE_MATCH_URI = MATCH_BASE_URI;
 export const CREATE_MATCH_URI = MATCH_BASE_URI;
 export const UPDATE_MATCH_URI = MATCH_BASE_URI;
 export const ADD_PLAYER_TO_MATCH_URI = `${MATCH_BASE_URI}/player`;
-export const GET_MATCHES_COUNT_URI = `${MATCH_BASE_URI}/count`;
+export const GET_PLAYED_MATCHES_COUNT_URI = `${MATCH_BASE_URI}/count`;
 export const REMOVE_PLAYER_FROM_MATCH_URI = `${MATCH_BASE_URI}/player`;
 
 export const GET_PLAYERS_URI = PLAYER_BASE_URI;

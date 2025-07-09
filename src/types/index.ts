@@ -1,6 +1,6 @@
 export { ApiParams, ApiResponse } from "./api/Api";
 export { PageParams } from "./api/Common";
-export { CreateMatchBody, GetCreatedMatchesResponse } from "./api/Match";
+export { CreateMatchBody, GetMatchesResponse } from "./api/Match";
 export { GetPlayerParams } from "./api/Player";
 export { ChangePasswordPayload as ChangePasswordDTO } from "./auth/ChangePasswordDTO";
 export { JWTPayload } from "./auth/JWTPayload";

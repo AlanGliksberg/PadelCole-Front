@@ -6,7 +6,9 @@ import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { colors } from "@/src/theme";
 import { Player } from "@/src/types/player/Player";
 import { styles } from "./PlayerProfile.styles";
-import { Configuration, MatchHistory, PersonalInfo } from "./index";
+import PersonalInfo from "./PersonalInfo";
+import MatchHistory from "./MatchHistory";
+import Configuration from "./Configuration";
 
 export type TabType = "personal" | "historial" | "configuracion";
 

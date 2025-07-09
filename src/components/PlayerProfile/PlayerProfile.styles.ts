@@ -183,40 +183,19 @@ export const styles = StyleSheet.create({
     height: 200,
     backgroundColor: colors.surface,
     borderRadius: 12,
-    padding: spacing.lg,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    gap: spacing.md,
   },
   emptyStateText: {
-    fontSize: typography.body,
     color: colors.description,
-    marginTop: spacing.md,
     textAlign: "center",
   },
-  actionsContainer: {
-    gap: spacing.sm,
-  },
-  actionButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: spacing.md,
-    backgroundColor: colors.input,
-    borderRadius: 8,
-    gap: spacing.sm,
-  },
-  actionText: {
-    fontSize: typography.body,
-    color: colors.text,
-    flex: 1,
-  },
-  logoutButton: {
-    backgroundColor: colors.error + "10",
-  },
-  logoutText: {
-    color: colors.error,
+  emptyStateSubtext: {
+    color: colors.placeholder,
   },
   configurationContainer: {
     gap: 8,

@@ -2,12 +2,12 @@ import {
   ADD_PLAYER_TO_MATCH_URI,
   CREATE_MATCH_URI,
   DELETE_MATCH_URI,
-  GET_MATCHES_COUNT_URI,
+  GET_PLAYED_MATCHES_COUNT_URI,
   GET_MY_MATCHES_URI,
   REMOVE_PLAYER_FROM_MATCH_URI,
   UPDATE_MATCH_URI,
 } from "../constants/api";
-import { CreateMatchBody, GetCreatedMatchesResponse } from "../types";
+import { CreateMatchBody, GetMatchesResponse } from "../types";
 import { CommonMatchResponse, UpdateMatchBody } from "../types/api/Match";
 import { deleteApi, get, post, put } from "./api";
 
@@ -16,7 +16,7 @@ export const getCreatedMatches = async (
   pageSize: number,
   withCache = true
 ) => {
-  return await get<GetCreatedMatchesResponse>(GET_MY_MATCHES_URI, {
+  return await get<GetMatchesResponse>(GET_MY_MATCHES_URI, {
     queryParams: { page, pageSize, createdBy: true },
     withCache,
   });
@@ -72,8 +72,19 @@ export const deletePlayerFromMatch = async (
   });
 };
 
-export const getMatchesCount = async () => {
-  return await get<{ count: number }>(GET_MATCHES_COUNT_URI, {
+export const getPlayedMatchesCount = async () => {
+  return await get<{ count: number }>(GET_PLAYED_MATCHES_COUNT_URI, {
     withCache: true,
+  });
+};
+
+export const getPlayedMatches = async (
+  page: number,
+  pageSize: number,
+  withCache = true
+) => {
+  return await get<GetMatchesResponse>(GET_MY_MATCHES_URI, {
+    queryParams: { page, pageSize, isPlayer: true },
+    withCache,
   });
 };

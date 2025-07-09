@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import CustomText from "@/src/components/ui/CustomText/CustomText";
-import { colors } from "@/src/theme";
 import { Match } from "@/src/types/match/Match";
 import { styles } from "./PlayerProfile.styles";
 import MatchesList from "../MatchesList/MatchesList";
-import { getCreatedMatches } from "@/src/services/match";
+import { getPlayedMatches } from "@/src/services/match";
 
 export default function MatchHistory() {
   const [error, setError] = useState<boolean>(false);
@@ -16,8 +15,7 @@ export default function MatchHistory() {
   ): Promise<[Match[], number] | void> => {
     try {
       setError(false);
-      // TODO - cambiar por partidos completados
-      const res = await getCreatedMatches(nextPage, pageSize);
+      const res = await getPlayedMatches(nextPage, pageSize);
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
       const { matches: newMatches, totalMatches } = res.data;
       return [newMatches, totalMatches];
@@ -30,18 +28,14 @@ export default function MatchHistory() {
 
   const Empty = (
     <View style={styles.emptyState}>
-      <CustomText
-        style={[styles.emptyStateText, { color: colors.description }]}
-      >
+      <CustomText style={styles.emptyStateText} type="body">
         No tenés partidos registrados aún
       </CustomText>
       <CustomText
-        style={[
-          styles.emptyStateText,
-          { color: colors.placeholder, fontSize: 14 },
-        ]}
+        style={[styles.emptyStateText, styles.emptyStateSubtext]}
+        type="medium"
       >
-        Cuando juegues partidos, aparecerán aquí
+        Cuando juegues partidos aparecerán aquí
       </CustomText>
     </View>
   );

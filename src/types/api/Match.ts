@@ -1,6 +1,6 @@
 import { Match } from "..";
 
-export type GetCreatedMatchesResponse = {
+export type GetMatchesResponse = {
   matches: Match[];
   totalMatches: number;
 };

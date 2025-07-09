@@ -7,7 +7,7 @@ import { Match } from "@/src/types/match/Match";
 import { Player } from "@/src/types/player/Player";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import { styles } from "./PlayerProfile.styles";
-import { getMatchesCount } from "@/src/services/match";
+import { getPlayedMatchesCount } from "@/src/services/match";
 import { colors } from "@/src/theme";
 
 interface ProfileHeaderProps {
@@ -22,7 +22,7 @@ export default function ProfileHeader({ player }: ProfileHeaderProps) {
   useEffect(() => {
     const loadMatchesCount = async () => {
       setLoadingMatchesCount(true);
-      const response = await getMatchesCount();
+      const response = await getPlayedMatchesCount();
       if (!response.error && response.data) {
         setMatchesCount(response.data.count);
       } else {
