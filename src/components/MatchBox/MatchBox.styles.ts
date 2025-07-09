@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
   },
   meta: {
     fontSize: typography.small,
-    color: colors.tagText,
+    color: colors.description,
     marginBottom: spacing.sm,
   },
   row: {
