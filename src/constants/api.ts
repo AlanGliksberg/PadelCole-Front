@@ -10,11 +10,12 @@ export const REFRESH_TOKEN_URI = `${AUTH_BASE_URI}/refresh`;
 export const CHANGE_PASSWORD_URI = `${AUTH_BASE_URI}/change-password`;
 
 export const GET_MY_MATCHES_URI = `${MATCH_BASE_URI}/me`;
+export const GET_CREATED_MATCHES_URI = `${MATCH_BASE_URI}/created`;
+export const GET_PLAYED_MATCHES_COUNT_URI = `${MATCH_BASE_URI}/count`;
 export const DELETE_MATCH_URI = MATCH_BASE_URI;
 export const CREATE_MATCH_URI = MATCH_BASE_URI;
 export const UPDATE_MATCH_URI = MATCH_BASE_URI;
 export const ADD_PLAYER_TO_MATCH_URI = `${MATCH_BASE_URI}/player`;
-export const GET_PLAYED_MATCHES_COUNT_URI = `${MATCH_BASE_URI}/count`;
 export const REMOVE_PLAYER_FROM_MATCH_URI = `${MATCH_BASE_URI}/player`;
 
 export const GET_PLAYERS_URI = PLAYER_BASE_URI;

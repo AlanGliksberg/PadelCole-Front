@@ -28,6 +28,7 @@ export default function MeFaltaAlguien() {
       return [newMatches, totalMatches];
     } catch (e: any) {
       console.log(e);
+      setMatches([]);
       setError(true);
       return;
     }

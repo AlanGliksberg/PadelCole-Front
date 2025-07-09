@@ -6,6 +6,7 @@ import {
   GET_MY_MATCHES_URI,
   REMOVE_PLAYER_FROM_MATCH_URI,
   UPDATE_MATCH_URI,
+  GET_CREATED_MATCHES_URI,
 } from "../constants/api";
 import { CreateMatchBody, GetMatchesResponse } from "../types";
 import { CommonMatchResponse, UpdateMatchBody } from "../types/api/Match";
@@ -16,7 +17,7 @@ export const getCreatedMatches = async (
   pageSize: number,
   withCache = true
 ) => {
-  return await get<GetMatchesResponse>(GET_MY_MATCHES_URI, {
+  return await get<GetMatchesResponse>(GET_CREATED_MATCHES_URI, {
     queryParams: { page, pageSize, createdBy: true },
     withCache,
   });
