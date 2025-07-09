@@ -1,13 +1,13 @@
 import { typography } from "@/src/theme";
 import React from "react";
 import {
-  Text,
   TextStyle,
   TouchableOpacity,
   TouchableOpacityProps,
   ViewStyle,
 } from "react-native";
 import { styles } from "./SimpleButton.styles";
+import CustomText from "../CustomText/CustomText";
 
 type ButtonSize = "xs" | "s" | "m" | "l" | "xl";
 
@@ -36,7 +36,9 @@ const SimpleButton: React.FC<SimpleButtonProps> = ({
   const fontSize = sizeMap[size];
   return (
     <TouchableOpacity {...props} style={[styles.button, containerStyle]}>
-      <Text style={[styles.text, { fontSize }, textStyle]}>{title}</Text>
+      <CustomText style={[styles.text, { fontSize }, textStyle]}>
+        {title}
+      </CustomText>
     </TouchableOpacity>
   );
 };

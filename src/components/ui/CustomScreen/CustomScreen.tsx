@@ -3,9 +3,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { BlurView } from "expo-blur";
 import React from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./CustomScreen.styles";
+import CustomText from "../CustomText/CustomText";
 
 interface CustomScreenProps {
   children: React.ReactNode;
@@ -38,7 +39,7 @@ const CustomScreen: React.FC<CustomScreenProps> = ({
         ) : (
           <View style={styles.backPlaceholder} />
         )}
-        <Text style={styles.title}>{title}</Text>
+        <CustomText style={styles.title}>{title}</CustomText>
       </View>
       <View style={styles.content}>
         {loading ? (
