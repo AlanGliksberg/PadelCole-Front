@@ -4,6 +4,7 @@ import { Match } from "../match/Match";
 export type ModalParams = {
   title: string;
   message: string;
+  secondParagraph?: string;
   primaryLabel?: string;
   primaryAction?: () => void;
   secondaryLabel?: string;

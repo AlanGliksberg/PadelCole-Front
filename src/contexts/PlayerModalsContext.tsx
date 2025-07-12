@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import { AddPlayerToMatchModal, PlayerDetailsModal } from "../components";
 import ApplicationsModal from "../components/Modals/ApplicationsModal";
 import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
@@ -6,6 +6,7 @@ import EditProfileModal from "../components/Modals/EditProfileModal";
 import { removeGetCreatedMatchesCache } from "../services/cache";
 import { Match, Player } from "../types";
 import { Application } from "../types/application/Application";
+import { ModalContext } from "./ModalContext";
 
 interface PlayerModalsContextData {
   openPlayerDetail: (player: Player, removeCallback?: () => void) => void;
@@ -42,6 +43,8 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
 export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const { openModal } = useContext(ModalContext);
+
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [removePlayerCallback, setRemovePlayerCallback] =
     useState<() => void>();
@@ -98,17 +101,32 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     applications: Application[],
     type: "accepted" | "rejected"
   ) => {
+    const players = applicationsMatch?.players || [];
+    if (type === "accepted") {
+      const acceptedApplication = applicationsMatch?.applications.find(
+        (a) => !applications.some((app) => app.id === a.id)
+      );
+      players?.push({ id: acceptedApplication?.playerId } as Player);
+    }
     setApplicationsMatch((prev) =>
       prev
         ? {
             ...prev,
+            players: players,
             applications,
           }
         : null
     );
     // Si se aceptó al último jugador, cierro el modal
-    if (type === "accepted" && applicationsMatch?.players?.length === 3)
+    if (type === "accepted" && applicationsMatch?.players?.length === 4) {
+      openModal({
+        title: "¡Partido completo!",
+        message:
+          "Ya juntaste a todos los jugadores, ahora solo queda disfrutar del partido.",
+        secondParagraph: "¡Buena suerte!",
+      });
       closeApplicationsModal();
+    }
     refreshData && (await refreshData());
     removeGetCreatedMatchesCache();
   };

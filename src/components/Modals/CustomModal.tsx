@@ -37,6 +37,12 @@ const CustomModal: React.FC<ModalProps> = ({ params, isOpen, closeModal }) => {
 
               <CustomText style={styles.message}>{params?.message}</CustomText>
 
+              {params?.secondParagraph && (
+                <CustomText style={styles.message}>
+                  {params?.secondParagraph}
+                </CustomText>
+              )}
+
               <View style={styles.buttonsContainer}>
                 <SimpleButton
                   title={params?.secondaryLabel || "Cancelar"}
