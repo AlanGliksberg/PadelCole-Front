@@ -41,7 +41,7 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
     isCreator &&
     canDelete &&
     removeCallback &&
-    (!match || match.status.name === MATCH_STATUS.PENDING);
+    (!match || match.status.code === MATCH_STATUS.PENDING);
 
   const textSize =
     size === "s"

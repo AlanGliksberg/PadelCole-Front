@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.selectedText,
     alignSelf: "center",
-    marginBottom: 16,
     height: 44,
     overflow: "hidden",
   },

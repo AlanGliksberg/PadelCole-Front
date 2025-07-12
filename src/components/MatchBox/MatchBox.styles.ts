@@ -39,15 +39,6 @@ export const styles = StyleSheet.create({
     marginBottom: spacing.sm,
     fontSize: typography.small,
   },
-  PENDING: {
-    backgroundColor: colors.pendingStatus,
-  },
-  CLOSED: {
-    backgroundColor: colors.closedStatus,
-  },
-  COMPLETED: {
-    backgroundColor: colors.completedStatus,
-  },
   location: {
     fontSize: typography.h4,
     fontWeight: "700",
@@ -125,5 +116,8 @@ export const styles = StyleSheet.create({
   moreOptionsButton: {
     padding: spacing.xs,
     marginLeft: spacing.sm,
+  },
+  applicationContainer: {
+    gap: spacing.xs,
   },
 });

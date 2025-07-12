@@ -78,7 +78,7 @@ export default function MatchesList({
 
       {!error && (
         <View style={styles.matchesContainer}>
-          {matches.length === 0 && (EmptyComponent || <></>)}
+          {matches.length === 0 && EmptyComponent}
           {matches.map((item, i) =>
             item.id ? (
               <MatchBox

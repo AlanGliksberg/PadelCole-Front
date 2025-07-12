@@ -13,12 +13,13 @@ const EmptyState: React.FC = () => {
       NavigationProp<AppStackParamList & MeFaltaAlguienStackParamList>
     >();
 
+  // TODO - ver que el navigate lleve a la pestaña de partidos dentro de quiero jugar
   return (
     <View style={styles.emptyContainer}>
       <MaterialCommunityIcons
         name="tennis-ball"
         size={100}
-        color={colors.primary}
+        color={colors.secondary}
       />
       <CustomText.Title style={styles.emptyTitle}>
         ¡Jugá tu próximo partido!
@@ -35,9 +36,7 @@ const EmptyState: React.FC = () => {
         size="l"
         onPress={() => navigation.navigate("CrearPartido")}
       >
-        <CustomText.ButtonText uppercase>
-          Creá tu partidoasd
-        </CustomText.ButtonText>
+        <CustomText.ButtonText uppercase>Creá tu partido</CustomText.ButtonText>
       </FullButton>
       <TouchableOpacity onPress={() => navigation.navigate("QuieroJugar")}>
         <CustomText.ButtonText

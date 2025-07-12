@@ -7,6 +7,7 @@ import {
   UPDATE_MATCH_URI,
   GET_CREATED_MATCHES_URI,
   GET_PLAYED_MATCHES_URI,
+  GET_APPLIED_MATCHES_URI,
 } from "../constants/api";
 import { CreateMatchBody, GetMatchesResponse } from "../types";
 import { CommonMatchResponse, UpdateMatchBody } from "../types/api/Match";
@@ -85,6 +86,17 @@ export const getPlayedMatches = async (
   withCache = true
 ) => {
   return await get<GetMatchesResponse>(GET_PLAYED_MATCHES_URI, {
+    queryParams: { page, pageSize },
+    withCache,
+  });
+};
+
+export const getAppliedMatches = async (
+  page: number,
+  pageSize: number,
+  withCache = true
+) => {
+  return await get<GetMatchesResponse>(GET_APPLIED_MATCHES_URI, {
     queryParams: { page, pageSize },
     withCache,
   });

@@ -3,7 +3,7 @@ import { CustomScreen } from "@/src/components";
 import { QUIERO_JUGAR_PAGE_NAME } from "@/src/constants/pages";
 import { MatchTabs } from "@/src/components/MatchTabs/MatchTabs";
 import PartidosList from "./PartidosList";
-import PostulacionesList from "./PostulacionesList";
+import ApplicationsList from "./PostulacionesList";
 
 export default function QuieroJugar() {
   const [selectedTab, setSelectedTab] = useState<"partidos" | "postulaciones">(
@@ -13,7 +13,11 @@ export default function QuieroJugar() {
   return (
     <CustomScreen title={QUIERO_JUGAR_PAGE_NAME}>
       <MatchTabs selectedTab={selectedTab} onTabChange={setSelectedTab} />
-      {selectedTab === "partidos" ? <PartidosList /> : <PostulacionesList />}
+      {selectedTab === "partidos" ? (
+        <PartidosList />
+      ) : (
+        <ApplicationsList goToMatches={() => setSelectedTab("partidos")} />
+      )}
     </CustomScreen>
   );
 }

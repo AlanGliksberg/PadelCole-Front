@@ -16,7 +16,7 @@ export default function MeFaltaAlguien() {
     useNavigation<NavigationProp<MeFaltaAlguienStackParamList>>();
 
   const loadMatches = async (
-    nextPage: number,
+    nextPage: number = 1,
     pageSize: number
   ): Promise<[Match[], number] | void> => {
     try {

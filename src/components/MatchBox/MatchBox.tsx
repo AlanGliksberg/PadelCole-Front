@@ -16,6 +16,7 @@ import BorderedButton from "../ui/BorderedButton/BorderedButton";
 import CustomText from "../ui/CustomText/CustomText";
 import DropdownMenu from "../ui/DropdownMenu/DropdownMenu";
 import { styles } from "./MatchBox.styles";
+import StatusChip from "./StatusChip";
 
 type NavigationProp = NativeStackNavigationProp<MeFaltaAlguienStackParamList>;
 
@@ -35,6 +36,9 @@ const MatchBox: React.FC<MatchBoxProps> = ({
   const { openApplicationsModal } = useContext(PlayerModalsContext);
   const navigation = useNavigation<NavigationProp>();
   const isCreator = user?.playerId === match.creatorPlayerId;
+  const application = match.applications.find(
+    (a) => a.playerId === user?.playerId
+  );
 
   const deleteMatch = () => {
     openModal({
@@ -128,27 +132,41 @@ const MatchBox: React.FC<MatchBoxProps> = ({
       </View>
       <View style={styles.column2}>
         <View style={styles.statusContainer}>
-          <CustomText.ButtonText
-            style={[styles.status, styles[match.status.name]]}
-          >
-            {match.status.description}
-          </CustomText.ButtonText>
+          <StatusChip
+            code={match.status.code}
+            label={match.status.label}
+            description={match.status.description}
+            type="match"
+          />
           {isCreator && showCreatorDetails && (
             <DropdownMenu options={dropdownOptions} />
           )}
         </View>
-        {isCreator && showCreatorDetails && (
-          <BorderedButton size="xl" onPress={handleApplications}>
-            <CustomText type="xsmall" style={styles.applicationsButtonText}>
-              Postulaciones
-            </CustomText>
-            <View style={styles.badge}>
-              <CustomText style={styles.badgeText}>
-                {match.applications.length}
+        <View style={styles.row}>
+          {isCreator && showCreatorDetails && (
+            <BorderedButton size="xl" onPress={handleApplications}>
+              <CustomText type="xsmall" style={styles.applicationsButtonText}>
+                Postulaciones
               </CustomText>
+              <View style={styles.badge}>
+                <CustomText style={styles.badgeText}>
+                  {match.applications.length}
+                </CustomText>
+              </View>
+            </BorderedButton>
+          )}
+          {application && (
+            <View style={styles.applicationContainer}>
+              <CustomText type="small">Postulación:</CustomText>
+              <StatusChip
+                code={application.status?.code}
+                label={application.status?.label}
+                description={application.status?.description}
+                type="application"
+              />
             </View>
-          </BorderedButton>
-        )}
+          )}
+        </View>
       </View>
     </View>
   );

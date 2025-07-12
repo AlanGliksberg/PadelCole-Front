@@ -1,18 +1,63 @@
-import React from "react";
-import { View } from "react-native";
-import CustomText from "@/src/components/ui/CustomText/CustomText";
+import React, { useState } from "react";
+import { ScrollView, View } from "react-native";
+import { Match } from "@/src/types";
+import { getAppliedMatches } from "@/src/services/match";
+import { CustomText, MatchesList, SimpleButton } from "@/src/components";
+import { removeGetAppliedMatchesCache } from "@/src/services/cache";
+import { styles } from "./PostulacionesList.styles";
 
-const PostulacionesList: React.FC = () => {
-  return (
-    <View style={{ padding: 16 }}>
-      <CustomText type="body" bold>
-        Lista de Postulaciones (dummy)
+interface ApplicationsListProps {
+  goToMatches: () => void;
+}
+
+const ApplicationsList: React.FC<ApplicationsListProps> = ({ goToMatches }) => {
+  const [error, setError] = useState<boolean>(false);
+
+  const loadMatches = async (
+    nextPage: number = 1,
+    pageSize: number
+  ): Promise<[Match[], number] | void> => {
+    try {
+      setError(false);
+      const res = await getAppliedMatches(nextPage, pageSize);
+      if (res.error || !res.data) throw new Error("Error al cargar partidos");
+      const { matches: newMatches, totalMatches } = res.data;
+      return [newMatches, totalMatches];
+    } catch (e: any) {
+      console.log(e);
+      setError(true);
+      return;
+    }
+  };
+
+  const EmptyState = (
+    <View style={styles.emptyContainer}>
+      <CustomText type="h4" bold style={styles.emptyTitle}>
+        No tenés postulaciones por ahora
       </CustomText>
-      <CustomText type="body">- Postulación 1</CustomText>
-      <CustomText type="body">- Postulación 2</CustomText>
-      <CustomText type="body">- Postulación 3</CustomText>
+      <CustomText type="medium" style={styles.emptySubtitle}>
+        Para postularte buscá un partido disponible y dejale tu solicitud al
+        creador del partido
+      </CustomText>
+      <SimpleButton title="Ver partidos disponibles" onPress={goToMatches} />
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <ScrollView style={styles.matchesScroll}>
+        <MatchesList
+          loadMatches={loadMatches}
+          refreshData={async () => {
+            removeGetAppliedMatchesCache();
+          }}
+          error={error}
+          EmptyComponent={EmptyState}
+          viewMore
+        />
+      </ScrollView>
     </View>
   );
 };
 
-export default PostulacionesList;
+export default ApplicationsList;
