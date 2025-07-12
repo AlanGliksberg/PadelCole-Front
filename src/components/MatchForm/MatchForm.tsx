@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Controller, Resolver, useForm } from "react-hook-form";
 import { View } from "react-native";
 
@@ -17,6 +17,7 @@ import CustomTimePicker from "../ui/CustomTimePicker/CustomTimePicker";
 import FullButton from "../ui/FullButton/FullButton";
 import CourtDistribution from "./CourtDistribution";
 import { styles } from "./MatchForm.styles";
+import { ModalContext } from "@/src/contexts/ModalContext";
 
 export type MatchFormProps = {
   initialValues?: MatchFormValues;
@@ -24,6 +25,8 @@ export type MatchFormProps = {
 };
 
 const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
+  const { openErrorModal } = useContext(ModalContext);
+
   const {
     control,
     handleSubmit,
@@ -219,6 +222,15 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
               <CourtDistribution
                 teams={value}
                 onPlayerAdd={(player, teamNumber, playerIndex) => {
+                  if (
+                    value.some((t) => t.players.some((p) => p.id === player.id))
+                  ) {
+                    openErrorModal(
+                      "¡Atención!",
+                      "El jugador seleccionado ya fue agregado al partido"
+                    );
+                    return;
+                  }
                   const teams = getNewTeams(
                     value,
                     player,
