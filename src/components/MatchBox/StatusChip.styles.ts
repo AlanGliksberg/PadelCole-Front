@@ -23,4 +23,32 @@ export const styles = StyleSheet.create({
     fontSize: typography.small,
     color: colors.text,
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "transparent",
+  },
+  tooltipContainer: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: [{ translateX: -125 }, { translateY: -50 }], // Centrar el tooltip
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  tooltipBubble: {
+    position: "absolute",
+    backgroundColor: colors.surface,
+    borderRadius: 8,
+    padding: spacing.sm,
+    maxWidth: 250,
+    borderWidth: 1,
+    borderColor: colors.border,
+    zIndex: 1000,
+  },
+
+  tooltipText: {
+    fontSize: typography.small,
+    color: colors.text,
+    lineHeight: 12,
+  },
 });
