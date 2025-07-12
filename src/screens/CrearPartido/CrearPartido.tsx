@@ -34,11 +34,11 @@ const CrearPartido: React.FC = () => {
         team1:
           form.teams
             .find((t) => t.teamNumber === 1)
-            ?.players.map((p) => ({ id: p.id })) || [],
+            ?.players.map((p) => (p.id ? { id: p.id } : p)) || [],
         team2:
           form.teams
             .find((t) => t.teamNumber === 2)
-            ?.players.map((p) => ({ id: p.id })) || [],
+            ?.players.map((p) => (p.id ? { id: p.id } : p)) || [],
       },
     };
     showLoading();
@@ -69,7 +69,10 @@ const CrearPartido: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="always"
+      >
         <MatchForm onSubmit={onSubmit} />
       </ScrollView>
     </View>

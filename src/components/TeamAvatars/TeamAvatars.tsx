@@ -31,7 +31,7 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
       message: `¿Estás seguro que querés agregar al jugador ${player.firstName} ${player.lastName} al partido?`,
       primaryLabel: "Agregar",
       primaryAction: async () => {
-        const result = await addPlayerToMatch(match!.id, team!, player.id);
+        const result = await addPlayerToMatch(match!.id, team!, player);
         if (result.error) {
           if (result.code === 16) {
             openErrorModal(
@@ -39,10 +39,16 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
               "El jugador ya se encuentra en el partido"
             );
             return;
+          } else if (result.code === 4) {
+            openErrorModal(
+              "Agregar jugador",
+              "El género del jugador no coincide con el género del partido"
+            );
+            return;
           } else {
             openErrorModal(
               "Agregar jugador",
-              "Error agregando el jugador al partido"
+              "Error agregando al jugador al partido"
             );
             return;
           }

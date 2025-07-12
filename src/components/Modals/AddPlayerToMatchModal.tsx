@@ -1,7 +1,7 @@
 import { colors } from "@/src/theme";
 import { Match, Player } from "@/src/types";
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Keyboard,
   Modal,
@@ -34,6 +34,12 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<TabType>("existing");
 
+  useEffect(() => {
+    if (isOpen) {
+      setActiveTab("existing");
+    }
+  }, [isOpen]);
+
   const handleAddMyself = async () => {
     const res = await getCurrentPlayer();
     if (res.error || !res.data) {
@@ -49,9 +55,9 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
     onClose();
   };
 
-  const handleAddNewPlayer = () => {
-    // TODO: Implementar navegación a formulario de nuevo jugador
-    console.log("Agregar nuevo jugador");
+  const handleAddNewPlayer = (player: Player) => {
+    onPlayerAdd?.(player);
+    onClose();
   };
 
   const onClose = () => {

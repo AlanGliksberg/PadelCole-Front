@@ -34,12 +34,17 @@ const FullButton: React.FC<FullButtonProps> = ({
   style,
   size = "xl",
   children,
+  disabled,
   ...props
 }) => {
   const sizeStyle = { width: widthMap[size], height: heightMap[size] };
 
   return (
-    <TouchableOpacity {...props} style={[styles.button, sizeStyle, style]}>
+    <TouchableOpacity
+      {...props}
+      style={[styles.button, sizeStyle, disabled && styles.disabled, style]}
+      disabled={disabled}
+    >
       {children}
     </TouchableOpacity>
   );

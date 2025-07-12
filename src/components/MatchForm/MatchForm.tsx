@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Controller, Resolver, useForm } from "react-hook-form";
-import { View } from "react-native";
+import { Keyboard, View } from "react-native";
 
 import useCategories from "@/src/hooks/useCategories";
 import useGenders from "@/src/hooks/useGenders";
@@ -70,7 +70,11 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
   ) => {
     const updatedTeams = [...teams];
     let team = updatedTeams.find((t) => t.teamNumber === teamNumber)!;
-    team.players = team.players.filter((p) => p.id !== player.id);
+    team.players = team.players.filter((p) =>
+      player.id
+        ? p.id !== player.id
+        : p.firstName + p.lastName !== player.firstName + player.lastName
+    );
     return updatedTeams;
   };
 
@@ -156,7 +160,10 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
               keyExtractor={(item) => item.id.toString()}
               labelExtractor={(item) => item.name}
               value={value}
-              onSelect={onChange}
+              onSelect={(v) => {
+                Keyboard.dismiss();
+                onChange(v);
+              }}
               error={errors.duration?.message}
               mandatory
               placeholder="Duración del partido"
@@ -176,7 +183,10 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
               keyExtractor={(item) => item.id.toString()}
               labelExtractor={(item) => item.name}
               value={value}
-              onSelect={onChange}
+              onSelect={(v) => {
+                Keyboard.dismiss();
+                onChange(v);
+              }}
               placeholder={
                 loadingGenders ? "Cargando..." : "Género del partido"
               }
@@ -198,7 +208,10 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
               keyExtractor={(item) => item.id.toString()}
               labelExtractor={(item) => item.code}
               value={value}
-              onSelect={onChange}
+              onSelect={(v) => {
+                Keyboard.dismiss();
+                onChange(v);
+              }}
               disabled={!selectedGender}
               placeholder={
                 !selectedGender
@@ -223,7 +236,9 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
                 teams={value}
                 onPlayerAdd={(player, teamNumber, playerIndex) => {
                   if (
-                    value.some((t) => t.players.some((p) => p.id === player.id))
+                    value.some((t) =>
+                      t.players.some((p) => p.id && p.id === player.id)
+                    )
                   ) {
                     openErrorModal(
                       "¡Atención!",

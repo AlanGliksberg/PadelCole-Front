@@ -92,7 +92,7 @@ const Register: React.FC = () => {
 
           <ScrollView
             contentContainerStyle={styles.content}
-            keyboardShouldPersistTaps="handled"
+            keyboardShouldPersistTaps="always"
           >
             {/* Campos del formulario */}
             <Controller

@@ -9,7 +9,7 @@ import {
   GET_PLAYED_MATCHES_URI,
   GET_APPLIED_MATCHES_URI,
 } from "../constants/api";
-import { CreateMatchBody, GetMatchesResponse } from "../types";
+import { CreateMatchBody, GetMatchesResponse, Player } from "../types";
 import { CommonMatchResponse, UpdateMatchBody } from "../types/api/Match";
 import { deleteApi, get, post, put } from "./api";
 
@@ -18,6 +18,9 @@ export const getCreatedMatches = async (
   pageSize: number,
   withCache = true
 ) => {
+  if (typeof page !== "number" || isNaN(page)) {
+    page = 1;
+  }
   return await get<GetMatchesResponse>(GET_CREATED_MATCHES_URI, {
     queryParams: { page, pageSize },
     withCache,
@@ -33,10 +36,19 @@ export const deleteMatchApi = async (matchId: number) => {
 export const addPlayerToMatch = async (
   matchId: number,
   teamNumber: number,
-  playerId: number
+  player: Player
 ) => {
   return await post<CommonMatchResponse>(ADD_PLAYER_TO_MATCH_URI, {
-    body: { matchId, teamNumber, playerId },
+    body: {
+      matchId,
+      teamNumber,
+      playerId: player.id,
+      firstName: player.firstName,
+      lastName: player.lastName,
+      genderId: player.genderId,
+      categoryId: player.categoryId,
+      phone: player.phone,
+    },
   });
 };
 
@@ -85,6 +97,9 @@ export const getPlayedMatches = async (
   pageSize: number,
   withCache = true
 ) => {
+  if (typeof page !== "number" || isNaN(page)) {
+    page = 1;
+  }
   return await get<GetMatchesResponse>(GET_PLAYED_MATCHES_URI, {
     queryParams: { page, pageSize },
     withCache,
@@ -96,6 +111,9 @@ export const getAppliedMatches = async (
   pageSize: number,
   withCache = true
 ) => {
+  if (typeof page !== "number" || isNaN(page)) {
+    page = 1;
+  }
   return await get<GetMatchesResponse>(GET_APPLIED_MATCHES_URI, {
     queryParams: { page, pageSize },
     withCache,

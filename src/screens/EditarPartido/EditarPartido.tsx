@@ -56,11 +56,11 @@ const EditarPartido: React.FC = () => {
         team1:
           values.teams
             .find((t) => t.teamNumber === 1)
-            ?.players.map((p) => ({ id: p.id })) || [],
+            ?.players.map((p) => (p.id ? { id: p.id } : p)) || [],
         team2:
           values.teams
             .find((t) => t.teamNumber === 2)
-            ?.players.map((p) => ({ id: p.id })) || [],
+            ?.players.map((p) => (p.id ? { id: p.id } : p)) || [],
       },
     };
 
@@ -92,7 +92,11 @@ const EditarPartido: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+    >
       <MatchForm initialValues={initialValues} onSubmit={handleSubmit} />
     </ScrollView>
   );
