@@ -86,9 +86,9 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
         )
     : isCreator
     ? () => openAddPlayerToMatch(match!, team!, callback)
-    : () => {};
+    : undefined;
 
-  return touchable ? (
+  return touchable && avatarAction ? (
     <TouchableOpacity onPress={avatarAction}>{avatarContent}</TouchableOpacity>
   ) : (
     <>{avatarContent}</>

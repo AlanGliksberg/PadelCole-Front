@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     height: 36,
     borderRadius: 8,
-    marginBottom: spacing.sm,
     borderColor: colors.primary,
     borderWidth: 2,
   },

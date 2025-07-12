@@ -78,7 +78,7 @@ const StatusChip: React.FC<StatusChipProps> = ({
         {label}
       </CustomText>
       {description && (
-        <MaterialIcons name="info-outline" size={15} color={colors.text} />
+        <MaterialIcons name="info-outline" size={16} color={colors.text} />
       )}
     </View>
   );

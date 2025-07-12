@@ -113,7 +113,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
         <View style={styles.row}>
           <TeamAvatars
             players={match.teams.find((t) => t.teamNumber === 1)!.players}
-            isCreator
+            isCreator={isCreator}
             match={match}
             team={1}
             callback={refreshData}
@@ -122,7 +122,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           <CustomText style={styles.vs}>vs</CustomText>
           <TeamAvatars
             players={match.teams.find((t) => t.teamNumber === 2)!.players}
-            isCreator
+            isCreator={isCreator}
             match={match}
             team={2}
             callback={refreshData}
