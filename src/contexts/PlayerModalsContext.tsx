@@ -120,7 +120,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     // Si se aceptó al último jugador, cierro el modal
     if (type === "accepted" && applicationsMatch?.players?.length === 4) {
       openModal({
-        title: "¡Partido completo!",
+        title: "¡Partido confirmado!",
         message:
           "Ya juntaste a todos los jugadores, ahora solo queda disfrutar del partido.",
         secondParagraph: "¡Buena suerte!",
