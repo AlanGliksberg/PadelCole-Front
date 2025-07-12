@@ -37,7 +37,6 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  // Detecta si hay filtros activos
   const hasActiveFilters =
     appliedGenders.length > 0 ||
     appliedPositions.length > 0 ||
@@ -57,6 +56,7 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
     setTempCategories([]);
   };
 
+  // TODO - agregar paginado y ver mas
   const searchPlayers = useCallback(async () => {
     setLoading(true);
     setError(false);
@@ -103,12 +103,10 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
     setModalVisible(false);
   };
 
-  // TODO - permitir crear un jugador temporal en algun lado
-
   return (
     <View style={styles.searchContainer}>
       <CustomSearchInput
-        placeholder="Buscá un jugador"
+        placeholder="Buscá un jugador por nombre"
         startSearchingOn={3}
         onSearch={setPlayerName}
         onClear={clearSearch}

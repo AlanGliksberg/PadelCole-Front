@@ -82,7 +82,7 @@ const TeamAvatars: React.FC<TeamAvatarsProps> = ({
             isCreator={isCreator}
             match={match}
             team={team}
-            callback={addPlayer}
+            addPlayerCallback={addPlayer}
             removeCallback={removePlayer}
             canDelete={canDelete}
           />

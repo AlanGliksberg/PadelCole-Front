@@ -27,14 +27,85 @@ export const styles = StyleSheet.create({
   headerRow: {
     width: "100%",
     position: "relative",
-    marginBottom: spacing.sm,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   title: {
-    width: "100%",
+    flex: 1,
   },
   closeButton: {
     position: "absolute",
     right: -5,
     top: -8,
+  },
+  headerRoundButton: {
+    minWidth: 60,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.primary,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: spacing.sm,
+    gap: spacing.xs,
+    shadowColor: colors.text,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+    marginRight: 40,
+  },
+  headerRoundButtonText: {
+    color: colors.white,
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+
+  headerButtons: {
+    position: "absolute",
+    right: -5,
+    top: -8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+  },
+  addMyselfHeaderButton: {
+    marginRight: spacing.xs,
+  },
+
+  tabsContainer: {
+    flex: 1,
+    gap: spacing.md,
+    minHeight: 450,
+  },
+  tabsHeader: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: spacing.sm,
+    alignItems: "center",
+    borderBottomWidth: 2,
+    borderBottomColor: "transparent",
+  },
+  tabButtonActive: {
+    borderBottomColor: colors.primary,
+  },
+  tabText: {
+    color: colors.description,
+  },
+  tabTextActive: {
+    color: colors.primary,
+    fontWeight: "bold",
+  },
+  tabContent: {
+    flex: 1,
+    minHeight: 400,
   },
 });

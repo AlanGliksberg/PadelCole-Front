@@ -50,7 +50,7 @@ export default function CourtDistribution({
                 size="m"
                 touchable
                 isCreator
-                callback={handlePlayerAdd}
+                addPlayerCallback={handlePlayerAdd}
                 removeCallback={handlePlayerRemove}
               />
               {player && (

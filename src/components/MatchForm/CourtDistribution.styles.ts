@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    right: 25,
-    bottom: 48,
+    right: 30,
+    bottom: 50,
   },
 });

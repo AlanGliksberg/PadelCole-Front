@@ -17,7 +17,7 @@ interface PlayerAvatarProps {
   touchable?: boolean;
   match?: Match | undefined;
   team?: number | undefined;
-  callback?: (p: Player) => void;
+  addPlayerCallback?: (p: Player) => void;
   removeCallback?: (p: Player) => void;
   canDelete?: boolean;
 }
@@ -30,7 +30,7 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
   touchable = true,
   match,
   team,
-  callback,
+  addPlayerCallback,
   removeCallback,
   canDelete = false,
 }) => {
@@ -85,7 +85,7 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
           canRemove ? () => removeCallback(player) : undefined
         )
     : isCreator
-    ? () => openAddPlayerToMatch(match!, team!, callback)
+    ? () => openAddPlayerToMatch(match!, team!, addPlayerCallback)
     : undefined;
 
   return touchable && avatarAction ? (
