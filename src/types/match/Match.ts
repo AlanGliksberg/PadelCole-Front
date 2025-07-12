@@ -1,6 +1,7 @@
 import { Application } from "../application/Application";
 import { Category } from "../player/Category";
 import { Gender } from "../player/Gender";
+import { Player } from "../player/Player";
 import { Team } from "../player/Team";
 import { Status } from "./Status";
 
@@ -16,6 +17,7 @@ export type Match = {
   creatorPlayerId: number;
   gender: Gender;
   duration: number;
+  players: Player[];
   teams: Team[];
   date: string;
   time: string;

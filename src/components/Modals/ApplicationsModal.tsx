@@ -50,7 +50,8 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       message: `Se ha agregado correctamente al jugador ${application.player.firstName} ${application.player.lastName} al partido`,
       primaryAction: () => {
         refreshApplications(
-          match.applications.filter((a) => a.id !== application.id)
+          match.applications.filter((a) => a.id !== application.id),
+          "accepted"
         );
       },
     });
@@ -75,7 +76,8 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       message: `Se ha rechazado correctamente al jugador ${application.player.firstName} ${application.player.lastName} del partido`,
       primaryAction: () => {
         refreshApplications(
-          match.applications.filter((a) => a.id !== application.id)
+          match.applications.filter((a) => a.id !== application.id),
+          "rejected"
         );
       },
     });

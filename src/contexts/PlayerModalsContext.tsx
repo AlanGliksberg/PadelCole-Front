@@ -94,7 +94,10 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     setRefreshData(() => refreshData);
   };
   const closeApplicationsModal = () => setApplicationsMatch(null);
-  const refreshApplications = async (applications: Application[]) => {
+  const refreshApplications = async (
+    applications: Application[],
+    type: "accepted" | "rejected"
+  ) => {
     setApplicationsMatch((prev) =>
       prev
         ? {
@@ -103,6 +106,9 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
           }
         : null
     );
+    // Si se aceptó al último jugador, cierro el modal
+    if (type === "accepted" && applicationsMatch?.players?.length === 3)
+      closeApplicationsModal();
     refreshData && (await refreshData());
     removeGetCreatedMatchesCache();
   };

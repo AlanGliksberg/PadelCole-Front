@@ -27,5 +27,8 @@ export interface ApplicationsModalProps {
   match: Match | null;
   isOpen: boolean;
   closeModal: () => void;
-  refreshApplications: (applications: Application[]) => void;
+  refreshApplications: (
+    applications: Application[],
+    type: "accepted" | "rejected"
+  ) => void;
 }
