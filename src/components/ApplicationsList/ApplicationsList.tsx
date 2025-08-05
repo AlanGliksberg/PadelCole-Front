@@ -4,7 +4,7 @@ import { Match } from "@/src/types";
 import { getAppliedMatches } from "@/src/services/match";
 import { CustomText, MatchesList, SimpleButton } from "@/src/components";
 import { removeGetAppliedMatchesCache } from "@/src/services/cache";
-import { styles } from "./PostulacionesList.styles";
+import { styles } from "./ApplicationsList.styles";
 
 interface ApplicationsListProps {
   goToMatches: () => void;

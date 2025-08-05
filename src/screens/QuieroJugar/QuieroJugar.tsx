@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { CustomScreen } from "@/src/components";
+import {
+  ApplicationsList,
+  AvailableMatchesList,
+  CustomScreen,
+} from "@/src/components";
 import { QUIERO_JUGAR_PAGE_NAME } from "@/src/constants/pages";
 import { MatchTabs } from "@/src/components/MatchTabs/MatchTabs";
-import PartidosList from "./PartidosList";
-import ApplicationsList from "./PostulacionesList";
 
 export default function QuieroJugar() {
   const [selectedTab, setSelectedTab] = useState<"partidos" | "postulaciones">(
@@ -14,7 +16,7 @@ export default function QuieroJugar() {
     <CustomScreen title={QUIERO_JUGAR_PAGE_NAME}>
       <MatchTabs selectedTab={selectedTab} onTabChange={setSelectedTab} />
       {selectedTab === "partidos" ? (
-        <PartidosList />
+        <AvailableMatchesList />
       ) : (
         <ApplicationsList goToMatches={() => setSelectedTab("partidos")} />
       )}

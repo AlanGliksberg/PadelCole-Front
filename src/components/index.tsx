@@ -21,3 +21,5 @@ export { default as FullButton } from "./ui/FullButton/FullButton";
 export { default as SimpleButton } from "./ui/SimpleButton/SimpleButton";
 export { default as ToggleGroup } from "./ui/ToggleGroup/ToggleGroup";
 export { default as MatchesList } from "./MatchesList/MatchesList";
+export { default as ApplicationsList } from "./ApplicationsList/ApplicationsList";
+export { default as AvailableMatchesList } from "./AvailableMatchesList/AvailableMatchesList";
