@@ -51,7 +51,7 @@ export default function ProfileHeader({ player }: ProfileHeaderProps) {
         <View style={styles.playerStats}>
           <View style={styles.statItem}>
             <CustomText style={styles.statValue}>
-              {player?.category?.description || "No informado"}
+              {player?.category?.description || "S/I"}
             </CustomText>
             <CustomText style={styles.statLabel}>Categoría</CustomText>
           </View>
