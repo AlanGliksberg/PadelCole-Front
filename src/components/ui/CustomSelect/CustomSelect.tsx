@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import {
   FlatList,
   Modal,
+  StyleProp,
   TextStyle,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  ViewStyle,
 } from "react-native";
 import CustomText, { CustomTextProps } from "../CustomText/CustomText";
 import { styles } from "./CustomSelect.styles";
@@ -29,6 +31,8 @@ export interface CustomSelectProps<T extends Item> {
   disabled?: boolean;
   error?: string;
   mandatory?: boolean;
+  withReset?: boolean;
+  inputStyles?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
 }
 
 const CustomSelect = <T extends Item>({
@@ -44,9 +48,36 @@ const CustomSelect = <T extends Item>({
   disabled,
   error,
   mandatory,
+  withReset = false,
+  inputStyles,
 }: CustomSelectProps<T>) => {
   const [modalVisible, setModalVisible] = useState(false);
   const selectedItem = data.find((item) => item.id === value) || null;
+  console.log("selectedItem", selectedItem);
+
+  // Agregar opción de reset si está habilitada
+  const dataWithReset = withReset
+    ? [
+        ...data,
+        {
+          id: -1,
+          name: "Restablecer",
+          code: "Restablecer",
+          description: "Restablecer",
+        } as unknown as T,
+      ]
+    : data;
+
+  const handleSelect = (selectedId: T["id"]) => {
+    if (selectedId === -1) {
+      // Si se selecciona reset, pasar null
+      onSelect(null as unknown as T["id"]);
+    } else {
+      // Selección normal
+      onSelect(selectedId);
+    }
+    setModalVisible(false);
+  };
 
   return (
     <View>
@@ -58,7 +89,7 @@ const CustomSelect = <T extends Item>({
       </View>
 
       <TouchableOpacity
-        style={[styles.selectButton, disabled && styles.disabled]}
+        style={[styles.selectButton, disabled && styles.disabled, inputStyles]}
         onPress={() => !disabled && setModalVisible(true)}
       >
         <CustomText
@@ -87,17 +118,14 @@ const CustomSelect = <T extends Item>({
         </TouchableWithoutFeedback>
         <View style={styles.modalContent}>
           <FlatList
-            data={data}
+            data={dataWithReset}
             keyExtractor={keyExtractor}
             renderItem={({ item }) => {
               const isSelected = item.id === value;
               return (
                 <TouchableOpacity
                   style={[styles.item, isSelected && styles.selected]}
-                  onPress={() => {
-                    onSelect(item.id);
-                    setModalVisible(false);
-                  }}
+                  onPress={() => handleSelect(item.id)}
                 >
                   <CustomText type="body">{labelExtractor(item)}</CustomText>
                 </TouchableOpacity>

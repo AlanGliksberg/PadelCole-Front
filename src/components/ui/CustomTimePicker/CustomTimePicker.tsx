@@ -1,28 +1,42 @@
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { StyleProp, TouchableOpacity, View, ViewStyle } from "react-native";
 import CustomText from "../CustomText/CustomText";
 import { styles } from "./CustomTimePicker.styles";
 
 interface CustomTimePickerProps {
+  label?: string;
   time: Date | null;
-  onChange: (d: Date) => void;
+  onChange: (d: Date | null) => void;
   mandatory?: boolean;
   placeholder: string;
   error?: string;
+  inputStyles?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
+  neutralButtonLabel?: string;
 }
 
 const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
+  label,
   time,
   onChange,
   mandatory,
   placeholder,
   error,
+  inputStyles,
+  neutralButtonLabel,
 }) => {
   const [showTimePicker, setShowTimePicker] = useState(false);
 
-  const action = (_: any, time?: Date) => {
+  const onTimeChange = (event: DateTimePickerEvent, time?: Date) => {
     setShowTimePicker(false);
+    if (event.type === "neutralButtonPressed") {
+      onChange(null);
+      return;
+    } else if (event.type === "dismissed") {
+      return;
+    }
     if (time) onChange(time);
   };
 
@@ -32,19 +46,21 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
 
   return (
     <View>
-      <View style={styles.labelContainer}>
-        <CustomText type="medium" style={styles.label}>
-          Hora
-        </CustomText>
-        {mandatory && (
-          <CustomText type="xsmall" style={styles.label}>
-            {" *"}
+      {label && (
+        <View style={styles.labelContainer}>
+          <CustomText type="medium" style={styles.label}>
+            Hora
           </CustomText>
-        )}
-      </View>
+          {mandatory && (
+            <CustomText type="xsmall" style={styles.label}>
+              {" *"}
+            </CustomText>
+          )}
+        </View>
+      )}
 
       <TouchableOpacity
-        style={styles.pickerButton}
+        style={[styles.pickerButton, inputStyles]}
         onPress={() => setShowTimePicker(true)}
       >
         {time ? (
@@ -68,8 +84,9 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
           value={selectedTime}
           mode="time"
           display="default"
-          onChange={action}
+          onChange={onTimeChange}
           is24Hour
+          neutralButton={{ label: neutralButtonLabel }}
         />
       )}
     </View>

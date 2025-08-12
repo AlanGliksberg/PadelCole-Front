@@ -3,12 +3,13 @@ import { colors, spacing } from "@/src/theme";
 
 export const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.sm,
   },
   filtersCard: {
     backgroundColor: colors.white,
     borderRadius: spacing.sm,
-    paddingVertical: spacing.sm,
+    paddingVertical: spacing.md,
     paddingHorizontal: spacing.md,
     marginBottom: spacing.md,
     // Sombra iOS
@@ -19,8 +20,8 @@ export const styles = StyleSheet.create({
     // Elevación Android
     elevation: 2,
   },
-  filterItem: {
-    minWidth: 110,
-    marginRight: 8,
+  filtersRow: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

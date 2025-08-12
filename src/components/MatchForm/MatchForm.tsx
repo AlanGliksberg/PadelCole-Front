@@ -18,6 +18,7 @@ import FullButton from "../ui/FullButton/FullButton";
 import CourtDistribution from "./CourtDistribution";
 import { styles } from "./MatchForm.styles";
 import { ModalContext } from "@/src/contexts/ModalContext";
+import { DURATIONS } from "@/src/constants/match";
 
 export type MatchFormProps = {
   initialValues?: MatchFormValues;
@@ -120,6 +121,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
           name="date"
           render={({ field: { onChange, value } }) => (
             <CustomDatePicker
+              label="Fecha"
               onChange={onChange}
               date={value}
               minimumDate={new Date()}
@@ -136,6 +138,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
           name="time"
           render={({ field: { onChange, value } }) => (
             <CustomTimePicker
+              label="Hora"
               onChange={onChange}
               time={value}
               mandatory
@@ -152,11 +155,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
           render={({ field: { onChange, value } }) => (
             <CustomSelect
               label="Duración"
-              data={[
-                { id: 60, name: "60 minutos" },
-                { id: 90, name: "90 minutos" },
-                { id: 120, name: "120 minutos" },
-              ]}
+              data={DURATIONS}
               keyExtractor={(item) => item.id.toString()}
               labelExtractor={(item) => item.name}
               value={value}
