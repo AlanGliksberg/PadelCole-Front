@@ -10,25 +10,14 @@ import { styles } from "./MatchesFilters.styles";
 import useGenders from "@/src/hooks/useGenders";
 import useCategories from "@/src/hooks/useCategories";
 import { DURATIONS } from "@/src/constants/match";
+import { MatchFilters } from "@/src/types";
 
 interface MatchesFiltersProps {
-  onSearch?: (search: string) => void;
-  onFiltersChange?: (filters: {
-    dateFrom: Date | null;
-    dateTo: Date | null;
-    timeFrom: Date | null;
-    timeTo: Date | null;
-    gender: number | null;
-    category: number | null;
-    duration: number | null;
-  }) => void;
+  onFiltersChange?: (filters: MatchFilters) => void;
 }
 
-const MatchesFilters: React.FC<MatchesFiltersProps> = ({
-  onSearch,
-  onFiltersChange,
-}) => {
-  const [search, setSearch] = useState("");
+const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
+  const [search, setSearch] = useState<string | null>("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
   const [timeFrom, setTimeFrom] = useState<Date | null>(null);
@@ -47,8 +36,19 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
     : allCategories;
 
   const handleSearch = (searchTerm: string) => {
-    setSearch(searchTerm);
-    onSearch?.(searchTerm);
+    const newFilters = {
+      description: searchTerm || null,
+      dateFrom,
+      dateTo,
+      timeFrom,
+      timeTo,
+      gender,
+      category,
+      duration,
+    };
+
+    setSearch(searchTerm || null);
+    onFiltersChange?.(newFilters);
   };
 
   const handleGenderChange = (value: number | null) => {
@@ -63,6 +63,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
     const newCategory = isCategoryAvailable ? category : null;
 
     const newFilters = {
+      description: search,
       dateFrom,
       dateTo,
       timeFrom,
@@ -79,6 +80,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
 
   const handleCategoryChange = (value: number | null) => {
     const newFilters = {
+      description: search,
       dateFrom,
       dateTo,
       timeFrom,
@@ -94,6 +96,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
 
   const handleDurationChange = (value: number | null) => {
     const newFilters = {
+      description: search,
       dateFrom,
       dateTo,
       timeFrom,
@@ -110,6 +113,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
   const handleDateFromChange = (newDateFrom: Date | null) => {
     setDateFrom(newDateFrom);
     onFiltersChange?.({
+      description: search,
       dateFrom: newDateFrom,
       dateTo,
       timeFrom,
@@ -123,6 +127,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
   const handleDateToChange = (newDateTo: Date | null) => {
     setDateTo(newDateTo);
     onFiltersChange?.({
+      description: search,
       dateFrom,
       dateTo: newDateTo,
       timeFrom,
@@ -136,6 +141,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
   const handleTimeFromChange = (newTimeFrom: Date | null) => {
     setTimeFrom(newTimeFrom);
     onFiltersChange?.({
+      description: search,
       dateFrom,
       dateTo,
       timeFrom: newTimeFrom,
@@ -149,6 +155,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
   const handleTimeToChange = (newTimeTo: Date | null) => {
     setTimeTo(newTimeTo);
     onFiltersChange?.({
+      description: search,
       dateFrom,
       dateTo,
       timeFrom,
@@ -165,7 +172,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
         placeholder="Buscá un partido"
         startSearchingOn={3}
         onSearch={handleSearch}
-        value={search}
+        onClear={() => handleSearch("")}
       />
       <View style={styles.filtersRow}>
         <MaterialIcons

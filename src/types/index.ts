@@ -10,6 +10,7 @@ export { RegisterResponse } from "./auth/RegisterResponse";
 export { MatchFormValues } from "./forms/MatchForm";
 export { RegisterFormValues } from "./forms/RegisterForm";
 export { Match } from "./match/Match";
+export { MatchFilters } from "./match/MatchFilters";
 export { Status } from "./match/Status";
 export {
   ModalContextData,

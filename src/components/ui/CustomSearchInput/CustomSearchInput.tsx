@@ -28,7 +28,7 @@ const CustomSearchInput: React.FC<CustomSearchInputProps> = ({
       return;
     }
     if (debouncedValue.length >= startSearchingOn) onSearch(debouncedValue);
-  }, [debouncedValue, onSearch, startSearchingOn]);
+  }, [debouncedValue]);
 
   const cleanInput = () => {
     onClear && onClear();
