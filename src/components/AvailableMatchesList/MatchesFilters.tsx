@@ -14,11 +14,13 @@ import { DURATIONS } from "@/src/constants/match";
 interface MatchesFiltersProps {
   onSearch?: (search: string) => void;
   onFiltersChange?: (filters: {
-    fecha: Date | null;
-    hora: Date | null;
-    genero: number | null;
-    categoria: number | null;
-    duracion: number | null;
+    dateFrom: Date | null;
+    dateTo: Date | null;
+    timeFrom: Date | null;
+    timeTo: Date | null;
+    gender: number | null;
+    category: number | null;
+    duration: number | null;
   }) => void;
 }
 
@@ -27,19 +29,21 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
   onFiltersChange,
 }) => {
   const [search, setSearch] = useState("");
-  const [fecha, setFecha] = useState<Date | null>(null);
-  const [hora, setHora] = useState<Date | null>(null);
-  const [genero, setGenero] = useState<number | null>(null);
-  const [categoria, setCategoria] = useState<number | null>(null);
-  const [duracion, setDuracion] = useState<number | null>(null);
+  const [dateFrom, setDateFrom] = useState<Date | null>(null);
+  const [dateTo, setDateTo] = useState<Date | null>(null);
+  const [timeFrom, setTimeFrom] = useState<Date | null>(null);
+  const [timeTo, setTimeTo] = useState<Date | null>(null);
+  const [gender, setGender] = useState<number | null>(null);
+  const [category, setCategory] = useState<number | null>(null);
+  const [duration, setDuration] = useState<number | null>(null);
 
-  const { data: generos = [], loading: loadingGenders } = useGenders();
+  const { data: genders = [], loading: loadingGenders } = useGenders();
   const { data: allCategories = [], loading: loadingCategories } =
     useCategories();
 
   // Filtrar categorías basadas en el género seleccionado
-  const categorias = genero
-    ? allCategories.filter((cat) => cat.genderId === genero)
+  const categories = gender
+    ? allCategories.filter((cat) => cat.genderId === gender)
     : allCategories;
 
   const handleSearch = (searchTerm: string) => {
@@ -47,43 +51,118 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
     onSearch?.(searchTerm);
   };
 
-  const handleFilterChange = (filterType: string, value: number | null) => {
-    let newFilters;
-    switch (filterType) {
-      case "genero":
-        newFilters = { fecha, hora, genero: value, categoria, duracion };
-        setGenero(value);
-        // Limpiar categoría cuando cambia el género
-        setCategoria(null);
-        break;
-      case "categoria":
-        newFilters = { fecha, hora, genero, categoria: value, duracion };
-        setCategoria(value);
-        break;
-      case "duracion":
-        newFilters = { fecha, hora, genero, categoria, duracion: value };
-        setDuracion(value);
-        break;
-      default:
-        return;
-    }
+  const handleGenderChange = (value: number | null) => {
+    // Verificar si la categoría actual está disponible para el nuevo género
+    const newCategories = value
+      ? allCategories.filter((cat) => cat.genderId === value)
+      : allCategories;
+    const isCategoryAvailable =
+      category && newCategories.some((cat) => cat.id === category);
+
+    // Solo resetear la categoría si no está disponible para el nuevo género
+    const newCategory = isCategoryAvailable ? category : null;
+
+    const newFilters = {
+      dateFrom,
+      dateTo,
+      timeFrom,
+      timeTo,
+      gender: value,
+      category: newCategory,
+      duration,
+    };
+
+    setGender(value);
+    setCategory(newCategory);
     onFiltersChange?.(newFilters);
   };
 
-  const handleFechaChange = (newFecha: Date | null) => {
-    setFecha(newFecha);
-    onFiltersChange?.({ fecha: newFecha, hora, genero, categoria, duracion });
+  const handleCategoryChange = (value: number | null) => {
+    const newFilters = {
+      dateFrom,
+      dateTo,
+      timeFrom,
+      timeTo,
+      gender,
+      category: value,
+      duration,
+    };
+
+    setCategory(value);
+    onFiltersChange?.(newFilters);
   };
 
-  const handleHoraChange = (newHora: Date | null) => {
-    setHora(newHora);
-    onFiltersChange?.({ fecha, hora: newHora, genero, categoria, duracion });
+  const handleDurationChange = (value: number | null) => {
+    const newFilters = {
+      dateFrom,
+      dateTo,
+      timeFrom,
+      timeTo,
+      gender,
+      category,
+      duration: value,
+    };
+
+    setDuration(value);
+    onFiltersChange?.(newFilters);
+  };
+
+  const handleDateFromChange = (newDateFrom: Date | null) => {
+    setDateFrom(newDateFrom);
+    onFiltersChange?.({
+      dateFrom: newDateFrom,
+      dateTo,
+      timeFrom,
+      timeTo,
+      gender,
+      category,
+      duration,
+    });
+  };
+
+  const handleDateToChange = (newDateTo: Date | null) => {
+    setDateTo(newDateTo);
+    onFiltersChange?.({
+      dateFrom,
+      dateTo: newDateTo,
+      timeFrom,
+      timeTo,
+      gender,
+      category,
+      duration,
+    });
+  };
+
+  const handleTimeFromChange = (newTimeFrom: Date | null) => {
+    setTimeFrom(newTimeFrom);
+    onFiltersChange?.({
+      dateFrom,
+      dateTo,
+      timeFrom: newTimeFrom,
+      timeTo,
+      gender,
+      category,
+      duration,
+    });
+  };
+
+  const handleTimeToChange = (newTimeTo: Date | null) => {
+    setTimeTo(newTimeTo);
+    onFiltersChange?.({
+      dateFrom,
+      dateTo,
+      timeFrom,
+      timeTo: newTimeTo,
+      gender,
+      category,
+      duration,
+    });
   };
 
   return (
     <View>
       <CustomSearchInput
-        placeholder="Buscar partido"
+        placeholder="Buscá un partido"
         startSearchingOn={3}
         onSearch={handleSearch}
         value={search}
@@ -97,63 +176,82 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({
         />
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.filtersList}>
-            <View style={[styles.filterItem, { marginTop: 26 }]}>
-              <CustomDatePicker
-                date={fecha}
-                onChange={handleFechaChange}
-                placeholder="Fecha"
-                minimumDate={new Date()}
-                inputStyles={fecha ? styles.selected : {}}
-                neutralButtonLabel="Restablecer"
-              />
-            </View>
-            <View style={[styles.filterItem, { marginTop: 25 }]}>
-              <CustomTimePicker
-                time={hora}
-                onChange={handleHoraChange}
-                placeholder="Hora"
-                inputStyles={hora ? styles.selected : {}}
-                neutralButtonLabel="Restablecer"
-              />
-            </View>
             <View style={styles.filterItem}>
               <CustomSelect
                 label=""
-                data={generos}
-                value={genero}
-                onSelect={(value) => handleFilterChange("genero", value)}
+                data={genders}
+                value={gender}
+                onSelect={handleGenderChange}
                 keyExtractor={(item) => item.id.toString()}
                 labelExtractor={(item) => item.name}
                 placeholder={loadingGenders ? "Cargando..." : "Género"}
                 disabled={loadingGenders}
-                inputStyles={genero ? styles.selected : {}}
+                inputStyles={gender ? styles.selected : {}}
                 withReset
               />
             </View>
             <View style={styles.filterItem}>
               <CustomSelect
                 label=""
-                data={categorias}
-                value={categoria}
-                onSelect={(value) => handleFilterChange("categoria", value)}
+                data={categories}
+                value={category}
+                onSelect={handleCategoryChange}
                 keyExtractor={(item) => item.id.toString()}
                 labelExtractor={(item) => item.description}
                 placeholder={loadingCategories ? "Cargando..." : "Categoría"}
                 disabled={loadingCategories}
-                inputStyles={categoria ? styles.selected : {}}
+                inputStyles={category ? styles.selected : {}}
                 withReset
+              />
+            </View>
+            <View style={[styles.filterItem, { marginTop: 26 }]}>
+              <CustomDatePicker
+                date={dateFrom}
+                onChange={handleDateFromChange}
+                placeholder="Fecha desde"
+                minimumDate={new Date()}
+                inputStyles={dateFrom ? styles.selected : {}}
+                neutralButtonLabel="Restablecer"
+              />
+            </View>
+            <View style={[styles.filterItem, { marginTop: 26 }]}>
+              <CustomDatePicker
+                date={dateTo}
+                onChange={handleDateToChange}
+                placeholder="Fecha hasta"
+                minimumDate={dateFrom || new Date()}
+                inputStyles={dateTo ? styles.selected : {}}
+                neutralButtonLabel="Restablecer"
+              />
+            </View>
+            <View style={[styles.filterItem, { marginTop: 26 }]}>
+              <CustomTimePicker
+                time={timeFrom}
+                onChange={handleTimeFromChange}
+                placeholder="Hora desde"
+                inputStyles={timeFrom ? styles.selected : {}}
+                neutralButtonLabel="Restablecer"
+              />
+            </View>
+            <View style={[styles.filterItem, { marginTop: 26 }]}>
+              <CustomTimePicker
+                time={timeTo}
+                onChange={handleTimeToChange}
+                placeholder="Hora hasta"
+                inputStyles={timeTo ? styles.selected : {}}
+                neutralButtonLabel="Restablecer"
               />
             </View>
             <View style={styles.filterItem}>
               <CustomSelect
                 label=""
                 data={DURATIONS}
-                value={duracion}
-                onSelect={(value) => handleFilterChange("duracion", value)}
+                value={duration}
+                onSelect={handleDurationChange}
                 keyExtractor={(item) => item.id.toString()}
                 labelExtractor={(item) => item.name}
                 placeholder="Duración"
-                inputStyles={duracion ? styles.selected : {}}
+                inputStyles={duration ? styles.selected : {}}
                 withReset
               />
             </View>

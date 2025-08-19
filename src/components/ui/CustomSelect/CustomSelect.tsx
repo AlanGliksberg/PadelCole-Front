@@ -53,7 +53,6 @@ const CustomSelect = <T extends Item>({
 }: CustomSelectProps<T>) => {
   const [modalVisible, setModalVisible] = useState(false);
   const selectedItem = data.find((item) => item.id === value) || null;
-  console.log("selectedItem", selectedItem);
 
   // Agregar opción de reset si está habilitada
   const dataWithReset = withReset

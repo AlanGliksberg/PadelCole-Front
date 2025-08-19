@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { styles } from "./AvailableMatchesList.styles";
@@ -11,14 +11,16 @@ const AvailableMatchesList: React.FC = () => {
   };
 
   const handleFiltersChange = (filters: {
-    fecha: Date | null;
-    hora: Date | null;
-    genero: number | null;
-    categoria: number | null;
-    duracion: number | null;
+    dateFrom: Date | null;
+    dateTo: Date | null;
+    timeFrom: Date | null;
+    timeTo: Date | null;
+    gender: number | null;
+    category: number | null;
+    duration: number | null;
   }) => {
     // Aquí puedes manejar los cambios de filtros
-    console.log("Filtros cambiados:", filters);
+    // console.log("Filtros cambiados:", filters);
   };
 
   return (
