@@ -9,6 +9,7 @@ export const REGISTER_URI = `${AUTH_BASE_URI}/register`;
 export const REFRESH_TOKEN_URI = `${AUTH_BASE_URI}/refresh`;
 export const CHANGE_PASSWORD_URI = `${AUTH_BASE_URI}/change-password`;
 
+export const GET_MATCHES_URI = `${MATCH_BASE_URI}`;
 export const GET_CREATED_MATCHES_URI = `${MATCH_BASE_URI}/created`;
 export const GET_PLAYED_MATCHES_URI = `${MATCH_BASE_URI}/played`;
 export const GET_APPLIED_MATCHES_URI = `${MATCH_BASE_URI}/applied`;

@@ -71,7 +71,7 @@ export default function MatchesList({
     <>
       {error && (
         <ErrorSection
-          message="Error buscando tus partidos"
+          message="Error buscando partidos"
           onRetry={loadMatchesData}
         />
       )}

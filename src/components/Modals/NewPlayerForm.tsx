@@ -89,7 +89,7 @@ const NewPlayerForm: React.FC<NewPlayerFormProps> = ({ onAddNewPlayer }) => {
             }}
             keyExtractor={(item) => item.id.toString()}
             labelExtractor={(item) => item.name}
-            placeholder="Selecciona el género"
+            placeholder="Seleccioná el género"
             mandatory
           />
 
@@ -103,7 +103,7 @@ const NewPlayerForm: React.FC<NewPlayerFormProps> = ({ onAddNewPlayer }) => {
             }}
             keyExtractor={(item) => item.id.toString()}
             labelExtractor={(item) => item.description}
-            placeholder="Selecciona la categoría"
+            placeholder="Seleccioná la categoría"
             mandatory
             disabled={!genderId}
           />

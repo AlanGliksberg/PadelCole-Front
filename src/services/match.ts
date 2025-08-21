@@ -8,8 +8,14 @@ import {
   GET_CREATED_MATCHES_URI,
   GET_PLAYED_MATCHES_URI,
   GET_APPLIED_MATCHES_URI,
+  GET_MATCHES_URI,
 } from "../constants/api";
-import { CreateMatchBody, GetMatchesResponse, Player } from "../types";
+import {
+  CreateMatchBody,
+  GetMatchesResponse,
+  MatchFilters,
+  Player,
+} from "../types";
 import { CommonMatchResponse, UpdateMatchBody } from "../types/api/Match";
 import { deleteApi, get, post, put } from "./api";
 
@@ -116,6 +122,21 @@ export const getAppliedMatches = async (
   }
   return await get<GetMatchesResponse>(GET_APPLIED_MATCHES_URI, {
     queryParams: { page, pageSize },
+    withCache,
+  });
+};
+
+export const getMatchesWithFilters = async (
+  page: number,
+  pageSize: number,
+  filters: MatchFilters,
+  withCache = true
+) => {
+  if (typeof page !== "number" || isNaN(page)) {
+    page = 1;
+  }
+  return await get<GetMatchesResponse>(GET_MATCHES_URI, {
+    queryParams: { page, pageSize, ...filters },
     withCache,
   });
 };

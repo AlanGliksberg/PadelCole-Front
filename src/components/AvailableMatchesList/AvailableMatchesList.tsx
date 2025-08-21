@@ -1,29 +1,72 @@
-import React from "react";
-import { View } from "react-native";
-import CustomText from "@/src/components/ui/CustomText/CustomText";
+import React, { useState } from "react";
+import { Keyboard, ScrollView, View } from "react-native";
 import { styles } from "./AvailableMatchesList.styles";
 import MatchesFilters from "./MatchesFilters";
-import { MatchFilters } from "@/src/types";
+import { Match, MatchFilters } from "@/src/types";
+import MatchesList from "../MatchesList/MatchesList";
+import CustomText from "../ui/CustomText/CustomText";
+import { getMatchesWithFilters } from "@/src/services/match";
 
 const AvailableMatchesList: React.FC = () => {
+  const [error, setError] = useState<boolean>(false);
+  const [filters, setFilters] = useState<MatchFilters>({
+    description: null,
+    dateFrom: null,
+    dateTo: null,
+    timeFrom: null,
+    timeTo: null,
+    gender: null,
+    category: null,
+    duration: null,
+  });
+
+  let loadMatches = async (
+    nextPage: number,
+    pageSize: number
+  ): Promise<[Match[], number] | void> => {
+    try {
+      setError(false);
+      const res = await getMatchesWithFilters(
+        nextPage,
+        pageSize,
+        filters,
+        false
+      );
+      if (res.error || !res.data) throw new Error("Error al cargar partidos");
+      const { matches: newMatches, totalMatches } = res.data;
+      return [newMatches, totalMatches];
+    } catch (e: any) {
+      console.log(e);
+      setError(true);
+      return;
+    }
+  };
+
+  const Empty = (
+    <View>
+      <CustomText>No hay partidos disponibles</CustomText>
+    </View>
+  );
+
   const handleFiltersChange = (filters: MatchFilters) => {
-    // Aquí puedes manejar los cambios de filtros
-    // console.log("Filtros cambiados:", filters);
+    setFilters(filters);
   };
 
   return (
     <View style={styles.container}>
-      {/* Input de búsqueda y filtros dentro del mismo fondo de card */}
       <View style={styles.filtersCard}>
         <MatchesFilters onFiltersChange={handleFiltersChange} />
       </View>
-      {/* Lista dummy de partidos */}
-      <CustomText type="body" bold>
-        Lista de Partidos (dummy)
-      </CustomText>
-      <CustomText type="body">- Partido 1</CustomText>
-      <CustomText type="body">- Partido 2</CustomText>
-      <CustomText type="body">- Partido 3</CustomText>
+
+      <ScrollView style={styles.matchesScroll}>
+        <MatchesList
+          key={JSON.stringify(filters)}
+          loadMatches={loadMatches}
+          error={error}
+          EmptyComponent={Empty}
+          viewMore
+        />
+      </ScrollView>
     </View>
   );
 };

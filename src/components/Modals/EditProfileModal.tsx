@@ -156,7 +156,7 @@ export default function EditProfileModal({
                 onSelect={setPositionId}
                 keyExtractor={(pos: Position) => pos.id.toString()}
                 labelExtractor={(pos: Position) => pos.description}
-                placeholder="Selecciona tu posición"
+                placeholder="Seleccioná tu posición"
               />
             )}
           </ScrollView>

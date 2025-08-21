@@ -11,9 +11,10 @@ import useGenders from "@/src/hooks/useGenders";
 import useCategories from "@/src/hooks/useCategories";
 import { DURATIONS } from "@/src/constants/match";
 import { MatchFilters } from "@/src/types";
+import { formatDate, formatTime } from "@/src/utils/common";
 
 interface MatchesFiltersProps {
-  onFiltersChange?: (filters: MatchFilters) => void;
+  onFiltersChange: (filters: MatchFilters) => void;
 }
 
 const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
@@ -35,20 +36,23 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
     ? allCategories.filter((cat) => cat.genderId === gender)
     : allCategories;
 
+  const getActualFilters = (): MatchFilters => ({
+    description: search,
+    dateFrom: formatDate(dateFrom),
+    dateTo: formatDate(dateTo),
+    timeFrom: formatTime(timeFrom),
+    timeTo: formatTime(timeTo),
+    gender,
+    category,
+    duration,
+  });
+
   const handleSearch = (searchTerm: string) => {
-    const newFilters = {
-      description: searchTerm || null,
-      dateFrom,
-      dateTo,
-      timeFrom,
-      timeTo,
-      gender,
-      category,
-      duration,
-    };
+    const actualFilters = getActualFilters();
+    actualFilters.description = searchTerm || null;
 
     setSearch(searchTerm || null);
-    onFiltersChange?.(newFilters);
+    onFiltersChange(actualFilters);
   };
 
   const handleGenderChange = (value: number | null) => {
@@ -62,108 +66,61 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
     // Solo resetear la categoría si no está disponible para el nuevo género
     const newCategory = isCategoryAvailable ? category : null;
 
-    const newFilters = {
-      description: search,
-      dateFrom,
-      dateTo,
-      timeFrom,
-      timeTo,
-      gender: value,
-      category: newCategory,
-      duration,
-    };
+    const actualFilters = getActualFilters();
+    actualFilters.gender = value;
+    actualFilters.category = newCategory;
 
     setGender(value);
     setCategory(newCategory);
-    onFiltersChange?.(newFilters);
+    onFiltersChange(actualFilters);
   };
 
   const handleCategoryChange = (value: number | null) => {
-    const newFilters = {
-      description: search,
-      dateFrom,
-      dateTo,
-      timeFrom,
-      timeTo,
-      gender,
-      category: value,
-      duration,
-    };
+    const actualFilters = getActualFilters();
+    actualFilters.category = value;
 
     setCategory(value);
-    onFiltersChange?.(newFilters);
+    onFiltersChange(actualFilters);
   };
 
   const handleDurationChange = (value: number | null) => {
-    const newFilters = {
-      description: search,
-      dateFrom,
-      dateTo,
-      timeFrom,
-      timeTo,
-      gender,
-      category,
-      duration: value,
-    };
+    const actualFilters = getActualFilters();
+    actualFilters.duration = value;
 
     setDuration(value);
-    onFiltersChange?.(newFilters);
+    onFiltersChange(actualFilters);
   };
 
   const handleDateFromChange = (newDateFrom: Date | null) => {
+    const actualFilters = getActualFilters();
+    actualFilters.dateFrom = formatDate(newDateFrom);
+
     setDateFrom(newDateFrom);
-    onFiltersChange?.({
-      description: search,
-      dateFrom: newDateFrom,
-      dateTo,
-      timeFrom,
-      timeTo,
-      gender,
-      category,
-      duration,
-    });
+    onFiltersChange(actualFilters);
   };
 
   const handleDateToChange = (newDateTo: Date | null) => {
+    const actualFilters = getActualFilters();
+    actualFilters.dateTo = formatDate(newDateTo);
+
     setDateTo(newDateTo);
-    onFiltersChange?.({
-      description: search,
-      dateFrom,
-      dateTo: newDateTo,
-      timeFrom,
-      timeTo,
-      gender,
-      category,
-      duration,
-    });
+    onFiltersChange(actualFilters);
   };
 
   const handleTimeFromChange = (newTimeFrom: Date | null) => {
+    const actualFilters = getActualFilters();
+    actualFilters.timeFrom = formatTime(newTimeFrom);
+
     setTimeFrom(newTimeFrom);
-    onFiltersChange?.({
-      description: search,
-      dateFrom,
-      dateTo,
-      timeFrom: newTimeFrom,
-      timeTo,
-      gender,
-      category,
-      duration,
-    });
+    onFiltersChange(actualFilters);
   };
 
   const handleTimeToChange = (newTimeTo: Date | null) => {
+    const actualFilters = getActualFilters();
+    actualFilters.timeTo = formatTime(newTimeTo);
+
     setTimeTo(newTimeTo);
-    onFiltersChange?.({
-      description: search,
-      dateFrom,
-      dateTo,
-      timeFrom,
-      timeTo: newTimeTo,
-      gender,
-      category,
-      duration,
-    });
+    onFiltersChange(actualFilters);
   };
 
   return (
@@ -181,7 +138,11 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
           color={colors.primary}
           style={{ marginTop: 22 }}
         />
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyboardShouldPersistTaps="always"
+        >
           <View style={styles.filtersList}>
             <View style={styles.filterItem}>
               <CustomSelect
@@ -189,7 +150,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
                 data={genders}
                 value={gender}
                 onSelect={handleGenderChange}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.code}
                 labelExtractor={(item) => item.name}
                 placeholder={loadingGenders ? "Cargando..." : "Género"}
                 disabled={loadingGenders}
@@ -203,7 +164,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
                 data={categories}
                 value={category}
                 onSelect={handleCategoryChange}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.code}
                 labelExtractor={(item) => item.description}
                 placeholder={loadingCategories ? "Cargando..." : "Categoría"}
                 disabled={loadingCategories}
@@ -235,12 +196,12 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
               <CustomTimePicker
                 time={timeFrom}
                 onChange={handleTimeFromChange}
-                placeholder="Hora desde"
+                placeholder="Hora"
                 inputStyles={timeFrom ? styles.selected : {}}
                 neutralButtonLabel="Restablecer"
               />
             </View>
-            <View style={[styles.filterItem, { marginTop: 26 }]}>
+            {/* <View style={[styles.filterItem, { marginTop: 26 }]}>
               <CustomTimePicker
                 time={timeTo}
                 onChange={handleTimeToChange}
@@ -248,7 +209,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
                 inputStyles={timeTo ? styles.selected : {}}
                 neutralButtonLabel="Restablecer"
               />
-            </View>
+            </View> */}
             <View style={styles.filterItem}>
               <CustomSelect
                 label=""

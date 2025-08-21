@@ -3,6 +3,7 @@ import { colors, spacing } from "@/src/theme";
 
 export const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.sm,
   },
@@ -23,5 +24,8 @@ export const styles = StyleSheet.create({
   filtersRow: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  matchesScroll: {
+    flex: 1,
   },
 });

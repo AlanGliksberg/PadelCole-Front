@@ -36,7 +36,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
   const { openApplicationsModal } = useContext(PlayerModalsContext);
   const navigation = useNavigation<NavigationProp>();
   const isCreator = user?.playerId === match.creatorPlayerId;
-  const application = match.applications.find(
+  const application = match.applications?.find(
     (a) => a.playerId === user?.playerId
   );
 
@@ -99,9 +99,9 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           <CustomText style={styles.meta}>{match.time}</CustomText>
         </View>
         <View style={styles.row}>
-          <CustomText style={styles.tag}>{match.gender.pluralName}</CustomText>
+          <CustomText style={styles.tag}>{match.gender?.pluralName}</CustomText>
           <CustomText style={styles.tag}>
-            {match.category.description}
+            {match.category?.description}
           </CustomText>
           <CustomText style={styles.tag}>{match.duration} min</CustomText>
         </View>
@@ -135,7 +135,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           <StatusChip
             code={match.status.code}
             label={match.status.label}
-            description={match.status.description}
+            description={match.status?.description}
             type="match"
           />
           {isCreator && showCreatorDetails && (
