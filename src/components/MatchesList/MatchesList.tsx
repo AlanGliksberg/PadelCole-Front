@@ -19,6 +19,7 @@ interface MatchesListProps {
   showCreatorDetails?: boolean;
   EmptyComponent?: React.ReactElement;
   viewMore?: boolean;
+  allowApply?: boolean;
 }
 
 export default function MatchesList({
@@ -29,6 +30,7 @@ export default function MatchesList({
   EmptyComponent,
   showCreatorDetails,
   viewMore,
+  allowApply,
 }: MatchesListProps) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -89,6 +91,7 @@ export default function MatchesList({
                   refreshData?.();
                   await loadMatchesData();
                 }}
+                allowApply={allowApply}
               />
             ) : (
               <MatchBoxSkeleton key={`skeleton-${i}`} />

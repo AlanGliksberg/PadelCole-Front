@@ -7,6 +7,7 @@ import { removeGetCreatedMatchesCache } from "../services/cache";
 import { Match, Player } from "../types";
 import { Application } from "../types/application/Application";
 import { ModalContext } from "./ModalContext";
+import ApplyToMatchModal from "../components/Modals/ApplyToMatchModal";
 
 interface PlayerModalsContextData {
   openPlayerDetail: (player: Player, removeCallback?: () => void) => void;
@@ -22,6 +23,12 @@ interface PlayerModalsContextData {
   closeChangePasswordModal: () => void;
   openEditProfileModal: (player: Player, onUpdate: () => void) => void;
   closeEditProfileModal: () => void;
+  openApplyToMatchModal: (
+    match: Match,
+    team: 1 | 2,
+    onSuccess?: () => void
+  ) => void;
+  closeApplyToMatchModal: () => void;
 }
 
 export const PlayerModalsContext = createContext<PlayerModalsContextData>({
@@ -38,6 +45,12 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
   closeChangePasswordModal: () => {},
   openEditProfileModal: (player: Player, onUpdate: () => void) => {},
   closeEditProfileModal: () => {},
+  openApplyToMatchModal: (
+    match: Match,
+    team: 1 | 2,
+    onSuccess?: () => void
+  ) => {},
+  closeApplyToMatchModal: () => {},
 });
 
 export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
@@ -45,6 +58,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const { openModal } = useContext(ModalContext);
 
+  // ==================== Player Details Modal ====================
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [removePlayerCallback, setRemovePlayerCallback] =
     useState<() => void>();
@@ -60,6 +74,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     setRemovePlayerCallback(undefined);
   };
 
+  // ==================== Add Player To Match Modal ====================
   const [openAddPlayerModal, setOpenAddPlayerModal] = useState<boolean>(false);
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
   const [selectedTeam, setSelectedTeam] = useState<number | null>(null);
@@ -83,6 +98,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     setOpenAddPlayerModal(false);
   };
 
+  // ==================== Applications Modal ====================
   const [applicationsMatch, setApplicationsMatch] = useState<Match | null>(
     null
   );
@@ -131,6 +147,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     removeGetCreatedMatchesCache();
   };
 
+  // ==================== Change Password Modal ====================
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
   const openChangePasswordModal = () => {
@@ -140,6 +157,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     setShowChangePasswordModal(false);
   };
 
+  // ==================== Edit Profile Modal ====================
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const [editProfilePlayer, setEditProfilePlayer] = useState<Player | null>(
     null
@@ -159,6 +177,32 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     setEditProfileCallback(null);
   };
 
+  // ==================== Apply To Match Modal ====================
+  const [showApplyToMatchModal, setShowApplyToMatchModal] = useState(false);
+  const [matchToApply, setMatchToApply] = useState<Match | null>(null);
+  const [teamToApply, setTeamToApply] = useState<1 | 2 | null>(null);
+  const [applySuccessCallback, setApplySuccessCallback] = useState<
+    (() => void) | null
+  >(null);
+
+  const openApplyToMatchModal = (
+    match: Match,
+    team: 1 | 2,
+    onSuccess?: () => void
+  ) => {
+    setMatchToApply(match);
+    setTeamToApply(team);
+    setApplySuccessCallback(() => onSuccess);
+    setShowApplyToMatchModal(true);
+  };
+
+  const closeApplyToMatchModal = () => {
+    setShowApplyToMatchModal(false);
+    setMatchToApply(null);
+    setTeamToApply(null);
+    setApplySuccessCallback(null);
+  };
+
   return (
     <PlayerModalsContext.Provider
       value={{
@@ -172,9 +216,12 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         closeChangePasswordModal,
         openEditProfileModal,
         closeEditProfileModal,
+        openApplyToMatchModal,
+        closeApplyToMatchModal,
       }}
     >
       {children}
+      {/* ==================== Modal Components ==================== */}
       <PlayerDetailsModal
         player={selectedPlayer}
         closePlayerDetail={closePlayerDetail}
@@ -202,6 +249,13 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         onClose={closeEditProfileModal}
         player={editProfilePlayer}
         onUpdate={editProfileCallback || (() => {})}
+      />
+      <ApplyToMatchModal
+        isVisible={showApplyToMatchModal}
+        onClose={closeApplyToMatchModal}
+        match={matchToApply}
+        team={teamToApply}
+        onSuccess={applySuccessCallback || undefined}
       />
     </PlayerModalsContext.Provider>
   );

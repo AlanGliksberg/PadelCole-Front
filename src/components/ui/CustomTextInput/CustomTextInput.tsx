@@ -1,5 +1,11 @@
 import React from "react";
-import { TextInput, TextInputProps, View } from "react-native";
+import {
+  StyleProp,
+  TextInput,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from "react-native";
 import { colors } from "../../../theme";
 import CustomText from "../CustomText/CustomText";
 import { styles } from "./CustomTextInput.styles";
@@ -10,6 +16,7 @@ export interface CustomTextInputProps extends TextInputProps {
   label?: string;
   error?: string;
   mandatory?: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
@@ -19,6 +26,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   label,
   error,
   mandatory,
+  containerStyle,
   ...rest
 }) => {
   return (
@@ -30,7 +38,13 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
         </View>
       )}
 
-      <View style={[styles.searchSection, error && styles.errorInput]}>
+      <View
+        style={[
+          styles.searchSection,
+          error && styles.errorInput,
+          containerStyle,
+        ]}
+      >
         {leftSlot && <View style={styles.leftSlot}>{leftSlot}</View>}
         <TextInput
           placeholderTextColor={colors.placeholder}

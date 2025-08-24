@@ -24,21 +24,25 @@ interface MatchBoxProps {
   match: Match;
   showCreatorDetails?: boolean;
   refreshData?: () => Promise<void>;
+  allowApply?: boolean;
 }
 
 const MatchBox: React.FC<MatchBoxProps> = ({
   match,
   showCreatorDetails = false,
   refreshData,
+  allowApply = false,
 }) => {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
-  const { openApplicationsModal } = useContext(PlayerModalsContext);
+  const { openApplicationsModal, openApplyToMatchModal } =
+    useContext(PlayerModalsContext);
   const navigation = useNavigation<NavigationProp>();
   const isCreator = user?.playerId === match.creatorPlayerId;
   const application = match.applications?.find(
     (a) => a.playerId === user?.playerId
   );
+  const isPlayer = match.players?.some((p) => p.id === user?.playerId);
 
   const deleteMatch = () => {
     openModal({
@@ -58,6 +62,10 @@ const MatchBox: React.FC<MatchBoxProps> = ({
 
   const handleApplications = () => {
     openApplicationsModal(match, refreshData);
+  };
+
+  const handleApply = () => {
+    openApplyToMatchModal(match, 1);
   };
 
   const dropdownOptions = [
@@ -165,6 +173,13 @@ const MatchBox: React.FC<MatchBoxProps> = ({
                 type="application"
               />
             </View>
+          )}
+          {allowApply && !application && !isPlayer && !isCreator && (
+            <BorderedButton size="xl" onPress={handleApply}>
+              <CustomText type="xsmall" style={styles.applicationsButtonText}>
+                Postularme
+              </CustomText>
+            </BorderedButton>
           )}
         </View>
       </View>

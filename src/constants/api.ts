@@ -31,3 +31,4 @@ export const GET_QUESTIONS_URI = `${PLAYER_BASE_URI}/question`;
 
 export const ACCEPT_APPLICATION_URI = `${APPLICATIONS_BASE_URI}/accept`;
 export const REJECT_APPLICATION_URI = `${APPLICATIONS_BASE_URI}/reject`;
+export const APPLY_TO_MATCH_URI = `${APPLICATIONS_BASE_URI}`;

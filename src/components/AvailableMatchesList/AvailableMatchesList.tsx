@@ -65,6 +65,7 @@ const AvailableMatchesList: React.FC = () => {
           error={error}
           EmptyComponent={Empty}
           viewMore
+          allowApply
         />
       </ScrollView>
     </View>

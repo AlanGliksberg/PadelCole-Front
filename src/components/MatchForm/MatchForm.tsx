@@ -205,7 +205,7 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
               label="Categoría"
               data={categories}
               keyExtractor={(item) => item.id.toString()}
-              labelExtractor={(item) => item.code}
+              labelExtractor={(item) => item.description}
               value={value}
               onSelect={(v) => {
                 Keyboard.dismiss();
