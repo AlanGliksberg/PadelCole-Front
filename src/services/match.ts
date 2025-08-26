@@ -22,7 +22,7 @@ import { deleteApi, get, post, put } from "./api";
 export const getCreatedMatches = async (
   page: number,
   pageSize: number,
-  withCache = false
+  withCache = true
 ) => {
   if (typeof page !== "number" || isNaN(page)) {
     page = 1;
