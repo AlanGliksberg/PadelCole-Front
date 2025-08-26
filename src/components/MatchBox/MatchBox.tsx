@@ -24,14 +24,16 @@ interface MatchBoxProps {
   match: Match;
   showCreatorDetails?: boolean;
   refreshData?: () => Promise<void>;
-  allowApply?: boolean;
+  allowApplications?: boolean;
+  onApplicationSuccess?: (match: Match) => void;
 }
 
 const MatchBox: React.FC<MatchBoxProps> = ({
   match,
   showCreatorDetails = false,
   refreshData,
-  allowApply = false,
+  allowApplications = false,
+  onApplicationSuccess,
 }) => {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
@@ -64,8 +66,9 @@ const MatchBox: React.FC<MatchBoxProps> = ({
     openApplicationsModal(match, refreshData);
   };
 
-  const handleApply = () => {
-    openApplyToMatchModal(match, 1);
+  const handleApply = (team?: 1 | 2) => {
+    if (!application)
+      openApplyToMatchModal(match, team, () => onApplicationSuccess?.(match));
   };
 
   const dropdownOptions = [
@@ -126,6 +129,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
             team={1}
             callback={refreshData}
             canDelete={showCreatorDetails}
+            handleApply={handleApply}
           />
           <CustomText style={styles.vs}>vs</CustomText>
           <TeamAvatars
@@ -135,6 +139,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
             team={2}
             callback={refreshData}
             canDelete={showCreatorDetails}
+            handleApply={handleApply}
           />
         </View>
       </View>
@@ -174,8 +179,8 @@ const MatchBox: React.FC<MatchBoxProps> = ({
               />
             </View>
           )}
-          {allowApply && !application && !isPlayer && !isCreator && (
-            <BorderedButton size="xl" onPress={handleApply}>
+          {allowApplications && !application && !isPlayer && !isCreator && (
+            <BorderedButton size="xl" onPress={() => handleApply()}>
               <CustomText type="xsmall" style={styles.applicationsButtonText}>
                 Postularme
               </CustomText>

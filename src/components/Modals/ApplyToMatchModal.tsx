@@ -19,7 +19,7 @@ interface ApplyToMatchModalProps {
   isVisible: boolean;
   onClose: () => void;
   match: Match | null;
-  team: 1 | 2 | null;
+  team: 1 | 2 | undefined;
   onSuccess?: () => void;
 }
 
@@ -34,13 +34,18 @@ const ApplyToMatchModal: React.FC<ApplyToMatchModalProps> = ({
   const [message, setMessage] = useState("");
   const [phone, setPhone] = useState(user?.phoneNumber || "");
   const [loading, setLoading] = useState(false);
-  const { openErrorModal } = useContext(ModalContext);
+  const { openErrorModal, openModal } = useContext(ModalContext);
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
       await applyToMatch(match!.id, team || 1, message, phone);
-      onSuccess?.();
+      openModal({
+        title: "Postulación exitosa",
+        message:
+          "Tu postulacion ya le llegó al organizador del partido. Cuando haya alguna novedad te vamos a avisar.",
+        primaryAction: onSuccess,
+      });
     } catch (error) {
       console.error(error);
       openErrorModal(

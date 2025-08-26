@@ -21,7 +21,7 @@ export const colors = {
   cancelleddMatchStatus: "#d1062e",
   pendingApplicationStatus: "#E49637",
   acceptedApplicationStatus: "#6AA45A",
-  rejectedApplicationStatus: "#d1062e",
+  rejectedApplicationStatus: "#f44336",
   skeleton: "#e0e0e0",
   input: "#F2F2F7",
   border: "#E5E7EB",

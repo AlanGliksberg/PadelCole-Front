@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Keyboard, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { styles } from "./AvailableMatchesList.styles";
 import MatchesFilters from "./MatchesFilters";
 import { Match, MatchFilters } from "@/src/types";
@@ -65,7 +65,7 @@ const AvailableMatchesList: React.FC = () => {
           error={error}
           EmptyComponent={Empty}
           viewMore
-          allowApply
+          allowApplications
         />
       </ScrollView>
     </View>

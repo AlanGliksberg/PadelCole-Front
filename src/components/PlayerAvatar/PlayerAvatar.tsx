@@ -16,10 +16,11 @@ interface PlayerAvatarProps {
   isCreator?: boolean;
   touchable?: boolean;
   match?: Match | undefined;
-  team?: number | undefined;
+  team?: 1 | 2 | undefined;
   addPlayerCallback?: (p: Player) => void;
   removeCallback?: (p: Player) => void;
   canDelete?: boolean;
+  handleApply?: (team?: 1 | 2) => void;
 }
 
 const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
@@ -33,6 +34,7 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
   addPlayerCallback,
   removeCallback,
   canDelete = false,
+  handleApply,
 }) => {
   const { openPlayerDetail, openAddPlayerToMatch } =
     useContext(PlayerModalsContext);
@@ -86,6 +88,8 @@ const PlayerAvatar: React.FC<PlayerAvatarProps> = ({
         )
     : isCreator
     ? () => openAddPlayerToMatch(match!, team!, addPlayerCallback)
+    : handleApply
+    ? () => handleApply(team)
     : undefined;
 
   return touchable && avatarAction ? (

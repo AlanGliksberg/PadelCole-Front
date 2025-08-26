@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import ErrorSection from "../ui/ErrorSection/ErrorSection";
 import MatchBox from "../MatchBox/MatchBox";
 import MatchBoxSkeleton from "../MatchBox/MatchBoxSkeleton";
@@ -7,6 +7,10 @@ import { styles } from "./MatchesList.styles";
 import { Match } from "@/src/types";
 import { useFocusEffect } from "@react-navigation/native";
 import { View } from "react-native";
+import { Application } from "@/src/types/application/Application";
+import { AuthContext } from "@/src/contexts/AuthContext";
+import useApplicationStatus from "@/src/hooks/useApplicationStatus";
+import { APPLICATION_STATUS } from "@/src/constants/application";
 
 interface MatchesListProps {
   pageSize?: number;
@@ -19,7 +23,7 @@ interface MatchesListProps {
   showCreatorDetails?: boolean;
   EmptyComponent?: React.ReactElement;
   viewMore?: boolean;
-  allowApply?: boolean;
+  allowApplications?: boolean;
 }
 
 export default function MatchesList({
@@ -30,10 +34,12 @@ export default function MatchesList({
   EmptyComponent,
   showCreatorDetails,
   viewMore,
-  allowApply,
+  allowApplications,
 }: MatchesListProps) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const { user } = useContext(AuthContext);
+  const { data: applicationStatus } = useApplicationStatus();
 
   const fakeMatches = useMemo(
     () => Array(pageSize).fill({} as Match),
@@ -69,6 +75,27 @@ export default function MatchesList({
     }, [])
   );
 
+  const onApplicationSuccess = (match: Match) => {
+    setMatches((prevMatches) =>
+      prevMatches.map((m) =>
+        m.id === match.id
+          ? {
+              ...m,
+              applications: [
+                ...(m.applications || []),
+                {
+                  playerId: user?.playerId,
+                  status: applicationStatus.find(
+                    (s) => s.code === APPLICATION_STATUS.PENDING
+                  ),
+                } as Application,
+              ],
+            }
+          : m
+      )
+    );
+  };
+
   return (
     <>
       {error && (
@@ -91,7 +118,8 @@ export default function MatchesList({
                   refreshData?.();
                   await loadMatchesData();
                 }}
-                allowApply={allowApply}
+                allowApplications={allowApplications}
+                onApplicationSuccess={onApplicationSuccess}
               />
             ) : (
               <MatchBoxSkeleton key={`skeleton-${i}`} />

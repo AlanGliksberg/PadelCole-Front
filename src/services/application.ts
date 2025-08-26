@@ -1,9 +1,11 @@
 import {
   ACCEPT_APPLICATION_URI,
   APPLY_TO_MATCH_URI,
+  GET_APPLICATION_STATUS_URI,
   REJECT_APPLICATION_URI,
 } from "../constants/api";
-import { post, put } from "./api";
+import { ApplicationStatus } from "../types/application/Status";
+import { get, post, put } from "./api";
 
 export const acceptApplication = async (
   applicationId: number,
@@ -27,4 +29,8 @@ export const applyToMatch = async (
   return await post(APPLY_TO_MATCH_URI, {
     body: { matchId, teamNumber, message, phone },
   });
+};
+
+export const getApplicationStatus = async () => {
+  return await get<{ status: ApplicationStatus[] }>(GET_APPLICATION_STATUS_URI);
 };

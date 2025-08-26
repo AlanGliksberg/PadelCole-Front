@@ -25,7 +25,7 @@ interface PlayerModalsContextData {
   closeEditProfileModal: () => void;
   openApplyToMatchModal: (
     match: Match,
-    team: 1 | 2,
+    team?: 1 | 2,
     onSuccess?: () => void
   ) => void;
   closeApplyToMatchModal: () => void;
@@ -47,7 +47,7 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
   closeEditProfileModal: () => {},
   openApplyToMatchModal: (
     match: Match,
-    team: 1 | 2,
+    team?: 1 | 2,
     onSuccess?: () => void
   ) => {},
   closeApplyToMatchModal: () => {},
@@ -180,14 +180,14 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   // ==================== Apply To Match Modal ====================
   const [showApplyToMatchModal, setShowApplyToMatchModal] = useState(false);
   const [matchToApply, setMatchToApply] = useState<Match | null>(null);
-  const [teamToApply, setTeamToApply] = useState<1 | 2 | null>(null);
+  const [teamToApply, setTeamToApply] = useState<1 | 2 | undefined>(undefined);
   const [applySuccessCallback, setApplySuccessCallback] = useState<
     (() => void) | null
   >(null);
 
   const openApplyToMatchModal = (
     match: Match,
-    team: 1 | 2,
+    team?: 1 | 2,
     onSuccess?: () => void
   ) => {
     setMatchToApply(match);
@@ -199,7 +199,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   const closeApplyToMatchModal = () => {
     setShowApplyToMatchModal(false);
     setMatchToApply(null);
-    setTeamToApply(null);
+    setTeamToApply(undefined);
     setApplySuccessCallback(null);
   };
 
