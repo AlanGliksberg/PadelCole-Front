@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { CustomScreen, TabSelector } from "@/src/components";
+import { CustomScreen, CustomText, TabSelector } from "@/src/components";
 import { HOME_PAGE_NAME } from "@/src/constants/pages";
+import { View, Linking } from "react-native";
+import { styles } from "./Home.styles";
+import { APP_EMAIL } from "@/src/constants/config";
 
 type HomeTabType = "partidos" | "resultados";
 
@@ -12,14 +15,35 @@ export default function Home() {
     { id: "resultados", label: "Resultados" },
   ] as const;
 
+  const handleEmailPress = () => {
+    Linking.openURL(`mailto:${APP_EMAIL}`);
+  };
+
   return (
     <CustomScreen title={HOME_PAGE_NAME}>
-      <TabSelector<HomeTabType>
-        tabs={tabs}
-        selectedTab={selectedTab}
-        onTabChange={setSelectedTab}
-      />
-      {selectedTab === "partidos" ? <></> : <></>}
+      <View style={styles.container}>
+        <View style={styles.topSection}>
+          <TabSelector<HomeTabType>
+            tabs={tabs}
+            selectedTab={selectedTab}
+            onTabChange={setSelectedTab}
+          />
+          {selectedTab === "partidos" ? <></> : <></>}
+        </View>
+        <View>
+          <CustomText type="xsmall">
+            Para consultas, sugerencias o reporte de errores envianos un mail a{" "}
+            <CustomText
+              type="xsmall"
+              bold
+              style={styles.emailLink}
+              onPress={handleEmailPress}
+            >
+              {APP_EMAIL}
+            </CustomText>
+          </CustomText>
+        </View>
+      </View>
     </CustomScreen>
   );
 }

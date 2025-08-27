@@ -26,4 +26,5 @@ export const colors = {
   input: "#F2F2F7",
   border: "#E5E7EB",
   disabled: "#ccc",
+  link: "#007AFF",
 };
