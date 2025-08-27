@@ -9,6 +9,7 @@ import {
   GET_PLAYED_MATCHES_URI,
   GET_APPLIED_MATCHES_URI,
   GET_MATCHES_URI,
+  GET_MY_MATCHES_URI,
 } from "../constants/api";
 import {
   CreateMatchBody,
@@ -103,7 +104,7 @@ export const getPlayedMatches = async (
   pageSize: number,
   withCache = true
 ) => {
-  if (typeof page !== "number" || isNaN(page)) {
+  if (isNaN(page)) {
     page = 1;
   }
   return await get<GetMatchesResponse>(GET_PLAYED_MATCHES_URI, {
@@ -132,11 +133,25 @@ export const getMatchesWithFilters = async (
   filters: MatchFilters,
   withCache = true
 ) => {
-  if (typeof page !== "number" || isNaN(page)) {
+  if (isNaN(page)) {
     page = 1;
   }
   return await get<GetMatchesResponse>(GET_MATCHES_URI, {
     queryParams: { page, pageSize, ...filters },
+    withCache,
+  });
+};
+
+export const getMyMatches = async (
+  page: number,
+  pageSize: number,
+  withCache = true
+) => {
+  if (isNaN(page)) {
+    page = 1;
+  }
+  return await get<GetMatchesResponse>(GET_MY_MATCHES_URI, {
+    queryParams: { page, pageSize },
     withCache,
   });
 };

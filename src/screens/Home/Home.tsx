@@ -4,6 +4,7 @@ import { HOME_PAGE_NAME } from "@/src/constants/pages";
 import { View, Linking } from "react-native";
 import { styles } from "./Home.styles";
 import { APP_EMAIL } from "@/src/constants/config";
+import MyMatches from "@/src/components/MyMatches/MyMatches";
 
 type HomeTabType = "partidos" | "resultados";
 
@@ -11,7 +12,7 @@ export default function Home() {
   const [selectedTab, setSelectedTab] = useState<HomeTabType>("partidos");
 
   const tabs = [
-    { id: "partidos", label: "Partidos" },
+    { id: "partidos", label: "Mis partidos" },
     { id: "resultados", label: "Resultados" },
   ] as const;
 
@@ -28,7 +29,7 @@ export default function Home() {
             selectedTab={selectedTab}
             onTabChange={setSelectedTab}
           />
-          {selectedTab === "partidos" ? <></> : <></>}
+          {selectedTab === "partidos" ? <MyMatches /> : <></>}
         </View>
         <View>
           <CustomText type="xsmall">

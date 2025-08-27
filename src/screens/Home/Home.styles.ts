@@ -6,7 +6,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
   },
-  topSection: {},
+  topSection: {
+    flex: 1,
+  },
   emailLink: {
     color: colors.link,
     textDecorationLine: "underline",

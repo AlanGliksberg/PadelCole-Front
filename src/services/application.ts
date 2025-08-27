@@ -32,5 +32,8 @@ export const applyToMatch = async (
 };
 
 export const getApplicationStatus = async () => {
-  return await get<{ status: ApplicationStatus[] }>(GET_APPLICATION_STATUS_URI);
+  return await get<{ status: ApplicationStatus[] }>(
+    GET_APPLICATION_STATUS_URI,
+    { withCache: true }
+  );
 };
