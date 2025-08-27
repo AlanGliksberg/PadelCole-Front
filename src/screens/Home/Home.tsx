@@ -1,12 +1,25 @@
-import React from "react";
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { styles } from "./Home.styles";
+import React, { useState } from "react";
+import { CustomScreen, TabSelector } from "@/src/components";
+import { HOME_PAGE_NAME } from "@/src/constants/pages";
+
+type HomeTabType = "partidos" | "resultados";
 
 export default function Home() {
+  const [selectedTab, setSelectedTab] = useState<HomeTabType>("partidos");
+
+  const tabs = [
+    { id: "partidos", label: "Partidos" },
+    { id: "resultados", label: "Resultados" },
+  ] as const;
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Bienvenido a Home</Text>
-    </SafeAreaView>
+    <CustomScreen title={HOME_PAGE_NAME}>
+      <TabSelector<HomeTabType>
+        tabs={tabs}
+        selectedTab={selectedTab}
+        onTabChange={setSelectedTab}
+      />
+      {selectedTab === "partidos" ? <></> : <></>}
+    </CustomScreen>
   );
 }
