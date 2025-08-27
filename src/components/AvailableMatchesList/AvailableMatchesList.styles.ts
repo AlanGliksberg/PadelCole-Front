@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
     borderWidth: 1,
-    borderColor: "#f0f0f0",
+    borderColor: colors.white,
     height: 300,
   },
   textContainer: {
