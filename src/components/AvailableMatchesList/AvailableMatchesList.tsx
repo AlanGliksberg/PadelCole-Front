@@ -6,6 +6,8 @@ import { Match, MatchFilters } from "@/src/types";
 import MatchesList from "../MatchesList/MatchesList";
 import CustomText from "../ui/CustomText/CustomText";
 import { getMatchesWithFilters } from "@/src/services/match";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { colors } from "@/src/theme";
 
 const AvailableMatchesList: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
@@ -43,8 +45,16 @@ const AvailableMatchesList: React.FC = () => {
   };
 
   const Empty = (
-    <View>
-      <CustomText>No hay partidos disponibles</CustomText>
+    <View style={styles.emptyContainer}>
+      <Ionicons name="tennisball-outline" size={100} color={colors.secondary} />
+      <View style={styles.textContainer}>
+        <CustomText type="h4" bold style={styles.emptyTitle}>
+          No se encontraron partidos con los filtros seleccionados
+        </CustomText>
+        <CustomText type="medium" style={styles.emptySubtitle}>
+          Ajustá los filtros para encontrar partidos que te interesen
+        </CustomText>
+      </View>
     </View>
   );
 
