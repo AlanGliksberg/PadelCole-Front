@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import CustomSearchInput from "@/src/components/ui/CustomSearchInput/CustomSearchInput";
@@ -12,6 +12,7 @@ import useCategories from "@/src/hooks/useCategories";
 import { DURATIONS } from "@/src/constants/match";
 import { MatchFilters } from "@/src/types";
 import { formatDate, formatTime } from "@/src/utils/common";
+import { useFocusEffect } from "expo-router";
 
 interface MatchesFiltersProps {
   onFiltersChange: (filters: MatchFilters) => void;
@@ -26,6 +27,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
   const [gender, setGender] = useState<number | null>(null);
   const [category, setCategory] = useState<number | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
+  const [key, setKey] = useState<number>(0);
 
   const { data: genders = [], loading: loadingGenders } = useGenders();
   const { data: allCategories = [], loading: loadingCategories } =
@@ -35,6 +37,12 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
   const categories = gender
     ? allCategories.filter((cat) => cat.genderId === gender)
     : allCategories;
+
+  useFocusEffect(
+    useCallback(() => {
+      setKey(Math.random());
+    }, [])
+  );
 
   const getActualFilters = (): MatchFilters => ({
     description: search,
@@ -124,7 +132,7 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
   };
 
   return (
-    <View>
+    <View key={key}>
       <CustomSearchInput
         placeholder="Buscá un partido"
         startSearchingOn={3}
