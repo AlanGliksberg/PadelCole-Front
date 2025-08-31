@@ -1,13 +1,18 @@
 import React from "react";
-import { CustomScreen, TabSelector, ContactInfo } from "@/src/components";
+import {
+  CustomScreen,
+  TabSelector,
+  ContactInfo,
+  MyMatches,
+  MyResults,
+} from "@/src/components";
 import { HOME_PAGE_NAME } from "@/src/constants/pages";
 import { View } from "react-native";
 import { styles } from "./Home.styles";
-import MyMatches from "@/src/components/MyMatches/MyMatches";
 
 const tabs = [
   { id: "partidos", label: "Mis partidos", component: <MyMatches /> },
-  { id: "resultados", label: "Resultados", component: <></> },
+  { id: "resultados", label: "Resultados", component: <MyResults /> },
 ];
 
 export default function Home() {

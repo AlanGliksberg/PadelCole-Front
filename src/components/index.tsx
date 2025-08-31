@@ -25,3 +25,5 @@ export { default as MatchesList } from "./MatchesList/MatchesList";
 export { default as ApplicationsList } from "./ApplicationsList/ApplicationsList";
 export { default as AvailableMatchesList } from "./AvailableMatchesList/AvailableMatchesList";
 export { ContactInfo } from "./ContactInfo/ContactInfo";
+export { default as MyResults } from "./MyResults/MyResults";
+export { default as MyMatches } from "./MyMatches/MyMatches";

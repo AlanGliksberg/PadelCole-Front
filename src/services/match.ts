@@ -10,6 +10,7 @@ import {
   GET_APPLIED_MATCHES_URI,
   GET_MATCHES_URI,
   GET_MY_MATCHES_URI,
+  GET_MY_PENDING_RESULTS_URI,
 } from "../constants/api";
 import {
   CreateMatchBody,
@@ -151,6 +152,20 @@ export const getMyMatches = async (
     page = 1;
   }
   return await get<GetMatchesResponse>(GET_MY_MATCHES_URI, {
+    queryParams: { page, pageSize },
+    withCache,
+  });
+};
+
+export const getMyPendingResults = async (
+  page: number,
+  pageSize: number,
+  withCache = true
+) => {
+  if (isNaN(page)) {
+    page = 1;
+  }
+  return await get<GetMatchesResponse>(GET_MY_PENDING_RESULTS_URI, {
     queryParams: { page, pageSize },
     withCache,
   });
