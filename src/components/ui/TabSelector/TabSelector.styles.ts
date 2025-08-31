@@ -2,6 +2,9 @@ import { colors } from "@/src/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  wrapper: {
+    height: "100%",
+  },
   container: {
     flexDirection: "row",
     backgroundColor: colors.white, // fondo blanco
@@ -30,6 +33,9 @@ export const styles = StyleSheet.create({
     width: 2,
     backgroundColor: colors.selectedText,
     alignSelf: "center",
+    height: "100%",
+  },
+  content: {
     height: "100%",
   },
 });

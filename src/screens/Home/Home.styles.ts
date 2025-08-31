@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   topSection: {
-    flex: 1,
+    height: "90%",
   },
   emailLink: {
     color: colors.link,

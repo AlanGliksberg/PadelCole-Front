@@ -3,23 +3,26 @@ import {
   ApplicationsList,
   AvailableMatchesList,
   CustomScreen,
+  TabSelector,
 } from "@/src/components";
 import { QUIERO_JUGAR_PAGE_NAME } from "@/src/constants/pages";
-import { MatchTabs } from "@/src/components/MatchTabs/MatchTabs";
 
 export default function QuieroJugar() {
-  const [selectedTab, setSelectedTab] = useState<"partidos" | "postulaciones">(
-    "partidos"
-  );
+  const [key, setKey] = useState(1);
 
+  const tabs = [
+    { id: "partidos", label: "Partidos", component: <AvailableMatchesList /> },
+    {
+      id: "postulaciones",
+      label: "Mis postulaciones",
+      component: (
+        <ApplicationsList goToMatches={() => setKey((prev) => prev + 1)} />
+      ),
+    },
+  ];
   return (
     <CustomScreen title={QUIERO_JUGAR_PAGE_NAME}>
-      <MatchTabs selectedTab={selectedTab} onTabChange={setSelectedTab} />
-      {selectedTab === "partidos" ? (
-        <AvailableMatchesList />
-      ) : (
-        <ApplicationsList goToMatches={() => setSelectedTab("partidos")} />
-      )}
+      <TabSelector tabs={tabs} key={key} />
     </CustomScreen>
   );
 }
