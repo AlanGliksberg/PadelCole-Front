@@ -1,4 +1,3 @@
-import { colors } from "@/src/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -8,9 +7,5 @@ export const styles = StyleSheet.create({
   },
   topSection: {
     height: "90%",
-  },
-  emailLink: {
-    color: colors.link,
-    textDecorationLine: "underline",
   },
 });

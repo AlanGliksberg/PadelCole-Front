@@ -24,3 +24,4 @@ export { default as ToggleGroup } from "./ui/ToggleGroup/ToggleGroup";
 export { default as MatchesList } from "./MatchesList/MatchesList";
 export { default as ApplicationsList } from "./ApplicationsList/ApplicationsList";
 export { default as AvailableMatchesList } from "./AvailableMatchesList/AvailableMatchesList";
+export { ContactInfo } from "./ContactInfo/ContactInfo";
