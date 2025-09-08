@@ -11,6 +11,7 @@ export type ApiParams = {
   body?: any;
   customHeaders?: Record<string, any>;
   withCache?: boolean;
+  cacheTtl?: number;
   method?: Method;
   queryParams?: Record<string, any>;
 };

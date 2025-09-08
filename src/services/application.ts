@@ -6,6 +6,7 @@ import {
 } from "../constants/api";
 import { ApplicationStatus } from "../types/application/Status";
 import { get, post, put } from "./api";
+import { EXTENDED_CACHE_TTL } from "./cache";
 
 export const acceptApplication = async (
   applicationId: number,
@@ -34,6 +35,6 @@ export const applyToMatch = async (
 export const getApplicationStatus = async () => {
   return await get<{ status: ApplicationStatus[] }>(
     GET_APPLICATION_STATUS_URI,
-    { withCache: true }
+    { withCache: true, cacheTtl: EXTENDED_CACHE_TTL }
   );
 };

@@ -12,6 +12,7 @@ import { Category, Gender, GetPlayerParams, Player, Position } from "../types";
 import { CreatePlayerPayload, UpdatePlayerPayload } from "../types/api/Player";
 import { Question } from "../types/player/Question";
 import { get, post, put } from "./api";
+import { EXTENDED_CACHE_TTL } from "./cache";
 
 export const getAllPlayers = async () => {
   return await get<{ players: Player[] }>(GET_PLAYERS_URI, {
@@ -37,6 +38,7 @@ export const getPlayers = async (params: GetPlayerParams) => {
 export const getGenders = async (filterBoth: boolean = false) => {
   const res = await get<{ genders: Gender[] }>(GET_GENDERS_URI, {
     withCache: true,
+    cacheTtl: EXTENDED_CACHE_TTL,
     queryParams: { filterBoth },
   });
 
@@ -48,12 +50,14 @@ export const getGenders = async (filterBoth: boolean = false) => {
 export const getPositions = async () => {
   return await get<{ positions: Position[] }>(GET_POSITIONS_URI, {
     withCache: true,
+    cacheTtl: EXTENDED_CACHE_TTL,
   });
 };
 
 export const getCategories = async (filterBoth: boolean) => {
   return await get<{ categories: Category[] }>(GET_CATEGORIES_URI, {
     withCache: true,
+    cacheTtl: EXTENDED_CACHE_TTL,
     queryParams: { filterBoth },
   });
 };
@@ -61,6 +65,7 @@ export const getCategories = async (filterBoth: boolean) => {
 export const getQuestions = async () => {
   return await get<{ questions: Question[] }>(GET_QUESTIONS_URI, {
     withCache: true,
+    cacheTtl: EXTENDED_CACHE_TTL,
   });
 };
 
