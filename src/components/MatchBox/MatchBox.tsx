@@ -66,10 +66,14 @@ const MatchBox: React.FC<MatchBoxProps> = ({
     openApplicationsModal(match, refreshData);
   };
 
-  const handleApply = (team?: 1 | 2) => {
-    if (!application)
-      openApplyToMatchModal(match, team, () => onApplicationSuccess?.(match));
-  };
+  const handleApply =
+    allowApplications && !application
+      ? (team?: 1 | 2) => {
+          openApplyToMatchModal(match, team, () =>
+            onApplicationSuccess?.(match)
+          );
+        }
+      : undefined;
 
   const dropdownOptions = [
     {
@@ -180,7 +184,10 @@ const MatchBox: React.FC<MatchBoxProps> = ({
             </View>
           )}
           {allowApplications && !application && !isPlayer && !isCreator && (
-            <BorderedButton size="xl" onPress={() => handleApply()}>
+            <BorderedButton
+              size="xl"
+              onPress={() => handleApply && handleApply()}
+            >
               <CustomText type="xsmall" style={styles.applicationsButtonText}>
                 Postularme
               </CustomText>
