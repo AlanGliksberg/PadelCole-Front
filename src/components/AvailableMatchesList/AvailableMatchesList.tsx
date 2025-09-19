@@ -32,7 +32,7 @@ const AvailableMatchesList: React.FC = () => {
         nextPage,
         pageSize,
         filters,
-        true
+        false
       );
       if (res.error || !res.data) throw new Error("Error al cargar partidos");
       const { matches: newMatches, totalMatches } = res.data;

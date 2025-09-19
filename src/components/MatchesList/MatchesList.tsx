@@ -11,6 +11,7 @@ import { Application } from "@/src/types/application/Application";
 import { AuthContext } from "@/src/contexts/AuthContext";
 import useApplicationStatus from "@/src/hooks/useApplicationStatus";
 import { APPLICATION_STATUS } from "@/src/constants/application";
+import { removeMyApplicationsCache } from "@/src/services/cache";
 
 interface MatchesListProps {
   pageSize?: number;
@@ -96,6 +97,7 @@ export default function MatchesList({
           : m
       )
     );
+    removeMyApplicationsCache();
   };
 
   return (
