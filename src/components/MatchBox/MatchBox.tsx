@@ -17,6 +17,7 @@ import CustomText from "../ui/CustomText/CustomText";
 import DropdownMenu from "../ui/DropdownMenu/DropdownMenu";
 import { styles } from "./MatchBox.styles";
 import StatusChip from "./StatusChip";
+import { MATCH_STATUS } from "@/src/constants/match";
 
 type NavigationProp = NativeStackNavigationProp<MeFaltaAlguienStackParamList>;
 
@@ -26,6 +27,7 @@ interface MatchBoxProps {
   refreshData?: () => Promise<void>;
   allowApplications?: boolean;
   onApplicationSuccess?: (match: Match) => void;
+  allowResults?: boolean;
 }
 
 const MatchBox: React.FC<MatchBoxProps> = ({
@@ -34,10 +36,11 @@ const MatchBox: React.FC<MatchBoxProps> = ({
   refreshData,
   allowApplications = false,
   onApplicationSuccess,
+  allowResults = false,
 }) => {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
-  const { openApplicationsModal, openApplyToMatchModal } =
+  const { openApplicationsModal, openApplyToMatchModal, openLoadResultModal } =
     useContext(PlayerModalsContext);
   const navigation = useNavigation<NavigationProp>();
   const isCreator = user?.playerId === match.creatorPlayerId;
@@ -160,18 +163,20 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           )}
         </View>
         <View style={styles.row}>
-          {isCreator && showCreatorDetails && (
-            <BorderedButton size="xl" onPress={handleApplications}>
-              <CustomText type="xsmall" style={styles.applicationsButtonText}>
-                Postulaciones
-              </CustomText>
-              <View style={styles.badge}>
-                <CustomText style={styles.badgeText}>
-                  {match.applications.length}
+          {isCreator &&
+            showCreatorDetails &&
+            match.status.code === MATCH_STATUS.PENDING && (
+              <BorderedButton size="xl" onPress={handleApplications}>
+                <CustomText type="xsmall" style={styles.applicationsButtonText}>
+                  Postulaciones
                 </CustomText>
-              </View>
-            </BorderedButton>
-          )}
+                <View style={styles.badge}>
+                  <CustomText style={styles.badgeText}>
+                    {match.applications.length}
+                  </CustomText>
+                </View>
+              </BorderedButton>
+            )}
           {application && (
             <View style={styles.applicationContainer}>
               <CustomText type="small">Postulación:</CustomText>
@@ -183,13 +188,27 @@ const MatchBox: React.FC<MatchBoxProps> = ({
               />
             </View>
           )}
-          {allowApplications && !application && !isPlayer && !isCreator && (
+          {allowApplications &&
+            !application &&
+            !isPlayer &&
+            !isCreator &&
+            match.status.code === MATCH_STATUS.PENDING && (
+              <BorderedButton
+                size="xl"
+                onPress={() => handleApply && handleApply()}
+              >
+                <CustomText type="xsmall" style={styles.applicationsButtonText}>
+                  Postularme
+                </CustomText>
+              </BorderedButton>
+            )}
+          {allowResults && (
             <BorderedButton
               size="xl"
-              onPress={() => handleApply && handleApply()}
+              onPress={() => openLoadResultModal(match)}
             >
-              <CustomText type="xsmall" style={styles.applicationsButtonText}>
-                Postularme
+              <CustomText type="xsmall" style={styles.resultsButtonText}>
+                Cargar resultado
               </CustomText>
             </BorderedButton>
           )}

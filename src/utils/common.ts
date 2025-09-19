@@ -10,6 +10,16 @@ export const parseDateToString = (dateString: string) => {
   return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 };
 
+export const parseDateStringToDDMMYYYY = (dateString: string) => {
+  const [year, month, day] = dateString.split("-").map(Number);
+
+  // Agregar cero a la izquierda si es necesario
+  const formattedDay = String(day).padStart(2, "0");
+  const formattedMonth = String(month).padStart(2, "0");
+
+  return [formattedDay, formattedMonth, year].join("-");
+};
+
 export const dateToString = (date: Date) => {
   return date.toISOString().slice(0, 10);
 };

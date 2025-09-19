@@ -3,8 +3,9 @@ import { AddPlayerToMatchModal, PlayerDetailsModal } from "../components";
 import ApplicationsModal from "../components/Modals/ApplicationsModal";
 import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
 import EditProfileModal from "../components/Modals/EditProfileModal";
+import LoadResultModal from "../components/Modals/LoadResultModal";
 import { removeGetCreatedMatchesCache } from "../services/cache";
-import { Match, Player } from "../types";
+import { Match, Player, MatchResult, MatchResultForm } from "../types";
 import { Application } from "../types/application/Application";
 import { ModalContext } from "./ModalContext";
 import ApplyToMatchModal from "../components/Modals/ApplyToMatchModal";
@@ -29,6 +30,8 @@ interface PlayerModalsContextData {
     onSuccess?: () => void
   ) => void;
   closeApplyToMatchModal: () => void;
+  openLoadResultModal: (match: Match, onSave?: () => void) => void;
+  closeLoadResultModal: () => void;
 }
 
 export const PlayerModalsContext = createContext<PlayerModalsContextData>({
@@ -51,6 +54,8 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
     onSuccess?: () => void
   ) => {},
   closeApplyToMatchModal: () => {},
+  openLoadResultModal: (match: Match, onSave?: () => void) => {},
+  closeLoadResultModal: () => {},
 });
 
 export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
@@ -203,6 +208,27 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
     setApplySuccessCallback(null);
   };
 
+  // ==================== Load Result Modal ====================
+  const [showLoadResultModal, setShowLoadResultModal] = useState(false);
+  const [matchForResult, setMatchForResult] = useState<Match | null>(null);
+  const [saveResultCallback, setSaveResultCallback] = useState<
+    (() => void) | undefined
+  >();
+  const [key, setKey] = useState(0);
+
+  const openLoadResultModal = (match: Match, onSave?: () => void) => {
+    setMatchForResult(match);
+    setSaveResultCallback(onSave);
+    setShowLoadResultModal(true);
+  };
+
+  const closeLoadResultModal = () => {
+    setShowLoadResultModal(false);
+    setMatchForResult(null);
+    setSaveResultCallback(undefined);
+    setKey((prev) => prev + 1);
+  };
+
   return (
     <PlayerModalsContext.Provider
       value={{
@@ -218,6 +244,8 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         closeEditProfileModal,
         openApplyToMatchModal,
         closeApplyToMatchModal,
+        openLoadResultModal,
+        closeLoadResultModal,
       }}
     >
       {children}
@@ -256,6 +284,13 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
         match={matchToApply}
         team={teamToApply}
         onSuccess={applySuccessCallback || undefined}
+      />
+      <LoadResultModal
+        key={key}
+        isVisible={showLoadResultModal}
+        onClose={closeLoadResultModal}
+        match={matchForResult}
+        onSaveResult={saveResultCallback}
       />
     </PlayerModalsContext.Provider>
   );

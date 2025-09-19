@@ -120,4 +120,7 @@ export const styles = StyleSheet.create({
   applicationContainer: {
     gap: spacing.xs,
   },
+  resultsButtonText: {
+    color: colors.primary,
+  },
 });

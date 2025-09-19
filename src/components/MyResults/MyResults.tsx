@@ -67,6 +67,7 @@ const MyResults: React.FC = () => {
           error={error}
           EmptyComponent={Empty}
           viewMore
+          allowResults
         />
       </ScrollView>
     </View>
