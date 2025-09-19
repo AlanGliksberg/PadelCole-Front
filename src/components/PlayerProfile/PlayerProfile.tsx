@@ -47,6 +47,7 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
   };
 
   // TODO - mejorar manejo de error y agregar loading
+  // considerar poder cerrar sesion si hay un error
   if (loading) {
     return <></>;
   }
