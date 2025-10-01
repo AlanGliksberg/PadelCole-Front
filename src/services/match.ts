@@ -11,11 +11,14 @@ import {
   GET_MATCHES_URI,
   GET_MY_MATCHES_URI,
   GET_MY_PENDING_RESULTS_URI,
+  UPDATE_MATCH_RESULT_URI,
+  ACCEPT_MATCH_RESULT_URI,
 } from "../constants/api";
 import {
   CreateMatchBody,
   GetMatchesResponse,
   MatchFilters,
+  MatchResult,
   Player,
 } from "../types";
 import { CommonMatchResponse, UpdateMatchBody } from "../types/api/Match";
@@ -169,4 +172,31 @@ export const getMyPendingResults = async (
     queryParams: { page, pageSize },
     withCache,
   });
+};
+
+export const updateMatchResult = async (
+  matchId: number,
+  result: MatchResult
+) => {
+  // Creamos un array de sets con el formato [number, number][]
+  const sets: [number, number][] = [];
+  sets.push([Number(result.team1Set1), Number(result.team2Set1)]);
+
+  if (result.team1Set2 && result.team2Set2) {
+    sets.push([Number(result.team1Set2), Number(result.team2Set2)]);
+  }
+  if (result.team1Set3 && result.team2Set3) {
+    sets.push([Number(result.team1Set3), Number(result.team2Set3)]);
+  }
+
+  return await put(UPDATE_MATCH_RESULT_URI, {
+    body: {
+      matchId,
+      sets,
+    },
+  });
+};
+
+export const acceptMatchResult = async (matchId: number) => {
+  return await post(ACCEPT_MATCH_RESULT_URI, { body: { matchId } });
 };

@@ -12,7 +12,11 @@
       "appVersionSource": "remote"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.Thunder.porTres",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.Thunder.padelcole",

@@ -48,6 +48,9 @@ const MatchBox: React.FC<MatchBoxProps> = ({
     (a) => a.playerId === user?.playerId
   );
   const isPlayer = match.players?.some((p) => p.id === user?.playerId);
+  const playerTeamNumber = match.teams.find((t) =>
+    t.players.some((p) => p.id === user?.playerId)
+  )?.teamNumber;
 
   const deleteMatch = () => {
     openModal({
@@ -202,16 +205,33 @@ const MatchBox: React.FC<MatchBoxProps> = ({
                 </CustomText>
               </BorderedButton>
             )}
-          {allowResults && (
-            <BorderedButton
-              size="xl"
-              onPress={() => openLoadResultModal(match)}
-            >
+          {allowResults &&
+            (!match.resultLoadedByTeam ? (
+              // Si no tiene ningún resultado cargado dejo cargar el resultado
+              <BorderedButton
+                size="xl"
+                onPress={() => openLoadResultModal(match, refreshData)}
+              >
+                <CustomText type="xsmall" style={styles.resultsButtonText}>
+                  Cargar resultado
+                </CustomText>
+              </BorderedButton>
+            ) : match.resultLoadedByTeam === playerTeamNumber ? (
+              // si el resultado fue cargado por mi equipo, tengo que esperar aprobación del otro equipo
               <CustomText type="xsmall" style={styles.resultsButtonText}>
-                Cargar resultado
+                Esperando aprobación de resultado
               </CustomText>
-            </BorderedButton>
-          )}
+            ) : (
+              // El resultado fue cargado por el otro equipo, tengo que aprobarlo o rechazarlo
+              <BorderedButton
+                size="xl"
+                onPress={() => openLoadResultModal(match, refreshData)}
+              >
+                <CustomText type="xsmall" style={styles.resultsButtonText}>
+                  Revisar resultado
+                </CustomText>
+              </BorderedButton>
+            ))}
         </View>
       </View>
     </View>

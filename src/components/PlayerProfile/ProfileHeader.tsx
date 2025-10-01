@@ -3,7 +3,6 @@ import { ActivityIndicator, View } from "react-native";
 
 import CustomText from "@/src/components/ui/CustomText/CustomText";
 import { AuthContext } from "@/src/contexts/AuthContext";
-import { Match } from "@/src/types/match/Match";
 import { Player } from "@/src/types/player/Player";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import { styles } from "./PlayerProfile.styles";

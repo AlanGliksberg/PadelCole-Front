@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, ScrollView } from "react-native";
-import { Match, MatchResultForm } from "@/src/types";
+import { Match, MatchResult } from "@/src/types";
 import BaseModal from "./BaseModal";
 import CustomTextInput from "../ui/CustomTextInput/CustomTextInput";
 import CustomText from "../ui/CustomText/CustomText";
@@ -8,9 +8,11 @@ import TeamAvatars from "../TeamAvatars/TeamAvatars";
 import { parseDateStringToDDMMYYYY } from "@/src/utils/common";
 import { styles } from "./LoadResultModal.styles";
 import FullButton from "../ui/FullButton/FullButton";
-import { parseSets } from "@/src/utils/match";
+import { matchResultIsValid, parseSets } from "@/src/utils/match";
 import { ModalContext } from "@/src/contexts/ModalContext";
 import SimpleButton from "../ui/SimpleButton/SimpleButton";
+import { acceptMatchResult, updateMatchResult } from "@/src/services/match";
+import { removeMyResultsCache } from "@/src/services/cache";
 
 interface LoadResultModalProps {
   isVisible: boolean;
@@ -26,19 +28,48 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
   onSaveResult,
 }) => {
   const { openModal, openErrorModal } = useContext(ModalContext);
-  const [existingResult, setExistingResult] = useState(parseSets(match));
-  const [formData, setFormData] = useState<MatchResultForm>({
-    team1Set1: existingResult?.team1Set1?.toString(),
-    team1Set2: existingResult?.team1Set2?.toString(),
-    team1Set3: existingResult?.team1Set3?.toString(),
-    team2Set1: existingResult?.team2Set1?.toString(),
-    team2Set2: existingResult?.team2Set2?.toString(),
-    team2Set3: existingResult?.team2Set3?.toString(),
+
+  const [existingResult, setExistingResult] = useState<MatchResult | null>(
+    null
+  );
+  const [formData, setFormData] = useState<MatchResult>({
+    team1Set1: "",
+    team1Set2: "",
+    team1Set3: "",
+    team2Set1: "",
+    team2Set2: "",
+    team2Set3: "",
   });
+
+  // Actualizar el estado cuando match cambie
+  useEffect(() => {
+    const currentParsedSets = parseSets(match);
+    if (currentParsedSets) {
+      setExistingResult(currentParsedSets);
+      setFormData({
+        team1Set1: currentParsedSets.team1Set1 || "",
+        team1Set2: currentParsedSets.team1Set2 || "",
+        team1Set3: currentParsedSets.team1Set3 || "",
+        team2Set1: currentParsedSets.team2Set1 || "",
+        team2Set2: currentParsedSets.team2Set2 || "",
+        team2Set3: currentParsedSets.team2Set3 || "",
+      });
+    } else {
+      setExistingResult(null);
+      setFormData({
+        team1Set1: "",
+        team1Set2: "",
+        team1Set3: "",
+        team2Set1: "",
+        team2Set2: "",
+        team2Set3: "",
+      });
+    }
+  }, [match]);
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = (field: keyof MatchResultForm, value: string) => {
+  const handleInputChange = (field: keyof MatchResult, value: string) => {
     // Solo permitir números del 0 al 9
     const numericValue = value.replace(/[^0-9]/g, "");
     setFormData((prev) => ({
@@ -50,8 +81,25 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      //crear servicio que actualiza resultados
-      console.log({ formData });
+      if (!matchResultIsValid(formData)) {
+        openErrorModal(
+          "Cargar resultado",
+          "El formato del resultado es incorrecto"
+        );
+        return;
+      }
+
+      if (existingResult) {
+        // TODO - si no modifico el resultado, aceptar tambien (pudo haber rechazado sin cambiar nada)
+        // aceptar resultado
+        const response = await acceptMatchResult(match!.id);
+        if (response.error) throw Error(response.message);
+      } else {
+        const response = await updateMatchResult(match!.id, formData);
+        if (response.error) throw Error(response.message);
+      }
+
+      removeMyResultsCache();
       onSaveResult?.();
       openModal({
         title: existingResult ? "Resultado aceptado" : "Resultado cargado",
@@ -62,6 +110,10 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
       onClose();
     } catch (error) {
       console.error("Error saving result:", error);
+      openErrorModal(
+        "Cargar resultado",
+        "Hubo un error cargando el resultado. Intenta nuevamente."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -78,6 +130,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
   };
 
   const rejectResult = () => {
+    // TODO - si se rechaza pero no se cambia nada, tomar como que se acepto
     setExistingResult(null);
   };
 
@@ -154,6 +207,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
+                  disabled={!!existingResult}
                 />
                 <CustomTextInput
                   value={formData.team2Set1}
@@ -164,6 +218,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
+                  disabled={!!existingResult}
                 />
               </View>
             </View>
@@ -182,6 +237,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
+                  disabled={!!existingResult}
                 />
                 <CustomTextInput
                   value={formData.team2Set2}
@@ -192,6 +248,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
+                  disabled={!!existingResult}
                 />
               </View>
             </View>
@@ -210,6 +267,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
+                  disabled={!!existingResult}
                 />
                 <CustomTextInput
                   value={formData.team2Set3}
@@ -220,6 +278,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
+                  disabled={!!existingResult}
                 />
               </View>
             </View>

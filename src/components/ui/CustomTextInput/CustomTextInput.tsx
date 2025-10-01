@@ -17,6 +17,7 @@ export interface CustomTextInputProps extends TextInputProps {
   error?: string;
   mandatory?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
@@ -27,6 +28,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   error,
   mandatory,
   containerStyle,
+  disabled = false,
   ...rest
 }) => {
   return (
@@ -42,6 +44,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
         style={[
           styles.searchSection,
           error && styles.errorInput,
+          disabled && styles.disabled,
           containerStyle,
         ]}
       >
@@ -49,6 +52,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
         <TextInput
           placeholderTextColor={colors.placeholder}
           style={[styles.input, style]}
+          editable={!disabled}
           {...rest}
         />
         {rightSlot && <View style={styles.rightSlot}>{rightSlot}</View>}

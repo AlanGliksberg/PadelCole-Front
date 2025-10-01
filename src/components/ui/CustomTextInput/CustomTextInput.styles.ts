@@ -51,4 +51,8 @@ export const styles = StyleSheet.create({
     borderColor: colors.error,
     borderWidth: 1,
   },
+  disabled: {
+    backgroundColor: colors.disabled,
+    opacity: 0.6,
+  },
 });

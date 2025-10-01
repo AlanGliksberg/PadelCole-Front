@@ -5,7 +5,7 @@ import ChangePasswordModal from "../components/Modals/ChangePasswordModal";
 import EditProfileModal from "../components/Modals/EditProfileModal";
 import LoadResultModal from "../components/Modals/LoadResultModal";
 import { removeGetCreatedMatchesCache } from "../services/cache";
-import { Match, Player, MatchResult, MatchResultForm } from "../types";
+import { Match, Player } from "../types";
 import { Application } from "../types/application/Application";
 import { ModalContext } from "./ModalContext";
 import ApplyToMatchModal from "../components/Modals/ApplyToMatchModal";
@@ -30,7 +30,7 @@ interface PlayerModalsContextData {
     onSuccess?: () => void
   ) => void;
   closeApplyToMatchModal: () => void;
-  openLoadResultModal: (match: Match, onSave?: () => void) => void;
+  openLoadResultModal: (match: Match, onSave?: () => Promise<void>) => void;
   closeLoadResultModal: () => void;
 }
 
@@ -54,7 +54,7 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
     onSuccess?: () => void
   ) => {},
   closeApplyToMatchModal: () => {},
-  openLoadResultModal: (match: Match, onSave?: () => void) => {},
+  openLoadResultModal: (match: Match, onSave?: () => Promise<void>) => {},
   closeLoadResultModal: () => {},
 });
 
@@ -216,9 +216,9 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   >();
   const [key, setKey] = useState(0);
 
-  const openLoadResultModal = (match: Match, onSave?: () => void) => {
+  const openLoadResultModal = (match: Match, onSave?: () => Promise<void>) => {
     setMatchForResult(match);
-    setSaveResultCallback(onSave);
+    setSaveResultCallback(() => onSave);
     setShowLoadResultModal(true);
   };
 

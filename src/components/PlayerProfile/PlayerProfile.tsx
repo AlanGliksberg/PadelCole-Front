@@ -22,7 +22,7 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     try {
       showLoading();
       setError(null);
-      const playerResponse = await getCurrentPlayer();
+      const playerResponse = await getCurrentPlayer(false);
       if (playerResponse.error || !playerResponse.data) {
         setError("Error al cargar los datos del jugador");
         return;

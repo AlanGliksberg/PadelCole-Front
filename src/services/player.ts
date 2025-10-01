@@ -81,8 +81,8 @@ export const updatePlayer = async (data: UpdatePlayerPayload) => {
   });
 };
 
-export const getCurrentPlayer = async () => {
+export const getCurrentPlayer = async (withCache = true) => {
   return await get<{ player: Player }>(GET_CURRENT_PLAYER_URI, {
-    withCache: true,
+    withCache,
   });
 };

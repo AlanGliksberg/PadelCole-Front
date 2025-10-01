@@ -5,6 +5,7 @@ import {
   GET_CREATED_MATCHES_URI,
   GET_APPLIED_MATCHES_URI,
   GET_MY_MATCHES_URI,
+  GET_MY_PENDING_RESULTS_URI,
 } from "../constants/api";
 import { ApiResponse } from "../types";
 
@@ -73,4 +74,8 @@ export const removeMyMatchesCache = () => {
 
 export const removeMyApplicationsCache = () => {
   removeCache(GET_APPLIED_MATCHES_URI);
+};
+
+export const removeMyResultsCache = () => {
+  removeCache(GET_MY_PENDING_RESULTS_URI);
 };
