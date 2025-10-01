@@ -51,7 +51,9 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
                   touchable={false}
                 />
                 <CustomText style={styles.name}>
-                  {`${player.firstName} ${player.lastName}`}
+                  {`${player.firstName} ${player.lastName} ${
+                    player.userId ? "" : "(Invitado)"
+                  }`}
                 </CustomText>
               </View>
               <View>
