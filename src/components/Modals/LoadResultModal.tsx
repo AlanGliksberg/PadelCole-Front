@@ -8,17 +8,25 @@ import TeamAvatars from "../TeamAvatars/TeamAvatars";
 import { parseDateStringToDDMMYYYY } from "@/src/utils/common";
 import { styles } from "./LoadResultModal.styles";
 import FullButton from "../ui/FullButton/FullButton";
-import { matchResultIsValid, parseSets } from "@/src/utils/match";
+import {
+  matchIsFriendly,
+  matchResultIsValid,
+  parseSets,
+} from "@/src/utils/match";
 import { ModalContext } from "@/src/contexts/ModalContext";
 import SimpleButton from "../ui/SimpleButton/SimpleButton";
 import { acceptMatchResult, updateMatchResult } from "@/src/services/match";
-import { removeMyResultsCache } from "@/src/services/cache";
+import {
+  removeGetPlayedMatchesCache,
+  removeMyResultsCache,
+} from "@/src/services/cache";
 
 interface LoadResultModalProps {
   isVisible: boolean;
   onClose: () => void;
   match: Match | null;
   onSaveResult?: () => void;
+  readOnly: boolean;
 }
 
 const LoadResultModal: React.FC<LoadResultModalProps> = ({
@@ -26,6 +34,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
   onClose,
   match,
   onSaveResult,
+  readOnly,
 }) => {
   const { openModal, openErrorModal } = useContext(ModalContext);
 
@@ -40,6 +49,8 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
     team2Set2: "",
     team2Set3: "",
   });
+
+  const friendlyMatch = matchIsFriendly(match);
 
   // Actualizar el estado cuando match cambie
   useEffect(() => {
@@ -100,10 +111,13 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
       }
 
       removeMyResultsCache();
+      removeGetPlayedMatchesCache();
       onSaveResult?.();
       openModal({
         title: existingResult ? "Resultado aceptado" : "Resultado cargado",
-        message: existingResult
+        message: friendlyMatch
+          ? "El resultado fue cargado correctamente"
+          : existingResult
           ? "El resultado fue aceptado. Próximamente se verá reflejado en tu ranking."
           : "El resultado fue cargado. Ahora hay que esperar a que el otro equipo lo acepte.",
       });
@@ -117,6 +131,11 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const styleIfWinner = (a: string | undefined, b: string | undefined) => {
+    if (!a || !b) return null;
+    return a > b ? styles.scoreInputContainerWinner : null;
   };
 
   if (!match) return null;
@@ -138,7 +157,13 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
     <BaseModal
       isVisible={isVisible}
       onClose={onClose}
-      title={existingResult ? "Confirmar resultado" : "Cargar resultado"}
+      title={
+        friendlyMatch
+          ? "Resultado"
+          : existingResult
+          ? "Confirmar resultado"
+          : "Cargar resultado"
+      }
     >
       <ScrollView
         style={styles.scrollContainer}
@@ -203,7 +228,10 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   onChangeText={(value) =>
                     handleInputChange("team1Set1", value)
                   }
-                  containerStyle={styles.scoreInputContainer}
+                  containerStyle={[
+                    styles.scoreInputContainer,
+                    styleIfWinner(formData.team1Set1, formData.team2Set1),
+                  ]}
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
@@ -214,7 +242,10 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   onChangeText={(value) =>
                     handleInputChange("team2Set1", value)
                   }
-                  containerStyle={styles.scoreInputContainer}
+                  containerStyle={[
+                    styles.scoreInputContainer,
+                    styleIfWinner(formData.team2Set1, formData.team1Set1),
+                  ]}
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
@@ -233,7 +264,10 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   onChangeText={(value) =>
                     handleInputChange("team1Set2", value)
                   }
-                  containerStyle={styles.scoreInputContainer}
+                  containerStyle={[
+                    styles.scoreInputContainer,
+                    styleIfWinner(formData.team1Set2, formData.team2Set2),
+                  ]}
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
@@ -244,7 +278,10 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   onChangeText={(value) =>
                     handleInputChange("team2Set2", value)
                   }
-                  containerStyle={styles.scoreInputContainer}
+                  containerStyle={[
+                    styles.scoreInputContainer,
+                    styleIfWinner(formData.team2Set2, formData.team1Set2),
+                  ]}
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
@@ -263,7 +300,10 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   onChangeText={(value) =>
                     handleInputChange("team1Set3", value)
                   }
-                  containerStyle={styles.scoreInputContainer}
+                  containerStyle={[
+                    styles.scoreInputContainer,
+                    styleIfWinner(formData.team1Set3, formData.team2Set3),
+                  ]}
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
@@ -274,7 +314,10 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
                   onChangeText={(value) =>
                     handleInputChange("team2Set3", value)
                   }
-                  containerStyle={styles.scoreInputContainer}
+                  containerStyle={[
+                    styles.scoreInputContainer,
+                    styleIfWinner(formData.team2Set3, formData.team1Set3),
+                  ]}
                   style={styles.scoreInput}
                   keyboardType="numeric"
                   maxLength={2}
@@ -286,15 +329,22 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
         </View>
 
         {/* Botón de guardar */}
-        <FullButton onPress={handleSave} size="xl" disabled={isLoading}>
-          <CustomText.ButtonText type="medium">
-            {isLoading ? "Guardando..." : "Confirmar resultado"}
-          </CustomText.ButtonText>
-        </FullButton>
-        {existingResult && (
-          <View style={styles.rejectButton}>
-            <SimpleButton title="Rechazar resultado" onPress={rejectResult} />
-          </View>
+        {!readOnly && (
+          <>
+            <FullButton onPress={handleSave} size="xl" disabled={isLoading}>
+              <CustomText.ButtonText type="medium">
+                {isLoading ? "Guardando..." : "Confirmar resultado"}
+              </CustomText.ButtonText>
+            </FullButton>
+            {existingResult && (
+              <View style={styles.rejectButton}>
+                <SimpleButton
+                  title="Rechazar resultado"
+                  onPress={rejectResult}
+                />
+              </View>
+            )}
+          </>
         )}
       </ScrollView>
     </BaseModal>

@@ -1,4 +1,7 @@
-import { removeGetCreatedMatchesCache } from "@/src/services/cache";
+import {
+  removeGetCreatedMatchesCache,
+  removeMyMatchesCache,
+} from "@/src/services/cache";
 import { getCreatedMatches } from "@/src/services/match";
 import { Match, MeFaltaAlguienStackParamList } from "@/src/types";
 import { NavigationProp } from "@react-navigation/native";
@@ -49,6 +52,7 @@ export default function MeFaltaAlguien() {
             loadMatches={loadMatches}
             refreshData={async () => {
               removeGetCreatedMatchesCache();
+              removeMyMatchesCache();
             }}
             error={error}
             showCreatorDetails

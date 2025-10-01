@@ -35,7 +35,7 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     } finally {
       hideLoading();
     }
-  }, [hideLoading, showLoading]);
+  }, []);
 
   useEffect(() => {
     loadPlayerData();

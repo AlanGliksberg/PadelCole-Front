@@ -51,6 +51,8 @@ export default function MatchHistory() {
           error={error}
           EmptyComponent={Empty}
           viewMore
+          historyDetails
+          allowResults
         />
       </View>
     </View>

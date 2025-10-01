@@ -5,6 +5,7 @@ import { Player } from "../player/Player";
 import { Team } from "../player/Team";
 import { Status } from "./Status";
 import { Set } from "./Set";
+import { PlayerRankingChange } from "../player/PlayerRankingChange";
 
 export type Match = {
   id: number;
@@ -16,7 +17,7 @@ export type Match = {
   status: Status;
   createdAt: Date;
   creatorPlayerId: number;
-  winnerTeamId?: number;
+  winnerTeamNumber?: number;
   resultLoadedByTeam?: number;
   gender: Gender;
   duration: number;
@@ -26,4 +27,5 @@ export type Match = {
   time: string;
   applications: Application[];
   sets: Set[];
+  playerRankingChange?: PlayerRankingChange[];
 };

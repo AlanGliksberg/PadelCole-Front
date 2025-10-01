@@ -26,6 +26,7 @@ interface MatchesListProps {
   viewMore?: boolean;
   allowApplications?: boolean;
   allowResults?: boolean;
+  historyDetails?: boolean;
 }
 
 export default function MatchesList({
@@ -38,6 +39,7 @@ export default function MatchesList({
   viewMore,
   allowApplications,
   allowResults,
+  historyDetails,
 }: MatchesListProps) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -125,6 +127,7 @@ export default function MatchesList({
                 allowApplications={allowApplications}
                 onApplicationSuccess={onApplicationSuccess}
                 allowResults={allowResults}
+                historyDetails={historyDetails}
               />
             ) : (
               <MatchBoxSkeleton key={`skeleton-${i}`} />

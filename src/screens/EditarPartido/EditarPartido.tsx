@@ -5,7 +5,10 @@ import { ScrollView } from "react-native";
 import MatchForm from "@/src/components/MatchForm/MatchForm";
 import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
-import { removeGetCreatedMatchesCache } from "@/src/services/cache";
+import {
+  removeGetCreatedMatchesCache,
+  removeMyMatchesCache,
+} from "@/src/services/cache";
 import { updateMatch } from "@/src/services/match";
 import { MatchFormValues } from "@/src/types";
 import { UpdateMatchBody } from "@/src/types/api/Match";
@@ -87,6 +90,7 @@ const EditarPartido: React.FC = () => {
       }
     } else {
       removeGetCreatedMatchesCache();
+      removeMyMatchesCache();
       navigation.navigate("MeFaltaAlguien");
     }
   };

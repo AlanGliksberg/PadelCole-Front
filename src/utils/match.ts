@@ -23,3 +23,7 @@ export const matchResultIsValid = (result: MatchResult) => {
   }
   return true;
 };
+
+export const matchIsFriendly = (match: Match | null) => {
+  return !match?.teams.every((t) => t.players.some((p) => p.userId));
+};

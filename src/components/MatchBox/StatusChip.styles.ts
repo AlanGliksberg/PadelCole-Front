@@ -18,6 +18,9 @@ export const styles = StyleSheet.create({
   application_PENDING: { backgroundColor: colors.pendingApplicationStatus },
   application_ACCEPTED: { backgroundColor: colors.acceptedApplicationStatus },
   application_REJECTED: { backgroundColor: colors.rejectedApplicationStatus },
+  result_tie: { backgroundColor: colors.resultTie },
+  result_win: { backgroundColor: colors.resultWin },
+  result_lose: { backgroundColor: colors.resultLose },
   status: {
     textTransform: "capitalize",
     fontSize: typography.small,

@@ -28,6 +28,7 @@ interface MatchBoxProps {
   allowApplications?: boolean;
   onApplicationSuccess?: (match: Match) => void;
   allowResults?: boolean;
+  historyDetails?: boolean;
 }
 
 const MatchBox: React.FC<MatchBoxProps> = ({
@@ -37,6 +38,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
   allowApplications = false,
   onApplicationSuccess,
   allowResults = false,
+  historyDetails = false,
 }) => {
   const { user } = useContext(AuthContext);
   const { openModal } = useContext(ModalContext);
@@ -51,6 +53,14 @@ const MatchBox: React.FC<MatchBoxProps> = ({
   const playerTeamNumber = match.teams.find((t) =>
     t.players.some((p) => p.id === user?.playerId)
   )?.teamNumber;
+  const rankingChange = match.playerRankingChange?.find(
+    (prc) => prc.playerId === user?.playerId
+  )?.deltaPoints;
+  const rankingChangeLabel = !rankingChange
+    ? "0"
+    : rankingChange > 0
+    ? `+${rankingChange}`
+    : `${rankingChange}`;
 
   const deleteMatch = () => {
     openModal({
@@ -155,12 +165,20 @@ const MatchBox: React.FC<MatchBoxProps> = ({
       </View>
       <View style={styles.column2}>
         <View style={styles.statusContainer}>
-          <StatusChip
-            code={match.status.code}
-            label={match.status.label}
-            description={match.status?.description}
-            type="match"
-          />
+          {historyDetails && rankingChange ? (
+            <StatusChip
+              code={rankingChange!}
+              label={rankingChangeLabel}
+              type="result"
+            />
+          ) : (
+            <StatusChip
+              code={match.status.code}
+              label={match.status.label}
+              description={match.status?.description}
+              type="match"
+            />
+          )}
           {isCreator && showCreatorDetails && (
             <DropdownMenu options={dropdownOptions} />
           )}
@@ -210,10 +228,20 @@ const MatchBox: React.FC<MatchBoxProps> = ({
               // Si no tiene ningún resultado cargado dejo cargar el resultado
               <BorderedButton
                 size="xl"
-                onPress={() => openLoadResultModal(match, refreshData)}
+                onPress={() => openLoadResultModal(match, false, refreshData)}
               >
                 <CustomText type="xsmall" style={styles.resultsButtonText}>
                   Cargar resultado
+                </CustomText>
+              </BorderedButton>
+            ) : Number.isInteger(match.winnerTeamNumber) ? (
+              //Si ya hay un ganador, muestro el resultado
+              <BorderedButton
+                size="xl"
+                onPress={() => openLoadResultModal(match, true)}
+              >
+                <CustomText type="xsmall" style={styles.resultsButtonText}>
+                  Ver resultado
                 </CustomText>
               </BorderedButton>
             ) : match.resultLoadedByTeam === playerTeamNumber ? (
@@ -225,7 +253,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
               // El resultado fue cargado por el otro equipo, tengo que aprobarlo o rechazarlo
               <BorderedButton
                 size="xl"
-                onPress={() => openLoadResultModal(match, refreshData)}
+                onPress={() => openLoadResultModal(match, false, refreshData)}
               >
                 <CustomText type="xsmall" style={styles.resultsButtonText}>
                   Revisar resultado

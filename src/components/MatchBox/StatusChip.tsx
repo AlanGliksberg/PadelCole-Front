@@ -13,23 +13,30 @@ import { MATCH_STATUS } from "@/src/constants/match";
 import { APPLICATION_STATUS } from "@/src/constants/application";
 
 interface StatusChipProps {
-  code: MATCH_STATUS | APPLICATION_STATUS;
+  code: MATCH_STATUS | APPLICATION_STATUS | number;
   label: string;
   description?: string;
-  type: "match" | "application";
+  type: "match" | "application" | "result";
 }
 
 function isApplication(
   type: string,
-  code: MATCH_STATUS | APPLICATION_STATUS
+  code: MATCH_STATUS | APPLICATION_STATUS | number
 ): code is APPLICATION_STATUS {
   return type === "application";
 }
 function isMatch(
   type: string,
-  code: MATCH_STATUS | APPLICATION_STATUS
+  code: MATCH_STATUS | APPLICATION_STATUS | number
 ): code is MATCH_STATUS {
   return type === "match";
+}
+
+function isResult(
+  type: string,
+  code: MATCH_STATUS | APPLICATION_STATUS | number
+): code is number {
+  return type === "result";
 }
 
 const StatusChip: React.FC<StatusChipProps> = ({
@@ -47,8 +54,11 @@ const StatusChip: React.FC<StatusChipProps> = ({
   let codeStyle;
   if (isApplication(type, code)) {
     codeStyle = styles[`application_${code}`];
-  } else {
+  } else if (isMatch(type, code)) {
     codeStyle = styles[`match_${code}`];
+  } else if (isResult(type, code)) {
+    const styleLabel = !code ? "tie" : code > 0 ? "win" : "lose";
+    codeStyle = styles[`result_${styleLabel}`];
   }
 
   const handlePress = () => {
@@ -121,14 +131,14 @@ const StatusChip: React.FC<StatusChipProps> = ({
                 {
                   left: tooltipPosition.x,
                   top: tooltipPosition.y,
-                  borderColor: codeStyle.backgroundColor,
+                  borderColor: codeStyle?.backgroundColor,
                 },
               ]}
             >
               <CustomText
                 style={[
                   styles.tooltipText,
-                  { color: codeStyle.backgroundColor },
+                  { color: codeStyle?.backgroundColor },
                 ]}
               >
                 {description}

@@ -57,6 +57,10 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.placeholder,
   },
+  scoreInputContainerWinner: {
+    borderWidth: 4,
+    borderColor: colors.setWin,
+  },
   scoreInput: {
     textAlign: "center",
   },
