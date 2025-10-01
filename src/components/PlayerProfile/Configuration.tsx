@@ -43,22 +43,24 @@ export default function Configuration() {
         <CustomText style={styles.sectionTitle}>Configuración</CustomText>
 
         <View style={styles.configurationContainer}>
-          <TouchableOpacity
-            style={styles.configButton}
-            onPress={handleChangePassword}
-          >
-            <View style={styles.configButtonContent}>
-              <MaterialIcons name="lock" size={20} color={colors.primary} />
-              <CustomText style={styles.configButtonText}>
-                Cambiar contraseña
-              </CustomText>
-            </View>
-            <MaterialIcons
-              name="chevron-right"
-              size={20}
-              color={colors.description}
-            />
-          </TouchableOpacity>
+          {!user?.googleId && (
+            <TouchableOpacity
+              style={styles.configButton}
+              onPress={handleChangePassword}
+            >
+              <View style={styles.configButtonContent}>
+                <MaterialIcons name="lock" size={20} color={colors.primary} />
+                <CustomText style={styles.configButtonText}>
+                  Cambiar contraseña
+                </CustomText>
+              </View>
+              <MaterialIcons
+                name="chevron-right"
+                size={20}
+                color={colors.description}
+              />
+            </TouchableOpacity>
+          )}
 
           <TouchableOpacity
             style={styles.configButtonLogout}
