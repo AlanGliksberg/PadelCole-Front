@@ -34,4 +34,7 @@ export type Category = {
   description: string;
   genderId: number;
   initialPoints: number;
+  minPoints: number;
+  maxPoints: number;
+  order: number;
 };
