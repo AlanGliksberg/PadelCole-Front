@@ -41,6 +41,11 @@ export const styles = StyleSheet.create({
     width: "100%",
     position: "relative",
   },
+  avatarContainer: {
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   playerName: {
     textAlign: "center",
     marginTop: spacing.xs,
@@ -72,7 +77,12 @@ export const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    right: 30,
-    bottom: 50,
+    top: -12,
+    right: -12,
+    width: 24,
+    height: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1,
   },
 });

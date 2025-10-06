@@ -45,26 +45,29 @@ export default function CourtDistribution({
 
           return (
             <View key={playerIndex} style={styles.playerSlot}>
-              <PlayerAvatar
-                player={player}
-                size="m"
-                touchable
-                isCreator
-                addPlayerCallback={handlePlayerAdd}
-                removeCallback={handlePlayerRemove}
-              />
-              {player && (
-                <TouchableOpacity
-                  onPress={() => onPlayerRemove?.(player, teamNumber)}
-                  style={styles.closeButton}
-                >
-                  <MaterialIcons
-                    name="close"
-                    size={18}
-                    color={colors.placeholder}
-                  />
-                </TouchableOpacity>
-              )}
+              <View style={styles.avatarContainer}>
+                <PlayerAvatar
+                  player={player}
+                  size="m"
+                  touchable
+                  isCreator
+                  addPlayerCallback={handlePlayerAdd}
+                  removeCallback={handlePlayerRemove}
+                  canDelete={!!player}
+                />
+                {player && (
+                  <TouchableOpacity
+                    onPress={() => onPlayerRemove?.(player, teamNumber)}
+                    style={styles.closeButton}
+                  >
+                    <MaterialIcons
+                      name="close"
+                      size={18}
+                      color={colors.placeholder}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
           );
         })}
