@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    height: 48,
+    height: 42,
     backgroundColor: colors.input,
     borderRadius: 8,
     paddingHorizontal: spacing.sm,
