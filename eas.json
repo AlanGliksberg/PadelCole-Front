@@ -29,5 +29,14 @@
         "EXPO_PUBLIC_IOS_CLIENT_ID": "174614424193-6ntfdudfko20mjcs94sj6vnc8cv0n5u1.apps.googleusercontent.com"
       }
     }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascApiKeyId": "458UVVNX58",
+        "ascApiKeyIssuerId": "62bcbbbd-5fe3-4861-ba27-450542714830",
+        "ascApiKeyPath": "./certs/AuthKey_458UVVNX58.p8"
+      }
+    }
   }
 }
