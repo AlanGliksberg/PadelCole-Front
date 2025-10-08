@@ -149,10 +149,10 @@ export default function Login() {
 
             <View style={styles.secondaryButtonsContainer}>
               <SimpleButton title="Registrarse" onPress={handleRegister} />
-              <SimpleButton
+              {/* <SimpleButton
                 title="¿Olvidaste tu contraseña?"
                 onPress={handleForgot}
-              />
+              /> */}
             </View>
           </View>
         </View>
