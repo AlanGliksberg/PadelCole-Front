@@ -1,16 +1,20 @@
 {
   "expo": {
-    "name": "padel-cole-front",
-    "slug": "padel-cole-front",
-    "version": "1.0.0",
+    "name": "porTres",
+    "slug": "portres",
+    "version": "1.0.6",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "padelcolefront",
+    "scheme": "portres",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "cli": {
       "appVersionSource": "remote"
     },
+    "platforms": ["ios", "android"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.Thunder.porTres",
@@ -19,17 +23,12 @@
       }
     },
     "android": {
-      "package": "com.Thunder.padelcole",
+      "package": "com.portres.porTres",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-dev-client",
@@ -47,9 +46,10 @@
       [
         "@react-native-google-signin/google-signin",
         {
-          "iosUrlScheme": "com.googleusercontent.apps.174614424193-6ntfdudfko20mjcs94sj6vnc8cv0n5u1"
+          "iosUrlScheme": "com.googleusercontent.apps.251399065339-v91cb22jdiabh8goumkrpnhua8bgqquv"
         }
-      ]
+      ],
+      "expo-updates"
     ],
     "experiments": {
       "typedRoutes": true
@@ -62,8 +62,11 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "45b2c7b0-0119-41ad-a42b-3aa55c93d6c0"
+        "projectId": "c3d8fb3c-d2ee-4b83-8ad2-49fb2ef03742"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c3d8fb3c-d2ee-4b83-8ad2-49fb2ef03742"
     }
   }
 }
