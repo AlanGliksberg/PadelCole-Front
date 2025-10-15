@@ -27,7 +27,7 @@ const Welcome: React.FC = () => {
       </TouchableOpacity>
       <View style={styles.titleContainer}>
         <CustomText type="h1" style={styles.title} bold>
-          ¡Bienvenid@ a PlayConnect!
+          ¡Bienvenid@ a porTres!
         </CustomText>
         <CustomText type="body" style={styles.subtitle}>
           Estamos creando la comunidad más grande de pádel en Argentina

@@ -57,7 +57,9 @@ export default function Login() {
   const handleGoogle = async () => {
     showLoading();
     try {
-      await GoogleSignin.hasPlayServices();
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
       const result = await GoogleSignin.signIn();
 
       let res = null;
@@ -97,7 +99,7 @@ export default function Login() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View style={styles.card}>
-          <CustomText.Title style={styles.title}>¡Bienvenido!</CustomText.Title>
+          <CustomText.Title style={styles.title}>¡Bienvenid@!</CustomText.Title>
 
           <View style={styles.inputsContainer}>
             <CustomTextInput

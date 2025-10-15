@@ -12,6 +12,8 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: 42,
     backgroundColor: colors.input,
+    borderWidth: 1,
+    borderColor: colors.border,
     borderRadius: 8,
     paddingHorizontal: spacing.sm,
   },

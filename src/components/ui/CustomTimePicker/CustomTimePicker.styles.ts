@@ -27,4 +27,19 @@ export const styles = StyleSheet.create({
     fontSize: typography.caption,
     marginLeft: 5,
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  modalContent: {
+    backgroundColor: colors.background,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: spacing.lg,
+    paddingBottom: spacing.xl,
+  },
+  buttonsSection: {
+    gap: spacing.sm,
+  },
 });

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Controller, Resolver, useForm } from "react-hook-form";
-import { Keyboard, View } from "react-native";
+import { Keyboard, View, TouchableWithoutFeedback } from "react-native";
 
 import useCategories from "@/src/hooks/useCategories";
 import useGenders from "@/src/hooks/useGenders";
@@ -80,8 +80,9 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
   };
 
   return (
-    <View style={styles.form}>
-      <View style={styles.card}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.form}>
+        <View style={styles.card}>
         <CustomText.Title>Detalles</CustomText.Title>
 
         {/* Nombre */}
@@ -273,7 +274,8 @@ const MatchForm: React.FC<MatchFormProps> = ({ initialValues, onSubmit }) => {
           Guardar partido
         </CustomText.ButtonText>
       </FullButton>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -2,9 +2,20 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { StyleProp, TouchableOpacity, View, ViewStyle } from "react-native";
+import {
+  Keyboard,
+  Platform,
+  StyleProp,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+  Modal,
+} from "react-native";
 import CustomText from "../CustomText/CustomText";
 import { styles } from "./CustomTimePicker.styles";
+import CustomTextInput from "../CustomTextInput/CustomTextInput";
+import FullButton from "../FullButton/FullButton";
+import SimpleButton from "../SimpleButton/SimpleButton";
 
 interface CustomTimePickerProps {
   label?: string;
@@ -28,9 +39,17 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
   neutralButtonLabel,
 }) => {
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const toggleTimePicker = () => {
+    setShowTimePicker((prev) => !prev);
+  };
+
+  const d = new Date();
+  d.setHours(19, 0, 0, 0);
+  const selectedTime = time || d;
 
   const onTimeChange = (event: DateTimePickerEvent, time?: Date) => {
-    setShowTimePicker(false);
+    if (Platform.OS !== "ios") toggleTimePicker();
+    Keyboard.dismiss();
     if (event.type === "neutralButtonPressed") {
       onChange(null);
       return;
@@ -40,9 +59,15 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
     if (time) onChange(time);
   };
 
-  const d = new Date();
-  d.setHours(19, 0, 0, 0);
-  const selectedTime = time || d;
+  const changeIosTime = () => {
+    onTimeChange({ type: "set" } as DateTimePickerEvent, time || d);
+    toggleTimePicker();
+  };
+
+  const resetIosTime = () => {
+    onTimeChange({ type: "neutralButtonPressed" } as DateTimePickerEvent);
+    toggleTimePicker();
+  };
 
   return (
     <View>
@@ -59,36 +84,77 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
         </View>
       )}
 
-      <TouchableOpacity
-        style={[styles.pickerButton, inputStyles]}
-        onPress={() => setShowTimePicker(true)}
-      >
-        {time ? (
-          <CustomText>
-            {time.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })}
-          </CustomText>
-        ) : (
-          <CustomText style={styles.placeholder}>
-            {placeholder || "Seleccioná la hora"}
-          </CustomText>
-        )}
-      </TouchableOpacity>
-      {error && <CustomText style={styles.errorText}>{error}</CustomText>}
+      {Platform.OS === "ios" ? (
+        <Modal
+          visible={showTimePicker}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={toggleTimePicker}
+        >
+          <TouchableOpacity
+            style={styles.modalOverlay}
+            activeOpacity={1}
+            onPress={toggleTimePicker}
+          >
+            <TouchableOpacity
+              style={styles.modalContent}
+              activeOpacity={1}
+              onPress={() => {}}
+            >
+              <DateTimePicker
+                value={selectedTime}
+                mode="time"
+                display="spinner"
+                onChange={onTimeChange}
+                is24Hour
+                themeVariant="light"
+              />
+              <View style={styles.buttonsSection}>
+                <FullButton onPress={changeIosTime}>
+                  <CustomText.ButtonText type="h4">
+                    Confirmar
+                  </CustomText.ButtonText>
+                </FullButton>
 
-      {showTimePicker && (
-        <DateTimePicker
-          value={selectedTime}
-          mode="time"
-          display="default"
-          onChange={onTimeChange}
-          is24Hour
-          neutralButton={{ label: neutralButtonLabel }}
-        />
+                {neutralButtonLabel && (
+                  <SimpleButton
+                    title={neutralButtonLabel}
+                    onPress={resetIosTime}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </Modal>
+      ) : (
+        showTimePicker && (
+          <DateTimePicker
+            value={selectedTime}
+            mode="time"
+            display="default"
+            onChange={onTimeChange}
+            is24Hour
+            neutralButton={{ label: neutralButtonLabel }}
+            themeVariant="light"
+          />
+        )
       )}
+
+      <TouchableOpacity onPress={toggleTimePicker}>
+        <CustomTextInput
+          placeholder={placeholder || "Seleccioná la hora"}
+          value={time?.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          })}
+          onPressIn={toggleTimePicker}
+          editable={false}
+          containerStyle={inputStyles}
+        />
+      </TouchableOpacity>
+
+      {error && <CustomText style={styles.errorText}>{error}</CustomText>}
     </View>
   );
 };

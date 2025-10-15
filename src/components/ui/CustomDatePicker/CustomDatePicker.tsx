@@ -2,9 +2,20 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { StyleProp, TouchableOpacity, View, ViewStyle } from "react-native";
+import {
+  StyleProp,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+  Keyboard,
+  Platform,
+  Modal,
+} from "react-native";
 import CustomText from "../CustomText/CustomText";
 import { styles } from "./CustomDatePicker.styles";
+import CustomTextInput from "../CustomTextInput/CustomTextInput";
+import FullButton from "../FullButton/FullButton";
+import SimpleButton from "../SimpleButton/SimpleButton";
 
 interface CustomDatePickerProps {
   label?: string;
@@ -30,9 +41,13 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   neutralButtonLabel,
 }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const toggleDatePicker = () => {
+    setShowDatePicker((prev) => !prev);
+  };
 
   const onDateChange = (event: DateTimePickerEvent, date?: Date) => {
-    setShowDatePicker(false);
+    if (Platform.OS !== "ios") toggleDatePicker();
+    Keyboard.dismiss();
     if (event.type === "neutralButtonPressed") {
       onChange(null);
       return;
@@ -40,6 +55,16 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
       return;
     }
     if (date) onChange(date);
+  };
+
+  const changeIosDate = () => {
+    onDateChange({ type: "set" } as DateTimePickerEvent, date || new Date());
+    toggleDatePicker();
+  };
+
+  const resetIosDate = () => {
+    onDateChange({ type: "neutralButtonPressed" } as DateTimePickerEvent);
+    toggleDatePicker();
   };
 
   return (
@@ -56,30 +81,75 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
           )}
         </View>
       )}
-      <TouchableOpacity
-        style={[styles.pickerButton, inputStyles]}
-        onPress={() => setShowDatePicker(true)}
-      >
-        {date ? (
-          <CustomText>{date.toLocaleDateString()}</CustomText>
-        ) : (
-          <CustomText style={styles.placeholder}>
-            {placeholder || "Seleccioná la fecha"}
-          </CustomText>
-        )}
-      </TouchableOpacity>
-      {error && <CustomText style={styles.errorText}>{error}</CustomText>}
 
-      {showDatePicker && (
-        <DateTimePicker
-          value={date || new Date()}
-          mode="date"
-          display="default"
-          onChange={onDateChange}
-          minimumDate={minimumDate}
-          neutralButton={{ label: neutralButtonLabel }}
-        />
+      {Platform.OS === "ios" ? (
+        <Modal
+          visible={showDatePicker}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={toggleDatePicker}
+        >
+          <TouchableOpacity
+            style={styles.modalOverlay}
+            activeOpacity={1}
+            onPress={toggleDatePicker}
+          >
+            <TouchableOpacity
+              style={styles.modalContent}
+              activeOpacity={1}
+              onPress={() => {}}
+            >
+              <DateTimePicker
+                value={date || new Date()}
+                mode="date"
+                display="inline"
+                onChange={onDateChange}
+                minimumDate={minimumDate}
+                themeVariant="light"
+              />
+
+              <View style={styles.buttonsSection}>
+                <FullButton onPress={changeIosDate}>
+                  <CustomText.ButtonText type="h4">
+                    Confirmar
+                  </CustomText.ButtonText>
+                </FullButton>
+
+                {neutralButtonLabel && (
+                  <SimpleButton
+                    title={neutralButtonLabel}
+                    onPress={resetIosDate}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </Modal>
+      ) : (
+        showDatePicker && (
+          <DateTimePicker
+            value={date || new Date()}
+            mode="date"
+            display="default"
+            onChange={onDateChange}
+            minimumDate={minimumDate}
+            neutralButton={{ label: neutralButtonLabel }}
+            themeVariant="light"
+          />
+        )
       )}
+
+      <TouchableOpacity onPress={toggleDatePicker}>
+        <CustomTextInput
+          placeholder={placeholder || "Seleccioná la fecha"}
+          value={date?.toLocaleDateString()}
+          onPressIn={toggleDatePicker}
+          editable={false}
+          containerStyle={inputStyles}
+        />
+      </TouchableOpacity>
+
+      {error && <CustomText style={styles.errorText}>{error}</CustomText>}
     </View>
   );
 };
