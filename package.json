@@ -2,7 +2,6 @@
   "name": "porTres",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "packageManager": "pnpm@9",
   "scripts": {
     "start": "expo start",
     "tunnel": "npx expo start --tunnel",
@@ -14,7 +13,7 @@
     "ios:submit": "eas submit -p ios",
     "update:dev": "eas update --branch dev",
     "update:preview": "eas update --branch preview",
-    "update:production": "eas update --branch production",
+    "update:prod": "eas update --branch production",
     "build:dev": "eas build --profile dev",
     "build:preview": "eas build --profile preview",
     "build:prod": "eas build --profile production"
@@ -31,6 +30,7 @@
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.9",
     "axios": "^1.9.0",
+    "babel-plugin-module-resolver": "^5.0.2",
     "babel-preset-expo": "^13.0.0",
     "expo": "~53.0.12",
     "expo-blur": "~14.1.5",
