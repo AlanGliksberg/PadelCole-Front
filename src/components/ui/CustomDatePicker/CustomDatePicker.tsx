@@ -1,7 +1,7 @@
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   StyleProp,
   TouchableOpacity,
@@ -16,6 +16,8 @@ import { styles } from "./CustomDatePicker.styles";
 import CustomTextInput from "../CustomTextInput/CustomTextInput";
 import FullButton from "../FullButton/FullButton";
 import SimpleButton from "../SimpleButton/SimpleButton";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { runOnJS } from "react-native-reanimated";
 
 interface CustomDatePickerProps {
   label?: string;
@@ -41,9 +43,9 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   neutralButtonLabel,
 }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const toggleDatePicker = () => {
+  const toggleDatePicker = useCallback(() => {
     setShowDatePicker((prev) => !prev);
-  };
+  }, []);
 
   const onDateChange = (event: DateTimePickerEvent, date?: Date) => {
     if (Platform.OS !== "ios") toggleDatePicker();
@@ -66,6 +68,18 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
     onDateChange({ type: "neutralButtonPressed" } as DateTimePickerEvent);
     toggleDatePicker();
   };
+
+  const tapToOpen = useMemo(
+    () =>
+      Gesture.Tap()
+        .maxDistance(6) // evita tap si hubo scroll > 6px
+        .onEnd((_evt, success) => {
+          if (success) {
+            runOnJS(toggleDatePicker)(); // 🚀 llamar función JS desde worklet
+          }
+        }),
+    [toggleDatePicker]
+  );
 
   return (
     <View>
@@ -139,15 +153,17 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
         )
       )}
 
-      <TouchableOpacity onPress={toggleDatePicker}>
-        <CustomTextInput
-          placeholder={placeholder || "Seleccioná la fecha"}
-          value={date?.toLocaleDateString()}
-          onPressIn={toggleDatePicker}
-          editable={false}
-          containerStyle={inputStyles}
-        />
-      </TouchableOpacity>
+      <GestureDetector gesture={tapToOpen}>
+        <View pointerEvents="box-only">
+          <CustomTextInput
+            placeholder={placeholder || "Seleccioná la fecha"}
+            value={date?.toLocaleDateString()}
+            // onPressIn={toggleDatePicker}
+            editable={false}
+            containerStyle={inputStyles}
+          />
+        </View>
+      </GestureDetector>
 
       {error && <CustomText style={styles.errorText}>{error}</CustomText>}
     </View>

@@ -8,6 +8,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
@@ -23,15 +24,17 @@ export default function Layout() {
   return (
     <SafeAreaProvider>
       <StatusBar style="inverted" />
-      <AuthProvider>
-        <ModalProvider>
-          <PlayerModalsProvider>
-            <LoadingProvider>
-              <RootNavigator />
-            </LoadingProvider>
-          </PlayerModalsProvider>
-        </ModalProvider>
-      </AuthProvider>
+      <GestureHandlerRootView>
+        <AuthProvider>
+          <ModalProvider>
+            <PlayerModalsProvider>
+              <LoadingProvider>
+                <RootNavigator />
+              </LoadingProvider>
+            </PlayerModalsProvider>
+          </ModalProvider>
+        </AuthProvider>
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 }

@@ -1,7 +1,7 @@
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   Keyboard,
   Platform,
@@ -16,6 +16,8 @@ import { styles } from "./CustomTimePicker.styles";
 import CustomTextInput from "../CustomTextInput/CustomTextInput";
 import FullButton from "../FullButton/FullButton";
 import SimpleButton from "../SimpleButton/SimpleButton";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { runOnJS } from "react-native-reanimated";
 
 interface CustomTimePickerProps {
   label?: string;
@@ -39,9 +41,9 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
   neutralButtonLabel,
 }) => {
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const toggleTimePicker = () => {
+  const toggleTimePicker = useCallback(() => {
     setShowTimePicker((prev) => !prev);
-  };
+  }, []);
 
   const d = new Date();
   d.setHours(19, 0, 0, 0);
@@ -68,6 +70,18 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
     onTimeChange({ type: "neutralButtonPressed" } as DateTimePickerEvent);
     toggleTimePicker();
   };
+
+  const tapToOpen = useMemo(
+    () =>
+      Gesture.Tap()
+        .maxDistance(6)
+        .onEnd((_evt, success) => {
+          if (success) {
+            runOnJS(toggleTimePicker)();
+          }
+        }),
+    [toggleTimePicker]
+  );
 
   return (
     <View>
@@ -140,19 +154,21 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
         )
       )}
 
-      <TouchableOpacity onPress={toggleTimePicker}>
-        <CustomTextInput
-          placeholder={placeholder || "Seleccioná la hora"}
-          value={time?.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          })}
-          onPressIn={toggleTimePicker}
-          editable={false}
-          containerStyle={inputStyles}
-        />
-      </TouchableOpacity>
+      <GestureDetector gesture={tapToOpen}>
+        <View pointerEvents="box-only">
+          <CustomTextInput
+            placeholder={placeholder || "Seleccioná la hora"}
+            value={time?.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
+            // onPressIn={toggleTimePicker}
+            editable={false}
+            containerStyle={inputStyles}
+          />
+        </View>
+      </GestureDetector>
 
       {error && <CustomText style={styles.errorText}>{error}</CustomText>}
     </View>
