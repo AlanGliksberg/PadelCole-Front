@@ -16,6 +16,7 @@ import ErrorSection from "../ui/ErrorSection/ErrorSection";
 import EmptyState from "./EmptyState";
 import FiltersModal from "./FiltersModal";
 import { styles } from "./PlayersList.styles";
+import PlayerItem from "./PlayerItem";
 
 interface PlayersListProps {
   onPlayerSelect?: (p: Player) => void;
@@ -153,36 +154,7 @@ const PlayersList: React.FC<PlayersListProps> = ({ onPlayerSelect }) => {
               style={styles.list}
               keyboardShouldPersistTaps="never"
               renderItem={({ item }) => (
-                <TouchableOpacity
-                  activeOpacity={1}
-                  style={styles.itemContainer}
-                >
-                  <View style={styles.playerInfo}>
-                    <PlayerAvatar player={item} />
-                    <View>
-                      <CustomText bold type="body">
-                        {item.firstName} {item.lastName}
-                      </CustomText>
-                      <CustomText type="small" style={styles.sub}>
-                        {item.category?.description} •{" "}
-                        {item.position?.description} • {item.gender?.name}
-                      </CustomText>
-                    </View>
-                  </View>
-                  {onPlayerSelect && (
-                    <TouchableOpacity
-                      style={styles.addIconContainer}
-                      onPress={() => onPlayerSelect(item)}
-                      activeOpacity={0.6}
-                    >
-                      <MaterialIcons
-                        name="add-circle-outline"
-                        size={28}
-                        color={colors.primary}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </TouchableOpacity>
+                <PlayerItem player={item} onPlayerSelect={onPlayerSelect} />
               )}
               ItemSeparatorComponent={() => <View style={styles.separator} />}
               ListEmptyComponent={() => <EmptyState />}
