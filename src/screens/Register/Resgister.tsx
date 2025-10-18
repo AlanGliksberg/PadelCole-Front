@@ -1,4 +1,3 @@
-// src/screens/Register.tsx
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useContext, useState } from "react";
 import { Controller, Resolver, useForm } from "react-hook-form";
@@ -16,7 +15,7 @@ import { CustomText, CustomTextInput, FullButton } from "@/src/components";
 import { LoadingContext } from "@/src/contexts/LoadingContext";
 import { ModalContext } from "@/src/contexts/ModalContext";
 import { registerSchema } from "@/src/schemas/registerSchema";
-import { register } from "@/src/services/auth";
+import { login, register } from "@/src/services/auth";
 import { colors } from "@/src/theme";
 import {
   AuthStackParamList,
@@ -28,6 +27,8 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import { styles } from "./Register.styles";
+import { SetPlayerStackParamList } from "@/src/types/navigation/SetPlayerStack";
+import { AuthContext } from "@/src/contexts/AuthContext";
 
 const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +43,11 @@ const Register: React.FC = () => {
   });
   const { hideLoading, showLoading } = useContext(LoadingContext);
   const { openErrorModal, openModal } = useContext(ModalContext);
-  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
+  const { saveToken } = useContext(AuthContext);
+  const navigation =
+    useNavigation<
+      NavigationProp<AuthStackParamList & SetPlayerStackParamList>
+    >();
 
   const onSubmit = async (values: RegisterFormValues) => {
     const data: RegisterPayload = {
@@ -65,9 +70,18 @@ const Register: React.FC = () => {
       openModal({
         title: "Registro",
         message: "Se ha registrado correctamente",
-        primaryAction: () => navigation.navigate("Login"),
+        primaryAction: () => handleRegister(data),
       });
     }
+  };
+
+  const handleRegister = async (data: RegisterPayload) => {
+    const res = await login(data.email, data.password);
+    if (res.error || !res.data) {
+      navigation.navigate("Login");
+      return;
+    }
+    saveToken(res.data?.token);
   };
 
   // TODO - agregar TYC
