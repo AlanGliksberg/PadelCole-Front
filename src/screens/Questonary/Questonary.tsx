@@ -84,6 +84,7 @@ const Questonary: React.FC = () => {
         primaryLabel: "Ingresar",
         primaryAction: refreshToken,
         secondaryAction: refreshToken,
+        hideClose: true,
       });
     }
   };

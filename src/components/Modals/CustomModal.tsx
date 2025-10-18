@@ -27,12 +27,14 @@ const CustomModal: React.FC<ModalProps> = ({ params, isOpen, closeModal }) => {
             <View style={styles.container}>
               <View style={styles.headerRow}>
                 <CustomText style={styles.title}>{params?.title}</CustomText>
-                <TouchableOpacity
-                  onPress={closeModal}
-                  style={styles.closeButton}
-                >
-                  <MaterialIcons name="close" size={28} color={colors.text} />
-                </TouchableOpacity>
+                {!params?.hideClose && (
+                  <TouchableOpacity
+                    onPress={closeModal}
+                    style={styles.closeButton}
+                  >
+                    <MaterialIcons name="close" size={28} color={colors.text} />
+                  </TouchableOpacity>
+                )}
               </View>
 
               <CustomText style={styles.message}>{params?.message}</CustomText>

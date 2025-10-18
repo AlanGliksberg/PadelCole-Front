@@ -9,6 +9,7 @@ export type ModalParams = {
   primaryAction?: () => void;
   secondaryLabel?: string;
   secondaryAction?: () => void;
+  hideClose?: boolean;
 };
 
 export interface ModalContextData {
@@ -21,6 +22,7 @@ export interface ModalContextData {
 export interface ModalProps {
   params: ModalParams | null;
   isOpen: boolean;
+  withClose?: boolean;
   closeModal: () => void;
 }
 
