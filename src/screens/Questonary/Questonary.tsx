@@ -77,11 +77,13 @@ const Questonary: React.FC = () => {
     } else {
       openModal({
         title: "¡Bienvenid@!",
-        message: data.knowsCategory
-          ? "Ya configuraste tu perfil. Ahora podés empezar a buscar partidos y conectar con otros jugadores ¡Que disfrutes del juego!"
-          : `Según tus respuestas, definimos que tu categoría es ${res.data?.player.category?.description}. Tu perfil quedó configurado. Ahora podés empezar a buscar partidos y conectar con otros jugadores ¡Que disfrutes del juego!`,
+        message:
+          !data.knowsCategory && res.data?.player.category?.description
+            ? `Según tus respuestas, definimos que tu categoría es ${res.data?.player.category?.description}. Tu perfil quedó configurado. Ahora podés empezar a buscar partidos y conectar con otros jugadores ¡Que disfrutes del juego!`
+            : "Ya configuraste tu perfil. Ahora podés empezar a buscar partidos y conectar con otros jugadores ¡Que disfrutes del juego!",
         primaryLabel: "Ingresar",
         primaryAction: refreshToken,
+        secondaryAction: refreshToken,
       });
     }
   };
