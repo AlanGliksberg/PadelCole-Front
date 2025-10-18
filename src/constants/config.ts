@@ -1,1 +1,1 @@
-export const APP_EMAIL = "playpadel6060@gmail.com";
+export const APP_EMAIL = "portresapp@gmail.com";
