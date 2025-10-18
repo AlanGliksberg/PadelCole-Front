@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     padding: spacing.sm,
     maxWidth: 250,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: colors.border,
     zIndex: 1000,
   },

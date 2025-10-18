@@ -78,7 +78,7 @@ const StatusChip: React.FC<StatusChipProps> = ({
 
       timeoutRef.current = setTimeout(() => {
         setShowTooltip(false);
-      }, 2500);
+      }, 3000);
     });
   };
 
@@ -138,7 +138,7 @@ const StatusChip: React.FC<StatusChipProps> = ({
               <CustomText
                 style={[
                   styles.tooltipText,
-                  { color: codeStyle?.backgroundColor },
+                  { color: colors.text },
                 ]}
               >
                 {description}
