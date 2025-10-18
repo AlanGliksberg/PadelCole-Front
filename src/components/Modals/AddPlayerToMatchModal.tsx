@@ -139,7 +139,7 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
                       bold={activeTab === "existing"}
                       type="medium"
                     >
-                      Jugadores existentes
+                      Jugadores registrados
                     </CustomText>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -157,7 +157,7 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
                       bold={activeTab === "new"}
                       type="medium"
                     >
-                      Nuevo jugador
+                      Jugador no registrado
                     </CustomText>
                   </TouchableOpacity>
                 </View>
