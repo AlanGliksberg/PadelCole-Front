@@ -106,20 +106,20 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
                 <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                   <MaterialIcons name="close" size={28} color={colors.text} />
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.headerRoundButton}
-                  onPress={handleAddMyself}
-                >
-                  <MaterialIcons
-                    name="person-add"
-                    size={16}
-                    color={colors.white}
-                  />
-                  <CustomText style={styles.headerRoundButtonText}>
-                    Yo
-                  </CustomText>
-                </TouchableOpacity>
               </View>
+              <TouchableOpacity
+                style={styles.headerRoundButton}
+                onPress={handleAddMyself}
+              >
+                <MaterialIcons
+                  name="person-add"
+                  size={16}
+                  color={colors.white}
+                />
+                <CustomText style={styles.headerRoundButtonText}>
+                  Incluirme
+                </CustomText>
+              </TouchableOpacity>
 
               {/* Pestañas para otras opciones */}
               <View style={styles.tabsContainer}>

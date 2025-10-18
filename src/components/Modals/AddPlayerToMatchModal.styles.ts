@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     overflow: "hidden",
     display: "flex",
-    gap: 20,
+    gap: 15,
   },
   headerRow: {
     width: "100%",
@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
   },
   headerRoundButton: {
     minWidth: 60,
+    width: 120,
     height: 40,
     borderRadius: 20,
     backgroundColor: colors.primary,
