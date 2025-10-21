@@ -63,10 +63,9 @@ export default function MeFaltaAlguien() {
       </View>
 
       {matches.length > 0 && (
-        <View>
-          <CustomText style={styles.createMatchText} bold>
-            Creá tu próximo partido:
-          </CustomText>
+        <View style={styles.createMatchContainer}>
+          <View style={styles.separator} />
+          <CustomText bold>Creá tu próximo partido:</CustomText>
           <FullButton
             onPress={() => navigation.navigate("CrearPartido")}
             size="l"

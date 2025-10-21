@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { styles } from "./MyResults.style";
 import {
@@ -14,6 +14,8 @@ import { getMyPendingResults } from "@/src/services/match";
 import { NavigationProp } from "@react-navigation/native";
 import { useNavigation } from "expo-router";
 import SimpleButton from "../ui/SimpleButton/SimpleButton";
+import FullButton from "../ui/FullButton/FullButton";
+import { PlayerModalsContext } from "@/src/contexts/PlayerModalsContext";
 
 const MyResults: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
@@ -21,6 +23,7 @@ const MyResults: React.FC = () => {
     useNavigation<
       NavigationProp<AppStackParamList & MeFaltaAlguienStackParamList>
     >();
+  const { openLoadResultModal } = useContext(PlayerModalsContext);
 
   let loadMatches = async (
     nextPage: number,
@@ -61,15 +64,31 @@ const MyResults: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.matchesScroll}>
-        <MatchesList
-          loadMatches={loadMatches}
-          error={error}
-          EmptyComponent={Empty}
-          viewMore
-          allowResults
-        />
-      </ScrollView>
+      <View style={styles.matchesContainer}>
+        <ScrollView style={styles.matchesScroll}>
+          <MatchesList
+            loadMatches={loadMatches}
+            error={error}
+            EmptyComponent={Empty}
+            viewMore
+            allowResults
+          />
+        </ScrollView>
+      </View>
+
+      <View style={styles.asyncContainer}>
+        <View style={styles.separator} />
+        <CustomText bold>Cargá un resultado de otro partido:</CustomText>
+        <FullButton
+          onPress={() => openLoadResultModal(null, false)}
+          size="l"
+          style={styles.createResultButton}
+        >
+          <CustomText.ButtonText uppercase type="small">
+            Cargar resultado
+          </CustomText.ButtonText>
+        </FullButton>
+      </View>
     </View>
   );
 };

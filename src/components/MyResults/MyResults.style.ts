@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.sm,
   },
+  matchesContainer: {
+    height: "85%",
+  },
   matchesScroll: {
     flex: 1,
   },
@@ -44,5 +47,17 @@ export const styles = StyleSheet.create({
   },
   search: {
     fontWeight: "600",
+  },
+  separator: {
+    width: "100%",
+    height: 2,
+    backgroundColor: colors.selectedText,
+  },
+  asyncContainer: {
+    marginTop: spacing.md,
+    gap: spacing.sm,
+  },
+  createResultButton: {
+    alignSelf: "center",
   },
 });

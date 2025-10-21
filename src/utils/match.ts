@@ -1,4 +1,4 @@
-import { MatchResult, Match } from "../types";
+import { MatchResult, Match, Player } from "../types";
 
 export const parseSets = (match: Match | null): MatchResult | null => {
   if (!match || match.sets.length === 0) return null;
@@ -24,6 +24,13 @@ export const matchResultIsValid = (result: MatchResult) => {
   return true;
 };
 
-export const matchIsFriendly = (match: Match | null) => {
-  return !match?.teams.every((t) => t.players.some((p) => p.userId));
+export const matchIsFriendly = (
+  match: Match | null,
+  team1?: Player[],
+  team2?: Player[]
+) => {
+  return match
+    ? !match?.teams.every((t) => t.players.some((p) => p.userId))
+    : (team1 && team1.every((p) => !p.userId)) ||
+        (team2 && team2!.every((p) => !p.userId));
 };

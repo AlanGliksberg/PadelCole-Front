@@ -130,11 +130,19 @@ const MatchBox: React.FC<MatchBoxProps> = ({
           <CustomText style={styles.meta}>{match.time}</CustomText>
         </View>
         <View style={styles.row}>
-          <CustomText style={styles.tag}>{match.gender?.pluralName}</CustomText>
-          <CustomText style={styles.tag}>
-            {match.category?.description}
-          </CustomText>
-          <CustomText style={styles.tag}>{match.duration} min</CustomText>
+          {match.gender?.pluralName && (
+            <CustomText style={styles.tag}>
+              {match.gender?.pluralName}
+            </CustomText>
+          )}
+          {match.category?.description && (
+            <CustomText style={styles.tag}>
+              {match.category?.description}
+            </CustomText>
+          )}
+          {match.duration && (
+            <CustomText style={styles.tag}>{match.duration} min</CustomText>
+          )}
         </View>
         <View style={styles.row}>
           <CustomText type="small" bold>
@@ -149,6 +157,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
             team={1}
             callback={refreshData}
             canDelete={showCreatorDetails}
+            removeCallback={refreshData}
             handleApply={handleApply}
           />
           <CustomText style={styles.vs}>vs</CustomText>
@@ -159,6 +168,7 @@ const MatchBox: React.FC<MatchBoxProps> = ({
             team={2}
             callback={refreshData}
             canDelete={showCreatorDetails}
+            removeCallback={refreshData}
             handleApply={handleApply}
           />
         </View>

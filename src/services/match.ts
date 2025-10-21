@@ -13,6 +13,7 @@ import {
   GET_MY_PENDING_RESULTS_URI,
   UPDATE_MATCH_RESULT_URI,
   ACCEPT_MATCH_RESULT_URI,
+  CREATE_MATCH_RESULT_URI,
 } from "../constants/api";
 import {
   CreateMatchBody,
@@ -199,4 +200,36 @@ export const updateMatchResult = async (
 
 export const acceptMatchResult = async (matchId: number) => {
   return await post(ACCEPT_MATCH_RESULT_URI, { body: { matchId } });
+};
+
+export const createMatchWithResult = async (
+  location: string,
+  date: string,
+  time: string,
+  gender: number,
+  category: number,
+  team1: Player[],
+  team2: Player[],
+  result: MatchResult
+) => {
+  const sets: [number, number][] = [];
+  sets.push([Number(result.team1Set1), Number(result.team2Set1)]);
+
+  if (result.team1Set2 && result.team2Set2) {
+    sets.push([Number(result.team1Set2), Number(result.team2Set2)]);
+  }
+  if (result.team1Set3 && result.team2Set3) {
+    sets.push([Number(result.team1Set3), Number(result.team2Set3)]);
+  }
+  return await post(CREATE_MATCH_RESULT_URI, {
+    body: {
+      location,
+      date,
+      time,
+      gender,
+      category,
+      teams: { team1, team2 },
+      sets,
+    },
+  });
 };

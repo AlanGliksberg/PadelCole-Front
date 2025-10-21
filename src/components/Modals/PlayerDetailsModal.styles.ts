@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "90%",
-    minHeight: "20%",
+    minHeight: "19%",
     maxHeight: "80%",
     backgroundColor: colors.background,
     borderRadius: spacing.md,

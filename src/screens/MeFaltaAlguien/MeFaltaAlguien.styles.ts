@@ -9,13 +9,18 @@ export const styles = StyleSheet.create({
   matchesContainer: {
     height: "87%",
   },
-  createMatchText: {
+  separator: {
+    width: "100%",
+    height: 2,
+    backgroundColor: colors.selectedText,
+  },
+  createMatchContainer: {
     marginTop: spacing.md,
     marginBottom: spacing.md,
+    gap: spacing.sm,
   },
   createMatchButton: {
     alignSelf: "center",
-    marginBottom: spacing.xl,
   },
   matchesText: {
     marginBottom: spacing.md,

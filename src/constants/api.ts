@@ -23,6 +23,7 @@ export const ADD_PLAYER_TO_MATCH_URI = `${MATCH_BASE_URI}/player`;
 export const REMOVE_PLAYER_FROM_MATCH_URI = `${MATCH_BASE_URI}/player`;
 export const UPDATE_MATCH_RESULT_URI = `${MATCH_BASE_URI}/results`;
 export const ACCEPT_MATCH_RESULT_URI = `${MATCH_BASE_URI}/results`;
+export const CREATE_MATCH_RESULT_URI = `${MATCH_BASE_URI}/matchwithresult`;
 
 export const GET_PLAYERS_URI = PLAYER_BASE_URI;
 export const CREATE_PLAYER_URI = PLAYER_BASE_URI;

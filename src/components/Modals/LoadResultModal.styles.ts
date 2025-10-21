@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.disabled,
     opacity: 0.6,
   },
-  dateTimeRow: {
+  row: {
     flexDirection: "row",
     justifyContent: "space-between",
     gap: spacing.sm,

@@ -25,7 +25,7 @@ interface CustomTimePickerProps {
   time: Date | null;
   onChange: (d: Date | null) => void;
   mandatory?: boolean;
-  placeholder: string;
+  placeholder?: string;
   error?: string;
   inputStyles?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
   neutralButtonLabel?: string;

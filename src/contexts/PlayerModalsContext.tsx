@@ -34,7 +34,7 @@ interface PlayerModalsContextData {
   ) => void;
   closeApplyToMatchModal: () => void;
   openLoadResultModal: (
-    match: Match,
+    match: Match | null,
     readOnly: boolean,
     onSave?: () => Promise<void>
   ) => void;
@@ -62,7 +62,7 @@ export const PlayerModalsContext = createContext<PlayerModalsContextData>({
   ) => {},
   closeApplyToMatchModal: () => {},
   openLoadResultModal: (
-    match: Match,
+    match: Match | null,
     readOnly: boolean,
     onSave?: () => Promise<void>
   ) => {},
@@ -230,7 +230,7 @@ export const PlayerModalsProvider: React.FC<{ children: ReactNode }> = ({
   const [key, setKey] = useState(0);
 
   const openLoadResultModal = (
-    match: Match,
+    match: Match | null,
     readonly = false,
     onSave?: () => Promise<void>
   ) => {
