@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./CustomModal.styles";
+import CustomModalView from "./CustomModalView";
 
 interface BaseModalProps {
   isVisible: boolean;
@@ -23,10 +24,9 @@ const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = ({
   children,
 }) => {
   return (
-    <Modal
+    <CustomModalView
       visible={isVisible}
       animationType="fade"
-      transparent
       onRequestClose={onClose}
     >
       <TouchableWithoutFeedback onPress={onClose}>
@@ -45,7 +45,7 @@ const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = ({
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
-    </Modal>
+    </CustomModalView>
   );
 };
 

@@ -19,6 +19,7 @@ import { updatePlayer } from "@/src/services/player";
 import { Player } from "@/src/types/player/Player";
 import { Position } from "@/src/types/player/Position";
 import { styles } from "./EditProfileModal.styles";
+import CustomModalView from "./CustomModalView";
 
 interface EditProfileModalProps {
   isVisible: boolean;
@@ -93,12 +94,10 @@ export default function EditProfileModal({
   };
 
   return (
-    <Modal
+    <CustomModalView
       visible={isVisible}
-      transparent
       animationType="fade"
       onRequestClose={handleClose}
-      statusBarTranslucent
     >
       <TouchableOpacity
         style={styles.overlay}
@@ -170,6 +169,6 @@ export default function EditProfileModal({
           </View>
         </TouchableOpacity>
       </TouchableOpacity>
-    </Modal>
+    </CustomModalView>
   );
 }

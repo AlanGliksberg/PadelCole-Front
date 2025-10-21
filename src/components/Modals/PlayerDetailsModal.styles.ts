@@ -4,7 +4,6 @@ import { colors, spacing, typography } from "../../theme";
 export const styles = StyleSheet.create({
   backdrop: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
     zIndex: 2000,

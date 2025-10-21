@@ -11,6 +11,7 @@ import {
 import CustomText from "../ui/CustomText/CustomText";
 import SimpleButton from "../ui/SimpleButton/SimpleButton";
 import { styles } from "./CustomErrorModal.styles";
+import CustomModalView from "./CustomModalView";
 
 const CustomErrorModal: React.FC<ModalProps> = ({
   params,
@@ -18,10 +19,9 @@ const CustomErrorModal: React.FC<ModalProps> = ({
   closeModal,
 }) => {
   return (
-    <Modal
+    <CustomModalView
       visible={isOpen}
       animationType="fade"
-      transparent
       onRequestClose={closeModal}
     >
       <TouchableWithoutFeedback onPress={closeModal}>
@@ -56,7 +56,7 @@ const CustomErrorModal: React.FC<ModalProps> = ({
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
-    </Modal>
+    </CustomModalView>
   );
 };
 

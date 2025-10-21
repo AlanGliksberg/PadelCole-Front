@@ -13,6 +13,7 @@ import CustomText, { CustomTextProps } from "../CustomText/CustomText";
 import { styles } from "./CustomSelect.styles";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/src/theme";
+import CustomModalView from "../../Modals/CustomModalView";
 
 type Item = {
   id: string | number;
@@ -106,9 +107,8 @@ const CustomSelect = <T extends Item>({
       </TouchableOpacity>
       {error ? <CustomText style={styles.errorText}>{error}</CustomText> : null}
 
-      <Modal
+      <CustomModalView
         visible={modalVisible}
-        transparent
         animationType="fade"
         onRequestClose={() => setModalVisible(false)}
       >
@@ -133,7 +133,7 @@ const CustomSelect = <T extends Item>({
             ItemSeparatorComponent={() => <View style={styles.separator} />}
           />
         </View>
-      </Modal>
+      </CustomModalView>
     </View>
   );
 };

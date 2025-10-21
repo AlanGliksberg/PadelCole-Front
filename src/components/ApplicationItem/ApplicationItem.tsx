@@ -3,10 +3,11 @@ import { Application } from "@/src/types/application/Application";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./ApplicationItem.styles";
+import CustomModalView from "../Modals/CustomModalView";
 
 interface ApplicationItemProps {
   application: Application;
@@ -139,9 +140,8 @@ const ApplicationItem: React.FC<ApplicationItemProps> = ({
         </View>
       )}
 
-      <Modal
+      <CustomModalView
         visible={openTeamSelector}
-        transparent
         animationType="fade"
         onRequestClose={() => setOpenTeamSelector(false)}
       >
@@ -174,7 +174,7 @@ const ApplicationItem: React.FC<ApplicationItemProps> = ({
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
-      </Modal>
+      </CustomModalView>
     </View>
   );
 };

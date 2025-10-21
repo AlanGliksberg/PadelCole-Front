@@ -14,6 +14,7 @@ import PlayersList from "../PlayersList/PlayersList";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./AddPlayerToMatchModal.styles";
 import { getCurrentPlayer } from "@/src/services/player";
+import CustomModalView from "./CustomModalView";
 
 interface PlayerDetailsModalProps {
   isOpen: boolean;
@@ -89,10 +90,9 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
   };
 
   return (
-    <Modal
+    <CustomModalView
       visible={isOpen}
       animationType="fade"
-      transparent={true}
       onRequestClose={onClose}
     >
       <TouchableWithoutFeedback onPress={onClose}>
@@ -168,7 +168,7 @@ const AddPlayerToMatchModal: React.FC<PlayerDetailsModalProps> = ({
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
-    </Modal>
+    </CustomModalView>
   );
 };
 

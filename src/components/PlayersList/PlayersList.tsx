@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomSearchInput from "../ui/CustomSearchInput/CustomSearchInput";
 import CustomText from "../ui/CustomText/CustomText";
 import ErrorSection from "../ui/ErrorSection/ErrorSection";

@@ -18,6 +18,7 @@ import FullButton from "../FullButton/FullButton";
 import SimpleButton from "../SimpleButton/SimpleButton";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
+import CustomModalView from "../../Modals/CustomModalView";
 
 interface CustomTimePickerProps {
   label?: string;
@@ -99,9 +100,8 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
       )}
 
       {Platform.OS === "ios" ? (
-        <Modal
+        <CustomModalView
           visible={showTimePicker}
-          transparent={true}
           animationType="slide"
           onRequestClose={toggleTimePicker}
         >
@@ -139,7 +139,7 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
               </View>
             </TouchableOpacity>
           </TouchableOpacity>
-        </Modal>
+        </CustomModalView>
       ) : (
         showTimePicker && (
           <DateTimePicker

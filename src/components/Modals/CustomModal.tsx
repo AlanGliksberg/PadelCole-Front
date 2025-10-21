@@ -2,23 +2,18 @@ import { colors } from "@/src/theme";
 import { ModalProps } from "@/src/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import React from "react";
-import {
-  Modal,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import CustomText from "../ui/CustomText/CustomText";
 import FullButton from "../ui/FullButton/FullButton";
 import SimpleButton from "../ui/SimpleButton/SimpleButton";
 import { styles } from "./CustomModal.styles";
+import CustomModalView from "./CustomModalView";
 
 const CustomModal: React.FC<ModalProps> = ({ params, isOpen, closeModal }) => {
   return (
-    <Modal
+    <CustomModalView
       visible={isOpen}
       animationType="fade"
-      transparent
       onRequestClose={closeModal}
     >
       <TouchableWithoutFeedback onPress={closeModal}>
@@ -69,7 +64,7 @@ const CustomModal: React.FC<ModalProps> = ({ params, isOpen, closeModal }) => {
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
-    </Modal>
+    </CustomModalView>
   );
 };
 

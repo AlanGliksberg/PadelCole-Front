@@ -8,12 +8,11 @@ export const styles = StyleSheet.create({
     position: "absolute",
     height: "100%",
     width: "100%",
-    backgroundColor: "rgba(0,0,0,0.5)",
   },
   container: {
     position: "absolute",
     marginHorizontal: width * 0.05,
-    marginTop: height * 0.15,
+    marginTop: height * 0.17,
     width: "90%",
     height: 600,
     backgroundColor: colors.white,

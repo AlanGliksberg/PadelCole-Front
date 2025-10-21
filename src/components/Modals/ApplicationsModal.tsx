@@ -18,6 +18,7 @@ import {
 import ApplicationItem from "../ApplicationItem/ApplicationItem";
 import CustomText from "../ui/CustomText/CustomText";
 import { styles } from "./ApplicationsModal.styles";
+import CustomModalView from "./CustomModalView";
 
 const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   match,
@@ -85,10 +86,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   };
 
   return (
-    <Modal
+    <CustomModalView
       visible={isOpen}
       animationType="fade"
-      transparent
       onRequestClose={closeModal}
     >
       <TouchableWithoutFeedback onPress={closeModal}>
@@ -142,7 +142,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
-    </Modal>
+    </CustomModalView>
   );
 };
 

@@ -12,6 +12,7 @@ import { changePasswordSchema } from "@/src/schemas/changePasswordSchema";
 import { changePassword } from "@/src/services/auth";
 import { colors } from "@/src/theme";
 import { styles } from "./ChangePasswordModal.styles";
+import CustomModalView from "./CustomModalView";
 
 type ChangePasswordFormData = {
   currentPassword: string;
@@ -82,12 +83,10 @@ export default function ChangePasswordModal({
   };
 
   return (
-    <Modal
+    <CustomModalView
       visible={isVisible}
-      transparent
       animationType="fade"
       onRequestClose={handleClose}
-      statusBarTranslucent
     >
       <TouchableOpacity
         style={styles.overlay}
@@ -198,6 +197,6 @@ export default function ChangePasswordModal({
           </View>
         </TouchableOpacity>
       </TouchableOpacity>
-    </Modal>
+    </CustomModalView>
   );
 }

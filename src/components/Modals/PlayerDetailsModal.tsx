@@ -12,6 +12,7 @@ import PlayerAvatar from "../PlayerAvatar/PlayerAvatar";
 import CustomText from "../ui/CustomText/CustomText";
 import SimpleButton from "../ui/SimpleButton/SimpleButton";
 import { styles } from "./PlayerDetailsModal.styles";
+import CustomModalView from "./CustomModalView";
 
 interface PlayerDetailsModalProps {
   player: Player | null;
@@ -33,10 +34,9 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
   //TODO - puede ser que sea un player recien creado, por lo que no tengo info de gender y category, solo tengo los ids. hay que buscar los valores
 
   return (
-    <Modal
+    <CustomModalView
       visible={player !== null}
       animationType="fade"
-      transparent
       onRequestClose={closePlayerDetail}
     >
       <TouchableWithoutFeedback onPress={closePlayerDetail}>
@@ -109,7 +109,7 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
-    </Modal>
+    </CustomModalView>
   );
 };
 

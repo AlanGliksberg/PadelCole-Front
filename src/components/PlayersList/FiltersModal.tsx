@@ -18,6 +18,7 @@ import CustomText from "../ui/CustomText/CustomText";
 import FullButton from "../ui/FullButton/FullButton";
 import SimpleButton from "../ui/SimpleButton/SimpleButton";
 import { styles } from "./FiltersModal.styles";
+import CustomModalView from "../Modals/CustomModalView";
 
 interface FiltersModalProps {
   visible: boolean;
@@ -88,9 +89,8 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
   }
 
   return (
-    <Modal
+    <CustomModalView
       visible={visible}
-      transparent
       animationType="slide"
       onRequestClose={onCancel}
     >
@@ -246,7 +246,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
-    </Modal>
+    </CustomModalView>
   );
 };
 

@@ -18,6 +18,7 @@ import FullButton from "../FullButton/FullButton";
 import SimpleButton from "../SimpleButton/SimpleButton";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
+import CustomModalView from "../../Modals/CustomModalView";
 
 interface CustomDatePickerProps {
   label?: string;
@@ -97,7 +98,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
       )}
 
       {Platform.OS === "ios" ? (
-        <Modal
+        <CustomModalView
           visible={showDatePicker}
           transparent={true}
           animationType="slide"
@@ -138,7 +139,7 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               </View>
             </TouchableOpacity>
           </TouchableOpacity>
-        </Modal>
+        </CustomModalView>
       ) : (
         showDatePicker && (
           <DateTimePicker
