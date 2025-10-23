@@ -31,8 +31,7 @@
     },
     "production": {
       "android": {
-        "buildType": "app-bundle",
-        "serviceAccountKeyPath": "./certs/portres-475023-72cec56e1dda.json"
+        "buildType": "app-bundle"
       },
       "channel": "production",
       "autoIncrement": true,
@@ -47,6 +46,9 @@
   },
   "submit": {
     "production": {
+      "android": {
+        "serviceAccountKeyPath": "./certs/portres-475023-72cec56e1dda.json"
+      },
       "ios": {
         "ascApiKeyId": "458UVVNX58",
         "ascApiKeyIssuerId": "62bcbbbd-5fe3-4861-ba27-450542714830",

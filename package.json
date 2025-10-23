@@ -11,6 +11,7 @@
     "lint": "expo lint",
     "ios:build": "eas build -p ios",
     "ios:submit": "eas submit -p ios",
+    "android:submit": "eas submit -p android",
     "update:dev": "eas update --branch dev",
     "update:preview": "eas update --branch preview",
     "update:prod": "eas update --branch production",
