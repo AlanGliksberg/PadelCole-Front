@@ -1,4 +1,7 @@
 {
+  "cli":{
+    "appVersionSource": "remote"
+  },
   "build": {
     "dev": {
       "developmentClient": true,
@@ -20,7 +23,7 @@
       "channel": "preview",
       "env": {
         "NODE_ENV": "preview",
-        "EXPO_PUBLIC_API_URL": "https://zxwk0dtg-3000.brs.devtunnels.ms/api",
+        "EXPO_PUBLIC_API_URL": "https://portres-api-251399065339.us-south1.run.app/api",
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "251399065339-u5fgqv9esdlprvi9ht1n85jo6ej0bnnm.apps.googleusercontent.com",
         "EXPO_PUBLIC_WEB_CLIENT_ID": "251399065339-q6a763soohsbnbggfeg934v5ukebddvd.apps.googleusercontent.com",
         "EXPO_PUBLIC_IOS_CLIENT_ID": "251399065339-v91cb22jdiabh8goumkrpnhua8bgqquv.apps.googleusercontent.com"
@@ -29,9 +32,10 @@
     "production": {
       "android": { "buildType": "app-bundle" },
       "channel": "production",
+      "autoIncrement": true,
       "env": {
         "NODE_ENV": "production",
-        "EXPO_PUBLIC_API_URL": "https://zxwk0dtg-3000.brs.devtunnels.ms/api",
+        "EXPO_PUBLIC_API_URL": "https://portres-api-251399065339.us-south1.run.app/api",
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "251399065339-u5fgqv9esdlprvi9ht1n85jo6ej0bnnm.apps.googleusercontent.com",
         "EXPO_PUBLIC_WEB_CLIENT_ID": "251399065339-q6a763soohsbnbggfeg934v5ukebddvd.apps.googleusercontent.com",
         "EXPO_PUBLIC_IOS_CLIENT_ID": "251399065339-v91cb22jdiabh8goumkrpnhua8bgqquv.apps.googleusercontent.com"

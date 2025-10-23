@@ -44,7 +44,7 @@ export default function ProfileHeader({ player }: ProfileHeaderProps) {
 
       <View style={styles.profileInfo}>
         <CustomText style={styles.playerName}>
-          {player?.firstName} {player?.lastName}
+          {player?.firstName || "S/I"} {player?.lastName}
         </CustomText>
         <CustomText style={styles.playerEmail}>{user?.email}</CustomText>
         <View style={styles.playerStats}>
@@ -57,7 +57,7 @@ export default function ProfileHeader({ player }: ProfileHeaderProps) {
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
             <CustomText style={styles.statValue}>
-              {player?.rankingPoints || 0}
+              {player?.rankingPoints || "S/I"}
             </CustomText>
             <CustomText style={styles.statLabel}>Puntos</CustomText>
           </View>

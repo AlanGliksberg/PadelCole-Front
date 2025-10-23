@@ -52,18 +52,6 @@ export default function PlayerProfile({ playerId }: PlayerProfileProps) {
     return <></>;
   }
 
-  if (error || !player) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.content}>
-          <CustomText>
-            {error || "No se pudo cargar el perfil del jugador"}
-          </CustomText>
-        </View>
-      </View>
-    );
-  }
-
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <ProfileHeader player={player} />

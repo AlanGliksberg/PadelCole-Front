@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View } from "react-native";
 import BaseModal from "./BaseModal";
 import CustomTextInput from "../ui/CustomTextInput/CustomTextInput";
 import { Match } from "@/src/types";
@@ -64,73 +64,67 @@ const ApplyToMatchModal: React.FC<ApplyToMatchModalProps> = ({
     onClose();
   };
 
-  const dismissKeyboard = () => {
-    Keyboard.dismiss();
-  };
-
   return (
     <BaseModal isVisible={isVisible} onClose={handleClose} title="Postularme">
-      <TouchableWithoutFeedback onPress={dismissKeyboard}>
-        <View style={styles.container}>
-          <View style={styles.subtitle}>
-            <CustomText type="h4">Postulate al partido</CustomText>
-            <CustomText type="h4" bold>
-              {" "}
-              {match?.location}
+      <View style={styles.container}>
+        <View style={styles.subtitle}>
+          <CustomText type="h4">Postulate al partido</CustomText>
+          <CustomText type="h4" bold>
+            {" "}
+            {match?.location}
+          </CustomText>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <View style={styles.labelContainer}>
+            <MaterialCommunityIcons
+              name="message-text-outline"
+              size={18}
+              color={colors.text}
+            />
+            <CustomText type="small">
+              Enviá un mensaje al organizador del partido (opcional)
             </CustomText>
           </View>
-
-          <View style={styles.inputContainer}>
-            <View style={styles.labelContainer}>
-              <MaterialCommunityIcons
-                name="message-text-outline"
-                size={18}
-                color={colors.text}
-              />
-              <CustomText type="small">
-                Envía un mensaje al organizador del partido (opcional)
-              </CustomText>
-            </View>
-            <CustomTextArea
-              placeholder="Me gustaría participar en este partido..."
-              value={message}
-              onChangeText={setMessage}
-              containerStyle={styles.inputBorderStyle}
-              maxLength={100}
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <View style={styles.labelContainer}>
-              <Feather name="phone" size={16} color={colors.text} />
-              <CustomText type="small">
-                Número de teléfono (recomendado)
-              </CustomText>
-            </View>
-            <CustomTextInput
-              placeholder="El organizador podrá contactarte"
-              value={phone}
-              onChangeText={setPhone}
-              keyboardType="phone-pad"
-              style={styles.phoneInput}
-              containerStyle={styles.inputBorderStyle}
-            />
-          </View>
-
-          <View style={styles.buttonsContainer}>
-            <SimpleButton
-              title="Cancelar"
-              onPress={handleClose}
-              containerStyle={styles.cancelButton}
-            />
-            <FullButton onPress={handleSubmit} size="s" disabled={loading}>
-              <CustomText.ButtonText type="small">
-                Postularme
-              </CustomText.ButtonText>
-            </FullButton>
-          </View>
+          <CustomTextArea
+            placeholder="Me gustaría participar en este partido..."
+            value={message}
+            onChangeText={setMessage}
+            containerStyle={styles.inputBorderStyle}
+            maxLength={100}
+          />
         </View>
-      </TouchableWithoutFeedback>
+
+        <View style={styles.inputContainer}>
+          <View style={styles.labelContainer}>
+            <Feather name="phone" size={16} color={colors.text} />
+            <CustomText type="small">
+              Número de teléfono (recomendado)
+            </CustomText>
+          </View>
+          <CustomTextInput
+            placeholder="El organizador podrá contactarte"
+            value={phone}
+            onChangeText={setPhone}
+            keyboardType="phone-pad"
+            style={styles.phoneInput}
+            containerStyle={styles.inputBorderStyle}
+          />
+        </View>
+
+        <View style={styles.buttonsContainer}>
+          <SimpleButton
+            title="Cancelar"
+            onPress={handleClose}
+            containerStyle={styles.cancelButton}
+          />
+          <FullButton onPress={handleSubmit} size="s" disabled={loading}>
+            <CustomText.ButtonText type="small">
+              Postularme
+            </CustomText.ButtonText>
+          </FullButton>
+        </View>
+      </View>
     </BaseModal>
   );
 };

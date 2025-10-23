@@ -1,12 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Keyboard,
-  Modal,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Keyboard, ScrollView, TouchableOpacity, View } from "react-native";
 
 import { ModalContext } from "@/src/contexts/ModalContext";
 
@@ -35,7 +29,7 @@ export default function EditProfileModal({
   onUpdate,
 }: EditProfileModalProps) {
   const [loading, setLoading] = useState(false);
-  const { data: positions } = usePositions();
+  const { data: positions } = usePositions(isVisible);
   const { openErrorModal, openModal } = useContext(ModalContext);
 
   const [firstName, setFirstName] = useState("");

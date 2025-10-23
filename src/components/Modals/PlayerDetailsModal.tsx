@@ -31,7 +31,6 @@ const PlayerDetailsModal: React.FC<PlayerDetailsModalProps> = ({
   };
 
   if (!player) return null;
-  //TODO - puede ser que sea un player recien creado, por lo que no tengo info de gender y category, solo tengo los ids. hay que buscar los valores
 
   return (
     <CustomModalView

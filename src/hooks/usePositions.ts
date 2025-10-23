@@ -2,13 +2,15 @@ import { getPositions } from "@/src/services/player";
 import { Position } from "@/src/types";
 import { useEffect, useState } from "react";
 
-export default function usePositions() {
+export default function usePositions(enabled = true) {
   const [data, setData] = useState<Position[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     let mounted = true;
+    if (!enabled) return;
+
     setLoading(true);
     getPositions()
       .then((res) => {
@@ -23,7 +25,7 @@ export default function usePositions() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [enabled]);
 
   return { data, loading, error };
 }

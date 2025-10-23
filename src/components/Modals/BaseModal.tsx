@@ -39,7 +39,6 @@ const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = ({
                   <MaterialIcons name="close" size={28} color={colors.text} />
                 </TouchableOpacity>
               </View>
-
               {children}
             </View>
           </TouchableWithoutFeedback>

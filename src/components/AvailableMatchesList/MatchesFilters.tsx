@@ -123,14 +123,6 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
     onFiltersChange(actualFilters);
   };
 
-  const handleTimeToChange = (newTimeTo: Date | null) => {
-    const actualFilters = getActualFilters();
-    actualFilters.timeTo = formatTime(newTimeTo);
-
-    setTimeTo(newTimeTo);
-    onFiltersChange(actualFilters);
-  };
-
   return (
     <View key={key}>
       <CustomSearchInput
@@ -209,15 +201,6 @@ const MatchesFilters: React.FC<MatchesFiltersProps> = ({ onFiltersChange }) => {
                 neutralButtonLabel="Restablecer"
               />
             </View>
-            {/* <View style={[styles.filterItem, { marginTop: 26 }]}>
-              <CustomTimePicker
-                time={timeTo}
-                onChange={handleTimeToChange}
-                placeholder="Hora hasta"
-                inputStyles={timeTo ? styles.selected : {}}
-                neutralButtonLabel="Restablecer"
-              />
-            </View> */}
             <View style={styles.filterItem}>
               <CustomSelect
                 label=""

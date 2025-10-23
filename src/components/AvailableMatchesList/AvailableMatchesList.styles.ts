@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
   },
   matchesScroll: {
     flex: 1,
+    marginBottom: spacing.md
   },
   emptyContainer: {
     justifyContent: "center",

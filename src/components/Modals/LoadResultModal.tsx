@@ -33,6 +33,7 @@ import CustomDatePicker from "../ui/CustomDatePicker/CustomDatePicker";
 import CustomSelect from "../ui/CustomSelect/CustomSelect";
 import useCategories from "@/src/hooks/useCategories";
 import useGenders from "@/src/hooks/useGenders";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface LoadResultModalProps {
   isVisible: boolean;
@@ -234,7 +235,8 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
           : "Cargar resultado"
       }
     >
-      <ScrollView
+      <KeyboardAwareScrollView
+        enableOnAndroid
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
@@ -489,7 +491,7 @@ const LoadResultModal: React.FC<LoadResultModalProps> = ({
             )}
           </>
         )}
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </BaseModal>
   );
 };

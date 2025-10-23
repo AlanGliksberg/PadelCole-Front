@@ -3,8 +3,6 @@ import React, { useContext, useState } from "react";
 import { Controller, Resolver, useForm } from "react-hook-form";
 import {
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -29,6 +27,7 @@ import { useNavigation } from "expo-router";
 import { styles } from "./Register.styles";
 import { SetPlayerStackParamList } from "@/src/types/navigation/SetPlayerStack";
 import { AuthContext } from "@/src/contexts/AuthContext";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -62,10 +61,16 @@ const Register: React.FC = () => {
     hideLoading();
 
     if (res.error)
-      openErrorModal(
-        "Registro",
-        "Hubo un error inesperado en el registro. Intentá nuevamente en unos momentos."
-      );
+      if (res.code === 18)
+        openErrorModal(
+          "Registro",
+          "Ya existe un usuario registrado con el mail que ingresaste"
+        );
+      else
+        openErrorModal(
+          "Registro",
+          "Hubo un error inesperado en el registro. Intentá nuevamente en unos momentos."
+        );
     else {
       openModal({
         title: "Registro",
@@ -86,153 +91,154 @@ const Register: React.FC = () => {
 
   // TODO - agregar TYC
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.select({ ios: 100, android: 0 })}
-    >
+    <View style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.inner}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Ionicons name="arrow-back" size={18} color={colors.primary} />
-            <CustomText type="small" style={styles.buttonText}>
-              Volver
-            </CustomText>
-          </TouchableOpacity>
-          <CustomText.Title style={styles.title}>Registro</CustomText.Title>
-
-          <ScrollView
-            contentContainerStyle={styles.content}
-            keyboardShouldPersistTaps="always"
-          >
-            {/* Campos del formulario */}
-            <Controller
-              control={control}
-              name="firstName"
-              render={({ field: { onChange, value } }) => (
-                <CustomTextInput
-                  label="Nombre"
-                  value={value}
-                  onChangeText={onChange}
-                  error={errors.firstName?.message}
-                  mandatory
-                />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="lastName"
-              render={({ field: { onChange, value } }) => (
-                <CustomTextInput
-                  label="Apellido"
-                  value={value}
-                  onChangeText={onChange}
-                  error={errors.lastName?.message}
-                  mandatory
-                />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { onChange, value } }) => (
-                <CustomTextInput
-                  label="Email"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  value={value}
-                  onChangeText={onChange}
-                  error={errors.email?.message}
-                  mandatory
-                />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="phone"
-              render={({ field: { onChange, value } }) => (
-                <CustomTextInput
-                  label="Teléfono (opcional)"
-                  keyboardType="phone-pad"
-                  value={value}
-                  onChangeText={onChange}
-                  error={errors.phone?.message}
-                />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { onChange, value } }) => (
-                <CustomTextInput
-                  label="Contraseña"
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  value={value}
-                  onChangeText={onChange}
-                  error={errors.password?.message}
-                  mandatory
-                  rightSlot={
-                    <TouchableOpacity
-                      onPress={() => setShowPassword((p) => !p)}
-                    >
-                      <AntDesign
-                        name={showPassword ? "eye" : "eyeo"}
-                        size={24}
-                        color={colors.placeholder}
-                      />
-                    </TouchableOpacity>
-                  }
-                />
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="confirmPassword"
-              render={({ field: { onChange, value } }) => (
-                <CustomTextInput
-                  label="Confirmar contraseña"
-                  secureTextEntry={!showConfirmPassword}
-                  autoCapitalize="none"
-                  value={value}
-                  onChangeText={onChange}
-                  error={errors.confirmPassword?.message}
-                  mandatory
-                  rightSlot={
-                    <TouchableOpacity
-                      onPress={() => setShowConfirmPassword((p) => !p)}
-                    >
-                      <AntDesign
-                        name={showConfirmPassword ? "eye" : "eyeo"}
-                        size={24}
-                        color={colors.placeholder}
-                      />
-                    </TouchableOpacity>
-                  }
-                />
-              )}
-            />
-
-            <FullButton
-              onPress={handleSubmit(onSubmit)}
-              style={{ marginTop: 20 }}
+        <KeyboardAwareScrollView
+          enableOnAndroid
+          keyboardShouldPersistTaps="always"
+        >
+          <View style={styles.inner}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
             >
-              <CustomText.ButtonText type="medium">
-                Registrarse
-              </CustomText.ButtonText>
-            </FullButton>
-          </ScrollView>
-        </View>
+              <Ionicons name="arrow-back" size={18} color={colors.primary} />
+              <CustomText type="small" style={styles.buttonText}>
+                Volver
+              </CustomText>
+            </TouchableOpacity>
+            <CustomText.Title style={styles.title}>Registro</CustomText.Title>
+
+            <ScrollView
+              contentContainerStyle={styles.content}
+              keyboardShouldPersistTaps="always"
+            >
+              {/* Campos del formulario */}
+              <Controller
+                control={control}
+                name="firstName"
+                render={({ field: { onChange, value } }) => (
+                  <CustomTextInput
+                    label="Nombre"
+                    value={value}
+                    onChangeText={onChange}
+                    error={errors.firstName?.message}
+                    mandatory
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="lastName"
+                render={({ field: { onChange, value } }) => (
+                  <CustomTextInput
+                    label="Apellido"
+                    value={value}
+                    onChangeText={onChange}
+                    error={errors.lastName?.message}
+                    mandatory
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="email"
+                render={({ field: { onChange, value } }) => (
+                  <CustomTextInput
+                    label="Email"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    value={value}
+                    onChangeText={onChange}
+                    error={errors.email?.message}
+                    mandatory
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="phone"
+                render={({ field: { onChange, value } }) => (
+                  <CustomTextInput
+                    label="Teléfono (opcional)"
+                    keyboardType="phone-pad"
+                    value={value}
+                    onChangeText={onChange}
+                    error={errors.phone?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="password"
+                render={({ field: { onChange, value } }) => (
+                  <CustomTextInput
+                    label="Contraseña"
+                    secureTextEntry={!showPassword}
+                    autoCapitalize="none"
+                    value={value}
+                    onChangeText={onChange}
+                    error={errors.password?.message}
+                    mandatory
+                    rightSlot={
+                      <TouchableOpacity
+                        onPress={() => setShowPassword((p) => !p)}
+                      >
+                        <AntDesign
+                          name={showPassword ? "eye" : "eyeo"}
+                          size={24}
+                          color={colors.placeholder}
+                        />
+                      </TouchableOpacity>
+                    }
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="confirmPassword"
+                render={({ field: { onChange, value } }) => (
+                  <CustomTextInput
+                    label="Confirmar contraseña"
+                    secureTextEntry={!showConfirmPassword}
+                    autoCapitalize="none"
+                    value={value}
+                    onChangeText={onChange}
+                    error={errors.confirmPassword?.message}
+                    mandatory
+                    rightSlot={
+                      <TouchableOpacity
+                        onPress={() => setShowConfirmPassword((p) => !p)}
+                      >
+                        <AntDesign
+                          name={showConfirmPassword ? "eye" : "eyeo"}
+                          size={24}
+                          color={colors.placeholder}
+                        />
+                      </TouchableOpacity>
+                    }
+                  />
+                )}
+              />
+
+              <FullButton
+                onPress={handleSubmit(onSubmit)}
+                style={{ marginTop: 20 }}
+              >
+                <CustomText.ButtonText type="medium">
+                  Registrarse
+                </CustomText.ButtonText>
+              </FullButton>
+            </ScrollView>
+          </View>
+        </KeyboardAwareScrollView>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
